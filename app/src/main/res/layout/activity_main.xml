@@ -109,7 +109,7 @@
                 android:background="@drawable/edit_text_background"
                 android:hint="Password"
                 android:drawableStart="@drawable/outline_lock_24"
-                android:drawableEnd="@drawable/outline_remove_red_eye_24"
+                android:drawableEnd="@drawable/hide_pass"
                 android:drawablePadding="10dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
