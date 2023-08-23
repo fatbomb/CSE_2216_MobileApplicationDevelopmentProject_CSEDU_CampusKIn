@@ -217,6 +217,7 @@
 
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/signup"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -236,9 +237,9 @@
         android:layout_height="40dp"
         android:layout_marginStart="80dp"
         android:background="@drawable/camera_background"
-        android:padding="5dp"
+        android:padding="3dp"
         android:elevation="21dp"
-        android:src="@drawable/baseline_add_a_photo_24"
+        android:src="@drawable/baseline_camera_alt_24"
         app:layout_constraintBottom_toBottomOf="@+id/cardView5"
         app:layout_constraintEnd_toEndOf="@+id/cardView5"
         app:layout_constraintStart_toStartOf="@+id/cardView5" />

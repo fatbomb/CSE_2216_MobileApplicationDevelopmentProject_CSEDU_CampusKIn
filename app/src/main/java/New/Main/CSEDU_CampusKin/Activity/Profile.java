@@ -1,5 +1,6 @@
-package New.Main.CSEDU_CampusKin;
+package New.Main.CSEDU_CampusKin.Activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,19 +8,11 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
-import android.text.InputType;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.widget.ImageView;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -27,100 +20,44 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import New.Main.CSEDU_CampusKin.Activity.Profile;
+import New.Main.CSEDU_CampusKin.R;
 
-public class SignUp extends AppCompatActivity {
-    boolean isPasswordVisible = false;
-    boolean isPasswordVisible1 = false;
-
+public class Profile extends AppCompatActivity {
     private static final int CAMERA_PERMISSION_REQUEST = 100;
     private static final int GALLERY_PERMISSION_REQUEST = 101;
     ImageView profile;
-
+    ImageView cover;
+    boolean select;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signup);
+        setContentView(R.layout.profiledemo);
         //getSupportActionBar().hide();
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
-        EditText passwordEditText = findViewById(R.id.passwordEditText);
+
         profile = findViewById(R.id.profile);
+        cover = findViewById(R.id.coverPhoto);
         ImageView addImage = findViewById(R.id.AddImage);
-        final Button register= findViewById(R.id.signup);
-
-
-        passwordEditText.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_END = 2;
-
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (passwordEditText.getRight() - passwordEditText.getCompoundDrawables()[DRAWABLE_END].getBounds().width())) {
-                        isPasswordVisible = !isPasswordVisible;
-
-                        if (isPasswordVisible) {
-                            passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                            //passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_lock_24, 0);
-                            passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.outline_lock_24, 0, R.drawable.outline_remove_red_eye_24, 0);
-                        } else {
-                            passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                            //passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_lock_24, 0);
-                            passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.outline_lock_24, 0, R.drawable.hide_pass, 0);
-                        }
-
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
-        EditText confirmpass = findViewById(R.id.confirmpass);
-
-
-        confirmpass.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_END = 2;
-
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (passwordEditText.getRight() - passwordEditText.getCompoundDrawables()[DRAWABLE_END].getBounds().width())) {
-                        isPasswordVisible1 = !isPasswordVisible1;
-
-                        if (isPasswordVisible1) {
-                            confirmpass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                            //passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_lock_24, 0);
-                            confirmpass.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.outline_lock_24, 0, R.drawable.outline_remove_red_eye_24, 0);
-                        } else {
-                            confirmpass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                            //passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_lock_24, 0);
-                            confirmpass.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.outline_lock_24, 0, R.drawable.hide_pass, 0);
-                        }
-
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                select=true;
                 showImageOptions(view);
             }
         });
-        register.setOnClickListener(new View.OnClickListener() {
+        ImageView addImage1 = findViewById(R.id.AddImage2);
+        addImage1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity((new Intent(SignUp.this, Profile.class)));
+                select=false;
+                showImageOptions(view);
             }
         });
-
     }
-
     public void showImageOptions(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose an Option")
@@ -193,19 +130,23 @@ public class SignUp extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLERY_PERMISSION_REQUEST && resultCode == RESULT_OK && data != null) {
             Uri imageUri = data.getData();
-            profile.setImageURI(imageUri);
+            if(select) {
+                profile.setImageURI(imageUri);
+            }
+            else {
+                cover.setImageURI(imageUri);
+            }
         } else if (requestCode == CAMERA_PERMISSION_REQUEST && resultCode == RESULT_OK) {
             Bitmap thumbnail = data.getParcelableExtra("data");
-            profile.setImageBitmap(thumbnail);
+            if(select) {
+                profile.setImageBitmap(thumbnail);
+            }
+            else {
+                cover.setImageBitmap(thumbnail);
+            }
             // Do other work with full size photo saved in locationForPhotos.
         }
 
     }
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt("imageResource", R.id.profile); // Replace with your image resource
-    }
 }
-
 

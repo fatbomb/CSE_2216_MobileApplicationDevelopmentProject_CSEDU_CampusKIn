@@ -8,7 +8,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
         //setContentView(R.layout.signup);
         // Initalize variables
         final View signup= findViewById(R.id.register_layout);
-        final View forgetPass = findViewById(R.id.forget_pass_button);
-        final View HomePage = findViewById(R.id.log_in_button);
+        final TextView forgetPass = findViewById(R.id.forget_pass_button);
+        final Button HomePage = findViewById(R.id.log_in_button);
 
         //initialize animations
         Animation fade_in= AnimationUtils.loadAnimation(this, R.anim.fade_in);

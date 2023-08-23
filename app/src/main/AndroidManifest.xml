@@ -36,6 +36,8 @@
             android:exported="false"/>
         <activity android:name=".HomePage"
             android:exported="false"/>
+        <activity android:name=".Activity.Profile"
+            android:exported="false"/>
 
     </application>
     <queries>

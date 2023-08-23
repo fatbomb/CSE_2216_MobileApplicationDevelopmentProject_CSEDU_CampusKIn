@@ -1,0 +1,244 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <!-- Search Bar -->
+    <EditText
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:drawableStart="@drawable/outline_search_24"
+        android:background="@drawable/edit_text_background"
+        android:hint="Search"
+        android:padding="8dp"/>
+
+    <!-- Cover Photo -->
+    <ImageView
+        android:id="@+id/coverPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/cover"/>
+    <ImageView
+        android:id="@+id/AddImage2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="330dp"
+        android:layout_marginTop="-45dp"
+        android:background="@drawable/camera_background"
+        android:padding="3dp"
+        android:elevation="21dp"
+        android:src="@drawable/baseline_camera_alt_24"/>
+
+
+    <!-- Profile Photo -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView5"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        app:cardCornerRadius="100dp"
+        app:cardElevation="0dp"
+        android:layout_marginTop="-65dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/image_background">
+
+            <ImageView
+                android:id="@+id/profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/human">
+
+
+            </ImageView>
+
+        </LinearLayout>
+
+
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/AddImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="-40dp"
+        android:background="@drawable/camera_background"
+        android:padding="3dp"
+        android:elevation="21dp"
+        android:src="@drawable/baseline_camera_alt_24"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:layout_marginStart="30dp"
+        android:paddingStart="20dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="5dp"
+        android:textSize="25sp"/>
+
+
+
+    <!-- Edit Profile and More Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/editProfileButton"
+            android:background="@drawable/button_background"
+            android:layout_width="0dp"
+            android:layout_marginEnd="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Edit Profile"/>
+
+        <Button
+            android:id="@+id/moreButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
+            android:text="..."/>
+    </LinearLayout>
+
+    <!-- About Info -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- About Tab -->
+        <LinearLayout
+            android:id="@+id/aboutTab"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About"
+                android:layout_marginBottom="10dp"
+                android:textColor="@android:color/black"
+                android:id="@+id/textView1"/>
+
+            <View
+                android:id="@+id/underline1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+
+        <!-- Posts Tab -->
+        <LinearLayout
+            android:id="@+id/postsTab"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Posts"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/textView2"/>
+
+            <View
+                android:id="@+id/underline2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+
+        <!-- Followers Tab -->
+        <LinearLayout
+            android:id="@+id/followersTab"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Followers"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/textView3"/>
+
+            <View
+                android:id="@+id/underline3"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+
+        <!-- Following Tab -->
+        <LinearLayout
+            android:id="@+id/followingTab"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Following"
+                android:layout_marginBottom="10dp"
+                android:textColor="@android:color/black"
+                android:id="@+id/textView4"/>
+
+            <View
+                android:id="@+id/underline4"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="-17dp"
+        android:background="@android:color/black"/>
+
+
+    <!-- User Posts (RecyclerView or ListView) -->
+    <!-- Add a RecyclerView or ListView here to display user posts -->
+    <!-- You'll need to customize this part according to your app's requirements -->
+
+</LinearLayout>
