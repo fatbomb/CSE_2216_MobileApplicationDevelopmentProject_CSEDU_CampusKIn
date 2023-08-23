@@ -38,6 +38,8 @@
             android:exported="false"/>
         <activity android:name=".Activity.Profile"
             android:exported="false"/>
+        <activity android:name=".Activity.AboutUs"
+            android:exported="false"/>
 
     </application>
     <queries>

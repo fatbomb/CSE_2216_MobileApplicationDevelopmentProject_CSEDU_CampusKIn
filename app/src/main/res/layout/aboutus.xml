@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Team Name"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:layout_marginTop="200dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Final Masquerade"
+        android:textColor="@color/primary"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:layout_marginTop="0dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="App Name"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:layout_marginTop="0dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CSEDU CampusKin"
+        android:textColor="@color/primary"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:layout_marginTop="0dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="Meherun Farzana"
+            android:textSize="23sp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/purple_500"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:text="Himel Roy"
+            android:textSize="23sp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/purple_500"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:text="Roll: 05"
+            android:textSize="22sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/purple_500"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="110dp"
+            android:text="Roll: 13"
+            android:textSize="22sp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/purple_500"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:text="Aniket Joarder"
+        android:textAlignment="center"
+        android:textSize="23sp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/purple_500"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:text="Roll: 48"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/purple_500"/>
+
+
+
+</LinearLayout>

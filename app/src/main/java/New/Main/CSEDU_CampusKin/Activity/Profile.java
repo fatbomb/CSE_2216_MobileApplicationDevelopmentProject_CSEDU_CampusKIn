@@ -20,7 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import New.Main.CSEDU_CampusKin.HomePage;
 import New.Main.CSEDU_CampusKin.R;
+import New.Main.CSEDU_CampusKin.SignUp;
 
 public class Profile extends AppCompatActivity {
     private static final int CAMERA_PERMISSION_REQUEST = 100;
@@ -42,6 +44,7 @@ public class Profile extends AppCompatActivity {
         profile = findViewById(R.id.profile);
         cover = findViewById(R.id.coverPhoto);
         ImageView addImage = findViewById(R.id.AddImage);
+        final ImageView home= findViewById(R.id.AddImage0);
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +58,12 @@ public class Profile extends AppCompatActivity {
             public void onClick(View view) {
                 select=false;
                 showImageOptions(view);
+            }
+        });
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity((new Intent(Profile.this, HomePage.class)));
             }
         });
     }
