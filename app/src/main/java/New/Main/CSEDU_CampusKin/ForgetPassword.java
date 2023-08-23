@@ -1,5 +1,6 @@
 package New.Main.CSEDU_CampusKin;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.MotionEvent;
@@ -23,25 +24,25 @@ public class ForgetPassword extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        EditText passwordEditText = findViewById(R.id.passwordEditText);
+        EditText passwordEditTextForgetPass = findViewById(R.id.passwordEditTextForgetPassNewPass);
 
-        passwordEditText.setOnTouchListener(new View.OnTouchListener() {
+        passwordEditTextForgetPass.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 final int DRAWABLE_END = 2;
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (passwordEditText.getRight() - passwordEditText.getCompoundDrawables()[DRAWABLE_END].getBounds().width())) {
+                    if (event.getRawX() >= (passwordEditTextForgetPass.getRight() - passwordEditTextForgetPass.getCompoundDrawables()[DRAWABLE_END].getBounds().width())) {
                         isPasswordVisible = !isPasswordVisible;
 
                         if (isPasswordVisible) {
-                            passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                            passwordEditTextForgetPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                             //passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_lock_24, 0);
-                            passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.outline_lock_24, 0, R.drawable.outline_remove_red_eye_24, 0);
+                            passwordEditTextForgetPass.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.outline_lock_24, 0, R.drawable.outline_remove_red_eye_24, 0);
                         } else {
-                            passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                            passwordEditTextForgetPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                             //passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_lock_24, 0);
-                            passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.outline_lock_24, 0, R.drawable.hide_pass, 0);
+                            passwordEditTextForgetPass.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.outline_lock_24, 0, R.drawable.hide_pass, 0);
                         }
 
                         return true;
@@ -51,25 +52,25 @@ public class ForgetPassword extends AppCompatActivity {
             }
         });
 
-        EditText confirmpass = findViewById(R.id.confirmpass);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) EditText confirmPassForgetPass = findViewById(R.id.confirmPassForgetPass);
 
-        confirmpass.setOnTouchListener(new View.OnTouchListener() {
+        confirmPassForgetPass.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 final int DRAWABLE_END = 2;
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (passwordEditText.getRight() - passwordEditText.getCompoundDrawables()[DRAWABLE_END].getBounds().width())) {
+                    if (event.getRawX() >= (passwordEditTextForgetPass.getRight() - passwordEditTextForgetPass.getCompoundDrawables()[DRAWABLE_END].getBounds().width())) {
                         isPasswordVisible1 = !isPasswordVisible1;
 
                         if (isPasswordVisible1) {
-                            confirmpass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                            confirmPassForgetPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                             //passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_lock_24, 0);
-                            confirmpass.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.outline_lock_24, 0, R.drawable.outline_remove_red_eye_24, 0);
+                            confirmPassForgetPass.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.outline_lock_24, 0, R.drawable.outline_remove_red_eye_24, 0);
                         } else {
-                            confirmpass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                            confirmPassForgetPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                             //passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_lock_24, 0);
-                            confirmpass.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.outline_lock_24, 0, R.drawable.hide_pass, 0);
+                            confirmPassForgetPass.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.outline_lock_24, 0, R.drawable.hide_pass, 0);
                         }
 
                         return true;

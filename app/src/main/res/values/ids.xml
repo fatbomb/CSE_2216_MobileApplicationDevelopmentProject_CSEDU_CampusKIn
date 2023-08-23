@@ -4,4 +4,6 @@
     <item name="confirmpass" type="id" />
     <item name="passwordEditTextForgetPass" type="id" />
     <item name="passwordEditTextForgetPassNewPass" type="id" />
+    <item name="confirmPassForgetPass" type="id" />
+    <item name="forgetPasswordCode" type="id" />
 </resources>
