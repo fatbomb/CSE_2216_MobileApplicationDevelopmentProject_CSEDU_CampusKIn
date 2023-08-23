@@ -133,6 +133,7 @@
 
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/log_in_button"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -141,9 +142,6 @@
                 android:text="Login"
                 android:textColor="@color/white"
                 android:textSize="20dp"/>
-
-
-
 
 
 

@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         // Initalize variables
         final View signup= findViewById(R.id.register_layout);
         final View forgetPass = findViewById(R.id.forget_pass_button);
+        final View HomePage = findViewById(R.id.log_in_button);
 
         //initialize animations
         Animation fade_in= AnimationUtils.loadAnimation(this, R.anim.fade_in);
@@ -96,7 +97,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
+        HomePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, HomePage.class));
+            }
+        });
 
     }
 }
