@@ -55,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(runnable,1000);
         EditText passwordEditText = findViewById(R.id.passwordEditText);
 
-
-
         passwordEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

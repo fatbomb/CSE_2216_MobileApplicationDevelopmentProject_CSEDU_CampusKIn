@@ -32,6 +32,9 @@
         </activity>
         <activity android:name=".SignUp"
             android:exported="false"/>
+        <activity android:name=".ForgetPassword"
+            android:exported="false"/>
+
 
     </application>
     <queries>

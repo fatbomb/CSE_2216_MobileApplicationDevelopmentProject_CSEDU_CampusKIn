@@ -2,4 +2,6 @@
 <resources>
     <item name="passwordEditText" type="id" />
     <item name="confirmpass" type="id" />
+    <item name="passwordEditTextForgetPass" type="id" />
+    <item name="passwordEditTextForgetPassNewPass" type="id" />
 </resources>
