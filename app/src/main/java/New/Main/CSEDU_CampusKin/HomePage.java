@@ -1,5 +1,6 @@
 package New.Main.CSEDU_CampusKin;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +19,7 @@ import New.Main.CSEDU_CampusKin.Fragments.NotificationFragment;
 
 public class HomePage extends AppCompatActivity {
 
-    Button buttonNotification, buttonKins;
+    Button buttonNotification, buttonKins, buttonProfile, buttonHome;
 
     @Override
     protected void onCreate(Bundle setInstanceState) {
@@ -30,6 +31,9 @@ public class HomePage extends AppCompatActivity {
         final ImageView chat = findViewById(R.id.AddImage);
         buttonNotification = findViewById(R.id.buttonNotification);
         buttonKins = findViewById(R.id.buttonKins);
+        buttonProfile = findViewById(R.id.buttonProfile);
+        buttonHome = findViewById(R.id.buttonHome);
+
         aboutus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,12 +54,26 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
+        buttonHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity((new Intent(HomePage.this, HomePage.class)));
+            }
+        });
+
+        buttonProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity((new Intent(HomePage.this, Profile.class)));
+            }
+        });
+
         buttonKins.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                loadFragment(new KinsFragment());
+                loadFragment(new KinsFragment(), 0);
             }
         });
 
@@ -64,16 +82,18 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                loadFragment(new NotificationFragment());
+                loadFragment(new NotificationFragment(), 1);
             }
         });
     }
-    public void loadFragment(Fragment fragment)
+    public void loadFragment(Fragment fragment, int flag)
     {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-
-        ft.add(R.id.navigationBar, fragment);
+        if(flag == 0)
+            ft.add(R.id.navigationBar, fragment);
+        else
+            ft.replace(R.id.navigationBar, fragment);
         ft.commit();
     }
 }

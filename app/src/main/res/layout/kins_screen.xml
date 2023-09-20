@@ -6,37 +6,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="580dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="1dp"
+    android:layout_marginEnd="15dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="20dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    tools:ignore="MissingConstraints"
     tools:context=".Fragments.KinsFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/button_background"
+        android:layout_width="434dp"
+        android:layout_height="130dp"
+        android:background="@drawable/navigation_buttons"
         android:elevation="4dp"
         android:theme="?attr/actionBarTheme"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-11dp"
+        tools:layout_editor_absoluteY="388dp">
+
+        <TextView
+            android:id="@+id/txtView"
+            android:layout_width="110dp"
+            android:layout_height="25dp"
+            android:text="Your Kins"
+            android:textSize="23dp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            tools:ignore="MissingConstraints"></TextView>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notificationRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="412dp"
+        android:layout_height="172dp"
         android:layout_weight="1"
         android:padding="8dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="56dp" />
-
-    <TextView
-        android:id="@+id/txtView"
-        android:layout_width="94dp"
-        android:layout_height="25dp"
-        android:text="Hello KINSSS"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notificationRecyclerView"
-        tools:ignore="MissingConstraints"></TextView>
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-1dp" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
