@@ -1,4 +1,5 @@
 package New.Main.CSEDU_CampusKin;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -7,7 +8,13 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.ktx.Firebase;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +26,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     boolean isPasswordVisible = false;
     private BottomNavigationView bottomNavigationView;
+    private TextView email;
+    private String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         final View signup = findViewById(R.id.register_layout);
         final TextView forgetPass = findViewById(R.id.forget_pass_button);
         final Button HomePage = findViewById(R.id.log_in_button);
+        email=findViewById(R.id.email);
 
         //initialize animations
         Animation fade_in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
@@ -94,12 +106,13 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
+        auth=FirebaseAuth.getInstance();
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, SignUp.class));
+
             }
         });
 
@@ -107,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity((new Intent(MainActivity.this, ForgetPassword.class)));
+
             }
         });
 
@@ -114,7 +128,29 @@ public class MainActivity extends AppCompatActivity {
         HomePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, HomePage.class));
+                String getEmail = email.getText().toString();
+                String s_pass1 = passwordEditText.getText().toString();
+                if (!getEmail.matches(emailpattern)) email.setError("Enter correct e-mail");
+                else if (s_pass1.isEmpty()) passwordEditText.setError("Password field can't be empty.");
+                else {
+                    auth.signInWithEmailAndPassword(getEmail,s_pass1).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+
+                            Toast.makeText(MainActivity.this, "Login Sucessfull", Toast.LENGTH_SHORT).show();
+
+                            startActivity(new Intent(MainActivity.this, HomePage.class));
+                            finish();
+                        }
+                    });
+                    auth.signInWithEmailAndPassword(getEmail,s_pass1).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(MainActivity.this, "Wrong Password or email adress", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
             }
         });
 

@@ -11,11 +11,14 @@ import android.provider.MediaStore;
 import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -27,6 +30,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.ktx.Firebase;
+
+import java.security.PrivateKey;
+import java.util.List;
+
 import New.Main.CSEDU_CampusKin.Activity.Profile;
 
 public class SignUp extends AppCompatActivity {
@@ -36,6 +48,11 @@ public class SignUp extends AppCompatActivity {
     private static final int CAMERA_PERMISSION_REQUEST = 100;
     private static final int GALLERY_PERMISSION_REQUEST = 101;
     ImageView profile;
+    private String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    private final String[] Gender = new String[]{"Male","Female","Other"};
+    private EditText email;
+
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +64,18 @@ public class SignUp extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
+        AutoCompleteTextView gender = findViewById(R.id.gender);
+        ArrayAdapter<String> adapter = new
+                ArrayAdapter<String>(this,
+                R.layout.list_items,R.id.text_view_list_item, Gender);
+        gender.setAdapter(adapter);
         EditText passwordEditText = findViewById(R.id.passwordEditText);
         profile = findViewById(R.id.profile);
         ImageView addImage = findViewById(R.id.AddImage);
         final Button register= findViewById(R.id.signup);
+        email=findViewById(R.id.email);
+
+
 
 
         passwordEditText.setOnTouchListener(new View.OnTouchListener() {
@@ -112,10 +137,36 @@ public class SignUp extends AppCompatActivity {
                 showImageOptions(view);
             }
         });
+        auth=FirebaseAuth.getInstance();
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity((new Intent(SignUp.this, Profile.class)));
+                String getEmail = email.getText().toString();
+                String s_pass1 = passwordEditText.getText().toString();
+                String s_pass2 = confirmpass.getText().toString();
+                if (!getEmail.matches(emailpattern)) email.setError("Enter correct e-mail");
+                else if (s_pass1.isEmpty()) passwordEditText.setError("Password field can't be empty.");
+                else if (s_pass1.length() < 6) passwordEditText.setError("Password length must be at least 6");
+                else if (!s_pass1.equals(s_pass2)) confirmpass.setError("Password didn't match");
+                else{
+                    auth.createUserWithEmailAndPassword(getEmail,s_pass1).addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(SignUp.this, "Register Sucessful", Toast.LENGTH_SHORT).show();
+                                startActivity((new Intent(SignUp.this, Profile.class)));
+                            }
+                            else {
+                                Toast.makeText(SignUp.this, "Registration faild", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+
+
+
+                }
+
             }
         });
 
