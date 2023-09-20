@@ -1,5 +1,13 @@
 package New.Main.CSEDU_CampusKin;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,27 +28,30 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     boolean isPasswordVisible = false;
+    private BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= ActivityMainBinding.inflate(getLayoutInflater());
+        super.onCreate(savedInstanceState);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         //setContentView(R.layout.signup);
         // Initalize variables
-        final View signup= findViewById(R.id.register_layout);
+        final View signup = findViewById(R.id.register_layout);
         final TextView forgetPass = findViewById(R.id.forget_pass_button);
         final Button HomePage = findViewById(R.id.log_in_button);
 
         //initialize animations
-        Animation fade_in= AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        Animation bottom_down=AnimationUtils.loadAnimation(this,R.anim.bottom_down);
+        Animation fade_in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        Animation bottom_down = AnimationUtils.loadAnimation(this, R.anim.bottom_down);
 
         // setting the bottom down animation on top layout
         binding.topLinearLayout.setAnimation(bottom_down);
 
         //let's create handler for other layouts
-        Handler handler= new Handler();
-        Runnable runnable= new Runnable() {
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 // lets's set fade in animation on other layouts
@@ -56,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        handler.postDelayed(runnable,1000);
+        handler.postDelayed(runnable, 1000);
         EditText passwordEditText = findViewById(R.id.passwordEditText);
 
         passwordEditText.setOnTouchListener(new View.OnTouchListener() {
@@ -84,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

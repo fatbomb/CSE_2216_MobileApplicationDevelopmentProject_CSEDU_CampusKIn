@@ -18,6 +18,7 @@ public class HomePage extends AppCompatActivity {
         setContentView(R.layout.homepage);
         final ImageView aboutus = findViewById(R.id.AddImage2);
         final ImageView profile = findViewById(R.id.AddImage0);
+        final ImageView chat = findViewById(R.id.AddImage);
         aboutus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -31,6 +32,12 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity((new Intent(HomePage.this, ChatActivity.class)));
+            }
+        });
 
 
     }

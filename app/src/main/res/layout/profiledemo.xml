@@ -120,23 +120,26 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:padding="16dp">
+        android:padding="10dp">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/editProfileButton"
             android:background="@drawable/button_background"
             android:layout_width="0dp"
             android:layout_marginEnd="10dp"
+            android:textSize="18sp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Edit Profile"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/moreButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_background"
-            android:text="..."/>
+            android:text="..."
+            android:textAlignment="center"
+            android:textSize="22sp"/>
     </LinearLayout>
 
     <!-- About Info -->
