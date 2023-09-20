@@ -1,25 +1,22 @@
-<!-- notification_page.xml -->
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- kins_screen.xml -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <!-- Toolbar -->
-    <!-- Notification List -->
+    tools:context=".Fragments.KinsFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@drawable/button_background"
         android:elevation="4dp"
         android:theme="?attr/actionBarTheme"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        tools:ignore="MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notificationRecyclerView"
@@ -33,11 +30,13 @@
 
     <TextView
         android:id="@+id/txtView"
-        android:layout_width="119dp"
-        android:layout_height="46dp"
-        android:text="Hello NOTIFICATION"
+        android:layout_width="94dp"
+        android:layout_height="25dp"
+        android:text="Hello KINSSS"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notificationRecyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/notificationRecyclerView"
+        tools:ignore="MissingConstraints"></TextView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
