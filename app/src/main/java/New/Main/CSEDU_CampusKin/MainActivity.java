@@ -1,6 +1,7 @@
 package New.Main.CSEDU_CampusKin;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -31,6 +32,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import New.Main.CSEDU_CampusKin.databinding.ActivityMainBinding;
+import android.graphics.Color;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
         final TextView forgetPass = findViewById(R.id.forget_pass_button);
         final Button HomePage = findViewById(R.id.log_in_button);
         email=findViewById(R.id.email);
+        CardView cardView = findViewById(R.id.cardView);
+        cardView.setCardBackgroundColor(Color.TRANSPARENT);
+
 
         //initialize animations
         Animation fade_in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
