@@ -2,10 +2,14 @@ package New.Main.CSEDU_CampusKin;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -42,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private TextView email;
     private String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+    private static final int NOTIFICATION_PERMISSION_REQUEST = 100;
     FirebaseAuth auth;
 
     @Override
@@ -86,6 +92,11 @@ public class MainActivity extends AppCompatActivity {
 
         handler.postDelayed(runnable, 1000);
         EditText passwordEditText = findViewById(R.id.passwordEditText);
+        if (!NotificationManagerCompat.from(this).areNotificationsEnabled()) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                    NOTIFICATION_PERMISSION_REQUEST);
+        }
+
 
         passwordEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -161,4 +172,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == NOTIFICATION_PERMISSION_REQUEST) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(MainActivity.this, "Permission Allowed", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(MainActivity.this, "Permission Not Allowed", Toast.LENGTH_SHORT).show();
+                // Permission denied. Handle this situation.
+            }
+        }
+    }
+
 }
