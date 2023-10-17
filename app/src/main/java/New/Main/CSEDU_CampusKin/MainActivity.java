@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
                             Toast.makeText(MainActivity.this, "Login Sucessfull", Toast.LENGTH_SHORT).show();
 
-                            startActivity(new Intent(MainActivity.this, HomePage.class));
+                            startActivity(new Intent(MainActivity.this, NavigationActivity.class));
                             finish();
                         }
                     });

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Unselected/default state -->
+    <item android:state_checked="false">
+        <color android:color="@color/white" /> <!-- Change to your desired unselected color -->
+    </item>
+    <!-- Selected state -->
+    <item android:state_checked="true">
+        <color android:color="#808080" /> <!-- Change to your desired selected color -->
+    </item>
+</selector>

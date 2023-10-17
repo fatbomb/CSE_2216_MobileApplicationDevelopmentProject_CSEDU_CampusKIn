@@ -1,22 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/home"
+        android:id="@+id/hub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/outline_home_24"
-        android:title="Home" />
+        android:title="Hub"
+        app:itemIconTint="@drawable/bottom_navig_icon_color"
+        />
     <item
-        android:id="@+id/chat"
+        android:id="@+id/kins"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/outline_message_24"
-        android:title="Chats" />
+        android:icon="@drawable/baseline_people_outline_24"
+        android:title="Kins"
+        app:itemIconTint="@drawable/bottom_navig_icon_color"/>
+    <item
+        android:id="@+id/notifications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/baseline_notifications_none_24"
+        android:title="Pushes"
+        app:itemIconTint="@drawable/bottom_navig_icon_color" />
     <item
         android:id="@+id/myProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_person_pin_24"
-        android:title="Me" />
-
+        android:title="Me"
+        app:itemIconTint="@drawable/bottom_navig_icon_color" />
 </menu>
