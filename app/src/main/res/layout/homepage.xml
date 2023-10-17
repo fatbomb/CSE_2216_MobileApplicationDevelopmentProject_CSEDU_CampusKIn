@@ -70,41 +70,41 @@
             android:src="@drawable/baseline_priority_high_24"/>
     </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="70dp"-->
+<!--            android:layout_gravity="bottom"-->
+<!--            android:orientation="horizontal">-->
 
-            <Button
-                android:id="@+id/buttonHome"
-                android:layout_width="77dp"
-                android:layout_height="70dp"
-                android:background="@drawable/navigation_buttons"
-                android:text="Home" />
+<!--            <Button-->
+<!--                android:id="@+id/buttonHome"-->
+<!--                android:layout_width="77dp"-->
+<!--                android:layout_height="70dp"-->
+<!--                android:background="@drawable/navigation_buttons"-->
+<!--                android:text="Home" />-->
 
-            <Button
-                android:id="@+id/buttonNotification"
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:background="@drawable/navigation_buttons"
-                android:text="Notification" />
+<!--            <Button-->
+<!--                android:id="@+id/buttonNotification"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="70dp"-->
+<!--                android:background="@drawable/navigation_buttons"-->
+<!--                android:text="Notification" />-->
 
-            <Button
-                android:id="@+id/buttonKins"
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:background="@drawable/navigation_buttons"
-                android:text="Kins" />
+<!--            <Button-->
+<!--                android:id="@+id/buttonKins"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="70dp"-->
+<!--                android:background="@drawable/navigation_buttons"-->
+<!--                android:text="Kins" />-->
 
-            <Button
-                android:id="@+id/buttonProfile"
-                android:layout_width="75dp"
-                android:layout_height="70dp"
-                android:background="@drawable/navigation_buttons"
-                android:text="Me" />
+<!--            <Button-->
+<!--                android:id="@+id/buttonProfile"-->
+<!--                android:layout_width="75dp"-->
+<!--                android:layout_height="70dp"-->
+<!--                android:background="@drawable/navigation_buttons"-->
+<!--                android:text="Me" />-->
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
 
     <FrameLayout
         android:layout_width="match_parent"

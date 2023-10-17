@@ -50,11 +50,15 @@ public class MainActivity extends AppCompatActivity {
     private static final int NOTIFICATION_PERMISSION_REQUEST = 100;
     FirebaseAuth auth;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+
         //setContentView(R.layout.signup);
         // Initalize variables
         final View signup = findViewById(R.id.register_layout);
@@ -71,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         // setting the bottom down animation on top layout
         binding.topLinearLayout.setAnimation(bottom_down);
+
 
         //let's create handler for other layouts
         Handler handler = new Handler();

@@ -1,6 +1,5 @@
 package New.Main.CSEDU_CampusKin;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import New.Main.CSEDU_CampusKin.Activity.AboutUs;
 import New.Main.CSEDU_CampusKin.Activity.Profile;
 import New.Main.CSEDU_CampusKin.Fragments.KinsFragment;
-import New.Main.CSEDU_CampusKin.Fragments.NotificationFragment;
+import New.Main.CSEDU_CampusKin.Fragments.NotificationPageFragment;
 
 public class HomePage extends AppCompatActivity {
 
@@ -29,10 +28,10 @@ public class HomePage extends AppCompatActivity {
         final ImageView aboutus = findViewById(R.id.AddImage2);
         final ImageView profile = findViewById(R.id.AddImage0);
         final ImageView chat = findViewById(R.id.AddImage);
-        buttonNotification = findViewById(R.id.buttonNotification);
-        buttonKins = findViewById(R.id.buttonKins);
-        buttonProfile = findViewById(R.id.buttonProfile);
-        buttonHome = findViewById(R.id.buttonHome);
+//        buttonNotification = findViewById(R.id.buttonNotification);
+//        buttonKins = findViewById(R.id.buttonKins);
+//        buttonProfile = findViewById(R.id.buttonProfile);
+//        buttonHome = findViewById(R.id.buttonHome);
 
         aboutus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +81,7 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                loadFragment(new NotificationFragment(), 1);
+                loadFragment(new NotificationPageFragment(), 1);
             }
         });
     }

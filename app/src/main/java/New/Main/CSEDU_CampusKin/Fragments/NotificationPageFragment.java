@@ -7,15 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import New.Main.CSEDU_CampusKin.R;
 
-public class NotificationFragment extends Fragment {
+public class NotificationPageFragment extends Fragment {
 
-    public NotificationFragment() {
+    public NotificationPageFragment() {
         // Required empty public constructor
     }
 
