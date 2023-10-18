@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import New.Main.CSEDU_CampusKin.Activity.Profile;
 import New.Main.CSEDU_CampusKin.Fragments.ChatPageFragment;
 import New.Main.CSEDU_CampusKin.Fragments.HomePageFragment;
 import New.Main.CSEDU_CampusKin.Fragments.KinsFragment;
@@ -51,6 +52,7 @@ public class NavigationActivity extends AppCompatActivity {
             else if(item.getItemId() == R.id.myProfile)
                 replaceFragment(new MyProfileFragment());
         });
+
     }
 
     private void replaceFragment(Fragment fragment){
@@ -59,4 +61,6 @@ public class NavigationActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
     }
+
+
 }

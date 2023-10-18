@@ -97,6 +97,8 @@
             android:exported="false" />
         <activity android:name=".NavigationActivity"
             android:exported="false"/>
+        <activity android:name=".SearchUserActivity"
+            android:exported="false"/>
 
 <!--        <service-->
 <!--            android:name=".MyFirebaseMessagingService"-->

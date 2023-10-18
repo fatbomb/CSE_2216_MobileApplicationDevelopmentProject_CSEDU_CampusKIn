@@ -145,36 +145,43 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+HomePage.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(MainActivity.this, NavigationActivity.class));
+    }
+});
 
-        HomePage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String getEmail = email.getText().toString();
-                String s_pass1 = passwordEditText.getText().toString();
-                if (!getEmail.matches(emailpattern)) email.setError("Enter correct e-mail");
-                else if (s_pass1.isEmpty()) passwordEditText.setError("Password field can't be empty.");
-                else {
-                    auth.signInWithEmailAndPassword(getEmail,s_pass1).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                        @Override
-                        public void onSuccess(AuthResult authResult) {
 
-                            Toast.makeText(MainActivity.this, "Login Sucessfull", Toast.LENGTH_SHORT).show();
-
-                            startActivity(new Intent(MainActivity.this, NavigationActivity.class));
-                            finish();
-                        }
-                    });
-                    auth.signInWithEmailAndPassword(getEmail,s_pass1).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(MainActivity.this, "Wrong Password or email adress", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-
-            }
-        });
-
+//        HomePage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String getEmail = email.getText().toString();
+//                String s_pass1 = passwordEditText.getText().toString();
+//                if (!getEmail.matches(emailpattern)) email.setError("Enter correct e-mail");
+//                else if (s_pass1.isEmpty()) passwordEditText.setError("Password field can't be empty.");
+//                else {
+//                    auth.signInWithEmailAndPassword(getEmail,s_pass1).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+//                        @Override
+//                        public void onSuccess(AuthResult authResult) {
+//
+//                            Toast.makeText(MainActivity.this, "Login Sucessfull", Toast.LENGTH_SHORT).show();
+//
+//                            startActivity(new Intent(MainActivity.this, NavigationActivity.class));
+//                            finish();
+//                        }
+//                    });
+//                    auth.signInWithEmailAndPassword(getEmail,s_pass1).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Toast.makeText(MainActivity.this, "Wrong Password or email adress", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                }
+//
+//            }
+//        });
+//
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
