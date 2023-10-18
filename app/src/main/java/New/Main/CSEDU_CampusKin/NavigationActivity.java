@@ -33,6 +33,8 @@ public class NavigationActivity extends AppCompatActivity {
                 replaceFragment(new HomePageFragment());
             else if(item.getItemId() == R.id.kins)
                 replaceFragment(new KinsFragment());
+            else if(item.getItemId() == R.id.chat)
+                replaceFragment(new ChatPageFragment());
             else if(item.getItemId() == R.id.notifications)
                 replaceFragment(new NotificationPageFragment());
             else if(item.getItemId() == R.id.myProfile)

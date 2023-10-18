@@ -16,6 +16,13 @@
         android:title="Kins"
         app:itemIconTint="@drawable/bottom_navig_icon_color"/>
     <item
+        android:id="@+id/chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/outline_message_24"
+        android:title="Chats"
+        app:itemIconTint="@drawable/bottom_navig_icon_color"/>
+    <item
         android:id="@+id/notifications"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
