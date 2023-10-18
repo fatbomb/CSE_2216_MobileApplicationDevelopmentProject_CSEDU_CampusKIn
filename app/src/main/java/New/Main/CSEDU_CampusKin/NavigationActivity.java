@@ -52,7 +52,6 @@ public class NavigationActivity extends AppCompatActivity {
             else if(item.getItemId() == R.id.myProfile)
                 replaceFragment(new MyProfileFragment());
         });
-
     }
 
     private void replaceFragment(Fragment fragment){
@@ -61,6 +60,4 @@ public class NavigationActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
     }
-
-
 }
