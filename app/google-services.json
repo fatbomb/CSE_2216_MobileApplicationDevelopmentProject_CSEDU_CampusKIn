@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "608970348248",
+    "project_id": "csedu-campuskin-83a5d",
+    "storage_bucket": "csedu-campuskin-83a5d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608970348248:android:edd9d888a80a89779ea9ad",
+        "android_client_info": {
+          "package_name": "New.Main.CSEDU_CampusKin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCejoFGeVqWpVuD8ZB1s7SJ_SCnwY_hTqI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
