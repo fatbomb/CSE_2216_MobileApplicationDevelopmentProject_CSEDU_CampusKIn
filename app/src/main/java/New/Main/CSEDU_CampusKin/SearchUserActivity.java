@@ -35,7 +35,7 @@ public class SearchUserActivity extends AppCompatActivity {
         searchButton.setOnClickListener(view -> {
             String searchTerm = searchInput.getText().toString();
             if(searchTerm.isEmpty() || searchTerm.length()<3){
-                searchInput.setText("Invalid Kin Name");
+                searchInput.setError("Invalid Kin Name");
                 return;
             }
             setUpSearchRecyclerView(searchTerm);
