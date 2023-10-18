@@ -21,34 +21,28 @@ public class SearchUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_user_screen);
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
+        searchInput = findViewById(R.id.searchInput);
+        backButton = findViewById(R.id.back_button);
+        searchButton = findViewById(R.id.search_button);
+        searchUserRecyclerView = findViewById(R.id.recycler_view);
 
+        searchInput.requestFocus();
 
-//        searchInput = findViewById(R.id.searchInput);
-//        backButton = findViewById(R.id.back_button);
-//        searchButton = findViewById(R.id.search_button);
-//        searchUserRecyclerView = findViewById(R.id.recycler_view);
-//
-//        searchInput.requestFocus();
-//
-//        backButton.setOnClickListener(view ->{
-//            onBackPressed();
-//        });
-//
-//        searchButton.setOnClickListener(view -> {
-//            String searchTerm = searchInput.getText().toString();
-//            if(searchTerm.isEmpty() || searchTerm.length()<3){
-//                searchInput.setText("Invalid Kin Name");
-//                return;
-//            }
-//            setUpSearchRecyclerView(searchTerm);
-//        });
-//    }
-//    void setUpSearchRecyclerView(String searchTerm)
-//    {
-//
+        backButton.setOnClickListener(view ->{
+            onBackPressed();
+        });
+
+        searchButton.setOnClickListener(view -> {
+            String searchTerm = searchInput.getText().toString();
+            if(searchTerm.isEmpty() || searchTerm.length()<3){
+                searchInput.setText("Invalid Kin Name");
+                return;
+            }
+            setUpSearchRecyclerView(searchTerm);
+        });
+    }
+    void setUpSearchRecyclerView(String searchTerm)
+    {
+
     }
 }
