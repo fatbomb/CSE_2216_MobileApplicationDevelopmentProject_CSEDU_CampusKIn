@@ -7,7 +7,7 @@
     tools:context=".NavigationActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/search_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@drawable/main_theme_color"
@@ -26,6 +26,7 @@
             android:textStyle="bold" />
 
         <ImageButton
+            android:id="@+id/search_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center|right"
@@ -45,7 +46,8 @@
         app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="UnknownId">
 
     </FrameLayout>
 
@@ -59,5 +61,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/nav_menu" />
+        app:menu="@menu/nav_menu"
+         />
 </androidx.constraintlayout.widget.ConstraintLayout>

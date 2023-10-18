@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -23,10 +26,18 @@ public class NavigationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_screen);
-       // setContentView(binding.getRoot());
-       replaceFragment(new HomePageFragment());
+        replaceFragment(new HomePageFragment());
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        ImageButton searchButton = findViewById(R.id.search_button);
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(NavigationActivity.this, SearchUserActivity.class));
+            }
+        });
+
         bottomNavigationView.setOnItemReselectedListener(item -> {
 
             if (item.getItemId() == R.id.hub)
