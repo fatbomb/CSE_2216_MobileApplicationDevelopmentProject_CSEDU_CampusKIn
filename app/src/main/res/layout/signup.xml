@@ -171,13 +171,12 @@
                     android:hint="Batch"
                     android:paddingStart="10dp" />
 
-                <AutoCompleteTextView
+                <Spinner
                     android:id="@+id/gender"
                     android:layout_width="165dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
-                    android:text="Gender"
                     android:background="@drawable/edit_text_background"
                     android:paddingStart="10dp"
                     android:drawablePadding="10dp" />

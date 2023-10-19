@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -51,6 +52,9 @@ public class SignUp extends AppCompatActivity {
     private final String[] Gender = new String[]{"Male","Female","Other"};
     private EditText email;
 
+    private EditText firstname,lastname,batch;
+
+
     private FirebaseAuth auth;
 
     @Override
@@ -63,11 +67,14 @@ public class SignUp extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        AutoCompleteTextView gender = findViewById(R.id.gender);
-        ArrayAdapter<String> adapter = new
-                ArrayAdapter<String>(this,
-                R.layout.list_items,R.id.text_view_list_item, Gender);
+        Spinner gender = findViewById(R.id.gender);
+        String[] items = {"Gender", "Male", "Female", "Others"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender.setAdapter(adapter);
+
+
         EditText passwordEditText = findViewById(R.id.passwordEditText);
         profile = findViewById(R.id.profile);
         ImageView addImage = findViewById(R.id.AddImage);
