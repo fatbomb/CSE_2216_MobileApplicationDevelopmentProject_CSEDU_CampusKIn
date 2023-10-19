@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -153,35 +154,48 @@ HomePage.setOnClickListener(new View.OnClickListener() {
 });
 
 
-//        HomePage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String getEmail = email.getText().toString();
-//                String s_pass1 = passwordEditText.getText().toString();
-//                if (!getEmail.matches(emailpattern)) email.setError("Enter correct e-mail");
-//                else if (s_pass1.isEmpty()) passwordEditText.setError("Password field can't be empty.");
-//                else {
-//                    auth.signInWithEmailAndPassword(getEmail,s_pass1).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-//                        @Override
-//                        public void onSuccess(AuthResult authResult) {
-//
-//                            Toast.makeText(MainActivity.this, "Login Sucessfull", Toast.LENGTH_SHORT).show();
-//
-//                            startActivity(new Intent(MainActivity.this, NavigationActivity.class));
-//                            finish();
-//                        }
-//                    });
-//                    auth.signInWithEmailAndPassword(getEmail,s_pass1).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Toast.makeText(MainActivity.this, "Wrong Password or email adress", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                }
-//
-//            }
-//        });
-//
+        HomePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String getEmail = email.getText().toString();
+                String s_pass1 = passwordEditText.getText().toString();
+                if (!getEmail.matches(emailpattern)) email.setError("Enter correct e-mail");
+                else if (s_pass1.isEmpty()) passwordEditText.setError("Password field can't be empty.");
+                else {
+                    auth.signInWithEmailAndPassword(getEmail,s_pass1).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            if (user != null) {
+                                boolean isEmailVerified = user.isEmailVerified();
+                                if (isEmailVerified) {
+                                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+
+                                    startActivity(new Intent(MainActivity.this, NavigationActivity.class));
+                                    finish();
+                                    // The user's email is verified, and they can access the app.
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Please Confirm Your email", Toast.LENGTH_SHORT).show();
+
+                                    // The user's email is not verified; restrict access.
+                                }
+                            }
+
+
+
+                        }
+                    });
+                    auth.signInWithEmailAndPassword(getEmail,s_pass1).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(MainActivity.this, "Wrong Password or email adress", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+            }
+        });
+
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -196,4 +210,12 @@ HomePage.setOnClickListener(new View.OnClickListener() {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+            startActivity(new Intent(MainActivity.this,NavigationActivity.class));
+            finish();
+        }
+    }
 }

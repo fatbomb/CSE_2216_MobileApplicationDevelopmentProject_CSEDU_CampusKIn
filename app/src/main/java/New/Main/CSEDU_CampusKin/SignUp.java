@@ -1,6 +1,8 @@
 package New.Main.CSEDU_CampusKin;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,8 +11,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -19,6 +23,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -32,12 +37,21 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.security.PrivateKey;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import New.Main.CSEDU_CampusKin.Activity.Profile;
 
@@ -49,13 +63,19 @@ public class SignUp extends AppCompatActivity {
     private static final int GALLERY_PERMISSION_REQUEST = 101;
     ImageView profile;
     private String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-    private final String[] Gender = new String[]{"Male","Female","Other"};
+    //private final String[] Gender = new String[]{"Male","Female","Other"};
     private EditText email;
+    String image;
 
-    private EditText firstname,lastname,batch;
+    private EditText firstname,lastname,batch,phnno,registration;
 
 
     private FirebaseAuth auth;
+    private DatabaseReference mRootRef;
+
+    private Uri imageUri;
+
+    ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +87,12 @@ public class SignUp extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
+        firstname=findViewById(R.id.fstname);
+        lastname=findViewById(R.id.lstname);
+        batch=findViewById(R.id.bat);
+        phnno=findViewById(R.id.contno);
+        registration=findViewById(R.id.regno);
+
         Spinner gender = findViewById(R.id.gender);
         String[] items = {"Gender", "Male", "Female", "Others"};
 
@@ -144,25 +170,64 @@ public class SignUp extends AppCompatActivity {
             }
         });
         auth=FirebaseAuth.getInstance();
+        mRootRef= FirebaseDatabase.getInstance().getReference();
+        pd= new ProgressDialog(this);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String getEmail = email.getText().toString();
                 String s_pass1 = passwordEditText.getText().toString();
+                String name=firstname.getText().toString()+" "+lastname.getText().toString();
+                String regnum=registration.getText().toString();
+                String phone=phnno.getText().toString();
+                String gen=gender.getSelectedItem().toString();
+                String bat=batch.getText().toString();
                 String s_pass2 = confirmpass.getText().toString();
                 if (!getEmail.matches(emailpattern)) email.setError("Enter correct e-mail");
+                else if(name.isEmpty())firstname.setError("Name is Empty");
+                else if(regnum.isEmpty()) registration.setError("No registration Number Provided");
+                else if(phone.isEmpty()) phnno.setError("Phone no not provided");
+                else if(gen=="Gender") {
+                    ((TextView) gender.getSelectedView()).setError("Please select an option");
+                    ((TextView) gender.getSelectedView()).requestFocus();
+                }
+                else if(bat.isEmpty())batch.setError("Batch no not provided");
                 else if (s_pass1.isEmpty()) passwordEditText.setError("Password field can't be empty.");
                 else if (s_pass1.length() < 6) passwordEditText.setError("Password length must be at least 6");
                 else if (!s_pass1.equals(s_pass2)) confirmpass.setError("Password didn't match");
                 else{
+                    pd.setMessage("Please Wait");
+                    pd.show();
+                    uploadimage();
                     auth.createUserWithEmailAndPassword(getEmail,s_pass1).addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                Toast.makeText(SignUp.this, "Register Sucessful", Toast.LENGTH_SHORT).show();
-                                startActivity((new Intent(SignUp.this, Profile.class)));
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                if (user != null) {
+                                    user.sendEmailVerification()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        // Email verification sent
+                                                        //Toast.makeText(SignUp.this, "Please Confirm your email to complete registration", Toast.LENGTH_SHORT).show();
+                                                        adduser(name,getEmail,regnum,phone,bat,gen);
+
+                                                    } else {
+                                                        Toast.makeText(SignUp.this, "Please add a valid email Address", Toast.LENGTH_SHORT).show();
+                                                        // Failed to send verification email
+                                                    }
+                                                }
+                                            });
+                                }
+
+
+                                //startActivity((new Intent(SignUp.this, Profile.class)));
                             }
                             else {
+                                pd.dismiss();
                                 Toast.makeText(SignUp.this, "Registration faild", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -172,6 +237,50 @@ public class SignUp extends AppCompatActivity {
 
 
                 }
+
+            }
+        });
+
+    }
+
+    private void uploadimage() {
+        if(imageUri!=null){
+            StorageReference fileRef= FirebaseStorage.getInstance().getReference().child("Profile pictures").child(System.currentTimeMillis()+"."+getfileExtention(imageUri));
+            fileRef.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            image=uri.toString();
+                            Log.d("Downloadurl",image);
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    private String getfileExtention(Uri imageUri) {
+        ContentResolver contentResolver=getContentResolver();
+        MimeTypeMap mimeTypeMap=MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(imageUri));
+    }
+
+    void adduser(String name, String email, String regno, String phnno, String batch, String gender){
+        HashMap<String, Object> map= new HashMap<>();
+        map.put("Name",name);
+        map.put("Email",email);
+        map.put("Registration no",regno);
+        map.put("Phone no",phnno);
+        map.put("Batch",batch);
+        map.put("Gender",gender);
+        map.put("Photo",image);
+        mRootRef.child("Users").child(auth.getCurrentUser().getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                pd.dismiss();
+                Toast.makeText(SignUp.this, "Please Confirm your email to complete registration", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -249,10 +358,11 @@ public class SignUp extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLERY_PERMISSION_REQUEST && resultCode == RESULT_OK && data != null) {
-            Uri imageUri = data.getData();
+            imageUri = data.getData();
             profile.setImageURI(imageUri);
         } else if (requestCode == CAMERA_PERMISSION_REQUEST && resultCode == RESULT_OK) {
             Bitmap thumbnail = data.getParcelableExtra("data");
+            imageUri=data.getData();
             profile.setImageBitmap(thumbnail);
             // Do other work with full size photo saved in locationForPhotos.
         }
