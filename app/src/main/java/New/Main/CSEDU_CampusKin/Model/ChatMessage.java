@@ -1,31 +1,36 @@
 package New.Main.CSEDU_CampusKin.Model;
 
+import com.google.firebase.Timestamp;
+
 public class ChatMessage {
     private String message;
-    private boolean isMine;
-    private String fileUrl;
+    private String senderID;
+    private Timestamp timestamp;
 
-    public ChatMessage(String message, boolean isMine) {
-        this.message = message;
-        this.isMine = isMine;
-        this.fileUrl = null;
-    }
-
-    public ChatMessage(String fileUrl, boolean isMine, boolean isFile) {
-        this.fileUrl = fileUrl;
-        this.isMine = isMine;
-        this.message = null;
+    public ChatMessage() {
     }
 
     public String getMessage() {
         return message;
     }
 
-    public boolean isMine() {
-        return isMine;
+    public String getSenderID() {
+        return senderID;
     }
 
-    public String getFileUrl() {
-        return fileUrl;
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setSenderID(String senderID) {
+        this.senderID = senderID;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 }

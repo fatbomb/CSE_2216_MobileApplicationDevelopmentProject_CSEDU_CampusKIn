@@ -1,60 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".MainActivity">
 
+    <RelativeLayout
+        android:id="@+id/tool_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:padding="10dp"
+        android:background="@drawable/main_theme_color"
+        tools:ignore="MissingConstraints">
+
+        <include layout="@layout/profile_pic_view"
+            android:id="@+id/profile"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@id/back_button"
+            />
+
+        <TextView
+            android:id="@+id/searchInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@id/profile"
+            android:gravity="center"
+            android:text="Kin Name"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="22sp" />
+
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/back_button_icon"
+            android:layout_centerVertical="true"
+            app:tint="@color/white"/>
+
+    </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clipToPadding="false"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:reverseLayout="true"
-        app:stackFromEnd="true"
-        tools:listitem="@layout/item_message" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/tool_bar_layout"
+        android:layout_above="@id/chat"/>
 
-    <EditText
-        android:id="@+id/edit_text_message"
+    <RelativeLayout
+        android:id="@id/chat"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Type your message..."
-        android:maxLines="3" />
+        android:layout_height="75dp"
+        android:layout_alignParentBottom="true"
+        android:padding="8dp"
+        android:background="@drawable/top_background"
+        >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_record_audio"
-            android:layout_width="wrap_content"
+        <EditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_background"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toLeftOf="@id/send_button"
+            android:hint="Text your kin"
+            android:padding="10dp"
             android:textColor="@color/white"
-            android:text="Record Audio" />
+            android:textColorHint="@color/white" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_background"
-            android:layout_marginLeft="130dp"
-            android:textColor="@color/white"
-            android:text="Send" />
-    </LinearLayout>
+        <ImageButton
+            android:id="@+id/send_button"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@drawable/send_icon"
+            app:tint="@color/white" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_pick_file"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_background"
-        android:textColor="@color/white"
-        android:text="Pick File" />
-</LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,74 +1,69 @@
 package New.Main.CSEDU_CampusKin.Adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.List;
+
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import New.Main.CSEDU_CampusKin.Model.ChatMessage;
 import New.Main.CSEDU_CampusKin.R;
+import New.Main.CSEDU_CampusKin.Utils.FirebaseUtils;
 
-public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
+public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessage, ChatAdapter.ChatModelViewHolder>
+{
+    Context context;
 
-    private List<ChatMessage> messageList;
+    public ChatAdapter(@NonNull FirestoreRecyclerOptions<ChatMessage> options, Context context){
+        super(options);
+        this.context = context;
 
-    public ChatAdapter(List<ChatMessage> messageList) {
-        this.messageList = messageList;
+    }
+
+    @Override
+    protected void onBindViewHolder(@NonNull ChatModelViewHolder holder, int position, @NonNull ChatMessage model) {
+        if(model.getSenderID().equals(FirebaseUtils.currentUserId())){
+            holder.leftChatLayout.setVisibility(View.GONE);
+            holder.rightChatLayout.setVisibility(View.VISIBLE);
+            holder.rightChatTextView.setText(model.getMessage());
+        }
+        else
+        {
+            holder.rightChatLayout.setVisibility(View.GONE);
+            holder.leftChatLayout.setVisibility(View.VISIBLE);
+            holder.leftChatTextView.setText(model.getMessage());
+        }
     }
 
     @NonNull
     @Override
-    public ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message, parent, false);
-        return new ChatViewHolder(view);
+    public ChatModelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.chat_list_recycler_row, parent, false);
+        return new ChatModelViewHolder(view);
+
+
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
-        ChatMessage message = messageList.get(position);
-        holder.bind(message);
-    }
+    class ChatModelViewHolder extends RecyclerView.ViewHolder
+    {
+        LinearLayout leftChatLayout, rightChatLayout;
+        TextView leftChatTextView, rightChatTextView;
 
-    @Override
-    public int getItemCount() {
-        return messageList.size();
-    }
-
-    public void addMessage(ChatMessage message) {
-        messageList.add(message);
-        notifyItemInserted(messageList.size() - 1);
-    }
-
-    static class ChatViewHolder extends RecyclerView.ViewHolder {
-        private TextView messageTextView;
-        private Button btnDownloadFile;
-
-        public ChatViewHolder(@NonNull View itemView) {
+        public ChatModelViewHolder(@NonNull View itemView)
+        {
             super(itemView);
-            messageTextView = itemView.findViewById(R.id.text_view_message);
-            btnDownloadFile = itemView.findViewById(R.id.btn_download_file);
-        }
 
-        public void bind(ChatMessage message) {
-            if (message.getMessage() != null) {
-                messageTextView.setVisibility(View.VISIBLE);
-                messageTextView.setText(message.getMessage());
-                btnDownloadFile.setVisibility(View.GONE);
-            } else if (message.getFileUrl() != null) {
-                messageTextView.setVisibility(View.GONE);
-                btnDownloadFile.setVisibility(View.VISIBLE);
-
-                btnDownloadFile.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Implement file download here
-                    }
-                });
-            }
+            leftChatLayout = itemView.findViewById(R.id.left_chat_layout);
+            rightChatLayout = itemView.findViewById(R.id.right_chat_layout);
+            leftChatTextView = itemView.findViewById(R.id.left_chat_textview);
+            rightChatTextView = itemView.findViewById(R.id.right_chat_textview);
         }
     }
 }
