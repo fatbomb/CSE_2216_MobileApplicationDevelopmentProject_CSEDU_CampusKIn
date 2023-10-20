@@ -45,6 +45,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -74,7 +75,7 @@ public class SignUp extends AppCompatActivity {
 
 
     private FirebaseAuth auth;
-    private DatabaseReference mRootRef;
+    private FirebaseFirestore mRootRef;
 
     private Uri imageUri;
 
@@ -173,7 +174,7 @@ public class SignUp extends AppCompatActivity {
             }
         });
         auth=FirebaseAuth.getInstance();
-        mRootRef= FirebaseDatabase.getInstance().getReference();
+        mRootRef= FirebaseFirestore.getInstance();
         pd= new ProgressDialog(this);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -274,7 +275,8 @@ public class SignUp extends AppCompatActivity {
                             map.put("Batch",batch);
                             map.put("Gender",gender);
                             map.put("Photo",s[0]);
-                            mRootRef.child("Users").child(auth.getCurrentUser().getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            map.put("user ID",auth.getCurrentUser().getUid());
+                            mRootRef.collection("Users").document(auth.getCurrentUser().getUid()).set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     pd.dismiss();
@@ -299,26 +301,26 @@ public class SignUp extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(imageUri));
     }
 
-    void adduser(String name, String email, String regno, String phnno, String batch, String gender){
-        HashMap<String, Object> map= new HashMap<>();
-        map.put("Name",name);
-        map.put("Email",email);
-        map.put("Registration no",regno);
-        map.put("Phone no",phnno);
-        map.put("Batch",batch);
-        map.put("Gender",gender);
-        map.put("Photo",image);
-        mRootRef.child("Users").child(auth.getCurrentUser().getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                pd.dismiss();
-                Toast.makeText(SignUp.this, "Please Confirm your email to complete registration", Toast.LENGTH_SHORT).show();
-                startActivity((new Intent(SignUp.this, MainActivity.class)));
-
-            }
-        });
-
-    }
+//    void adduser(String name, String email, String regno, String phnno, String batch, String gender){
+//        HashMap<String, Object> map= new HashMap<>();
+//        map.put("Name",name);
+//        map.put("Email",email);
+//        map.put("Registration no",regno);
+//        map.put("Phone no",phnno);
+//        map.put("Batch",batch);
+//        map.put("Gender",gender);
+//        map.put("Photo",image);
+//        mRootRef.child("Users").child(auth.getCurrentUser().getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                pd.dismiss();
+//                Toast.makeText(SignUp.this, "Please Confirm your email to complete registration", Toast.LENGTH_SHORT).show();
+//                startActivity((new Intent(SignUp.this, MainActivity.class)));
+//
+//            }
+//        });
+//
+//    }
 
     public void showImageOptions(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
