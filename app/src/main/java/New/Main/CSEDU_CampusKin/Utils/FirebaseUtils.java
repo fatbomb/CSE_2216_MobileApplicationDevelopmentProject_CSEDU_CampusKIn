@@ -22,4 +22,22 @@ public class FirebaseUtils {
     {
         return FirebaseFirestore.getInstance().collection("Users");
     }
+
+    public static DocumentReference getChatRoomReference(String chatRoomID)
+    {
+        return FirebaseFirestore.getInstance().collection("chatrooms").document(chatRoomID);
+    }
+
+    public static String getChatRoomID(String userID_1, String userID_2)
+    {
+        if(userID_1.hashCode()<userID_2.hashCode())
+        {
+            return userID_1 + "_" + userID_2;
+        }
+        else
+        {
+            return userID_2 + "_" + userID_1;
+
+        }
+    }
 }

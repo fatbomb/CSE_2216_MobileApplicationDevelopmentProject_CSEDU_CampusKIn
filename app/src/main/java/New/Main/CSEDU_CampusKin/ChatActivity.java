@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,23 +22,31 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.Timestamp;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import New.Main.CSEDU_CampusKin.Adapters.ChatAdapter;
 import New.Main.CSEDU_CampusKin.Model.ChatMessage;
+import New.Main.CSEDU_CampusKin.Model.ChatRoomModel;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
 import New.Main.CSEDU_CampusKin.Utils.AndroidUtil;
+import New.Main.CSEDU_CampusKin.Utils.FirebaseUtils;
 
 public class ChatActivity extends AppCompatActivity {
 
     UserModel otherUser;
+    ChatRoomModel chatRoomModel;
     EditText chat_msg_input;
     ImageButton sendButton;
     ImageButton backButton;
     TextView otherUserName;
     RecyclerView recyclerView;
+    String chatRoomID;
 
 //    private RecyclerView recyclerView;
 //    private ChatAdapter adapter;
@@ -64,13 +73,16 @@ public class ChatActivity extends AppCompatActivity {
         backButton = findViewById(R.id.back_button);
         recyclerView = findViewById(R.id.chat_recycler_view);
 
-        backButton.setOnClickListener(view ->{
+        backButton.setOnClickListener(view -> {
             onBackPressed();
         });
 
         //get user model
         otherUser = AndroidUtil.getUserModelFromIntent(getIntent());
         otherUserName.setText(otherUser.getUsername());
+        chatRoomID = FirebaseUtils.getChatRoomID(FirebaseUtils.currentUserId(), otherUser.getUserID());
+
+        getOrCreateChatRoomModel();
 
 
 //
@@ -177,5 +189,22 @@ public class ChatActivity extends AppCompatActivity {
 //            mediaRecorder.release();
 //            mediaRecorder = null;
 //        }
+    }
+
+    void getOrCreateChatRoomModel() {
+        FirebaseUtils.getChatRoomReference(chatRoomID).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful())
+                chatRoomModel = task.getResult().toObject(ChatRoomModel.class);
+            if (chatRoomModel == null) {
+                //first time chatting
+                chatRoomModel = new ChatRoomModel(
+                        chatRoomID,
+                        Arrays.asList(FirebaseUtils.currentUserId(), otherUser.getUserID()),
+                        Timestamp.now(),
+                        "");
+                FirebaseUtils.getChatRoomReference(chatRoomID).set(chatRoomModel);
+
+            }
+        });
     }
 }
