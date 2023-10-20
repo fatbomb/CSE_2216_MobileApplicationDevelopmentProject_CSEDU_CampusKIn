@@ -40,6 +40,7 @@ import androidx.core.content.ContextCompat;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -268,14 +269,15 @@ public class SignUp extends AppCompatActivity {
                         public void onSuccess(Uri uri) {
                             s[0] =uri.toString();
                             HashMap<String, Object> map= new HashMap<>();
-                            map.put("Name",name);
-                            map.put("Email",email);
-                            map.put("Registration no",regno);
-                            map.put("Phone no",phnno);
-                            map.put("Batch",batch);
-                            map.put("Gender",gender);
-                            map.put("Photo",s[0]);
-                            map.put("user ID",auth.getCurrentUser().getUid());
+                            map.put("username",name);
+                            map.put("email",email);
+                            map.put("registrationNo",regno);
+                            map.put("phoneNo",phnno);
+                            map.put("batch",batch);
+                            map.put("gender",gender);
+                            map.put("photo",s[0]);
+                            map.put("createdTimeStamp", Timestamp.now());
+                            map.put("userID",auth.getCurrentUser().getUid());
                             mRootRef.collection("Users").document(auth.getCurrentUser().getUid()).set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
