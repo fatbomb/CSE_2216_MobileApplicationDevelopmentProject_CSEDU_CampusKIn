@@ -40,4 +40,9 @@ public class FirebaseUtils {
 
         }
     }
+
+    public static CollectionReference getChatRoomMessageReference(String chatRoomID)
+    {
+        return getChatRoomReference(chatRoomID).collection("chats");
+    }
 }

@@ -1,37 +1,23 @@
 package New.Main.CSEDU_CampusKin;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.Time;
 import java.util.Arrays;
-import java.util.List;
 
-import New.Main.CSEDU_CampusKin.Adapters.ChatAdapter;
-import New.Main.CSEDU_CampusKin.Model.ChatMessage;
+import New.Main.CSEDU_CampusKin.Model.ChatMessageModel;
 import New.Main.CSEDU_CampusKin.Model.ChatRoomModel;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
 import New.Main.CSEDU_CampusKin.Utils.AndroidUtil;
@@ -83,6 +69,13 @@ public class ChatActivity extends AppCompatActivity {
         chatRoomID = FirebaseUtils.getChatRoomID(FirebaseUtils.currentUserId(), otherUser.getUserID());
 
         getOrCreateChatRoomModel();
+
+        sendButton.setOnClickListener(view -> {
+            String message = chat_msg_input.getText().toString().trim();
+            if(message.isEmpty())
+                return;
+            sendMessageToOtherUser(message);
+        });
 
 
 //
@@ -206,5 +199,23 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    void sendMessageToOtherUser(String message){
+        chatRoomModel.setLastMessageTimestamp(Timestamp.now());
+        chatRoomModel.setLastMessageSenderID(FirebaseUtils.currentUserId());
+        FirebaseUtils.getChatRoomReference(chatRoomID).set(chatRoomModel);
+
+        ChatMessageModel chatMessageModel = new ChatMessageModel(message, FirebaseUtils.currentUserId(), Timestamp.now());
+        FirebaseUtils.getChatRoomMessageReference(chatRoomID).add(chatMessageModel)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        if(task.isSuccessful()){
+                            chat_msg_input.setText("");
+                        }
+                    }
+                });
+
     }
 }

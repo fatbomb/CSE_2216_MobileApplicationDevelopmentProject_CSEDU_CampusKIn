@@ -2,12 +2,18 @@ package New.Main.CSEDU_CampusKin.Model;
 
 import com.google.firebase.Timestamp;
 
-public class ChatMessage {
+public class ChatMessageModel {
     private String message;
     private String senderID;
     private Timestamp timestamp;
 
-    public ChatMessage() {
+    public ChatMessageModel() {
+    }
+
+    public ChatMessageModel(String message, String senderID, Timestamp timestamp) {
+        this.message = message;
+        this.senderID = senderID;
+        this.timestamp = timestamp;
     }
 
     public String getMessage() {

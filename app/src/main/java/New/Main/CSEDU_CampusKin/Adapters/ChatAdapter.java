@@ -13,22 +13,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-import New.Main.CSEDU_CampusKin.Model.ChatMessage;
+import New.Main.CSEDU_CampusKin.Model.ChatMessageModel;
 import New.Main.CSEDU_CampusKin.R;
 import New.Main.CSEDU_CampusKin.Utils.FirebaseUtils;
 
-public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessage, ChatAdapter.ChatModelViewHolder>
+public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, ChatAdapter.ChatModelViewHolder>
 {
     Context context;
 
-    public ChatAdapter(@NonNull FirestoreRecyclerOptions<ChatMessage> options, Context context){
+    public ChatAdapter(@NonNull FirestoreRecyclerOptions<ChatMessageModel> options, Context context){
         super(options);
         this.context = context;
 
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ChatModelViewHolder holder, int position, @NonNull ChatMessage model) {
+    protected void onBindViewHolder(@NonNull ChatModelViewHolder holder, int position, @NonNull ChatMessageModel model) {
         if(model.getSenderID().equals(FirebaseUtils.currentUserId())){
             holder.leftChatLayout.setVisibility(View.GONE);
             holder.rightChatLayout.setVisibility(View.VISIBLE);
