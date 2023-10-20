@@ -236,8 +236,19 @@ public class ChatActivity extends AppCompatActivity {
                 .setQuery(query, ChatMessageModel.class).build();
 
         adapter = new ChatAdapter(options,getApplicationContext());
-        chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setReverseLayout(true);
+        chatRecyclerView.setLayoutManager(manager);
         chatRecyclerView.setAdapter(adapter);
         adapter.startListening();
+
+        //to scroll when a message is sent
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                chatRecyclerView.smoothScrollToPosition(0);
+            }
+        });
     }
 }
