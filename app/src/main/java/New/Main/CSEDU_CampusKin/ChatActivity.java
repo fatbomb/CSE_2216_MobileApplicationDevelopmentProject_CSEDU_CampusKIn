@@ -7,16 +7,21 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.Query;
 
 import java.sql.Time;
 import java.util.Arrays;
 
+import New.Main.CSEDU_CampusKin.Adapters.ChatAdapter;
+import New.Main.CSEDU_CampusKin.Adapters.SearchUserRecyclerAdapter;
 import New.Main.CSEDU_CampusKin.Model.ChatMessageModel;
 import New.Main.CSEDU_CampusKin.Model.ChatRoomModel;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
@@ -31,8 +36,10 @@ public class ChatActivity extends AppCompatActivity {
     ImageButton sendButton;
     ImageButton backButton;
     TextView otherUserName;
-    RecyclerView recyclerView;
+    RecyclerView chatRecyclerView;
     String chatRoomID;
+
+    ChatAdapter adapter;
 
 //    private RecyclerView recyclerView;
 //    private ChatAdapter adapter;
@@ -57,7 +64,7 @@ public class ChatActivity extends AppCompatActivity {
         sendButton = findViewById(R.id.send_button);
         otherUserName = findViewById(R.id.otherUserName);
         backButton = findViewById(R.id.back_button);
-        recyclerView = findViewById(R.id.chat_recycler_view);
+        chatRecyclerView = findViewById(R.id.chat_recycler_view);
 
         backButton.setOnClickListener(view -> {
             onBackPressed();
@@ -77,6 +84,7 @@ public class ChatActivity extends AppCompatActivity {
             sendMessageToOtherUser(message);
         });
 
+        setUpChatRecyclerView();
 
 //
 //        recyclerView = findViewById(R.id.recycler_view);
@@ -217,5 +225,19 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    void setUpChatRecyclerView()
+    {
+        Query query = FirebaseUtils.getChatRoomMessageReference(chatRoomID)
+                .orderBy("timestamp", Query.Direction.DESCENDING);
+
+        FirestoreRecyclerOptions<ChatMessageModel> options = new FirestoreRecyclerOptions.Builder<ChatMessageModel>()
+                .setQuery(query, ChatMessageModel.class).build();
+
+        adapter = new ChatAdapter(options,getApplicationContext());
+        chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        chatRecyclerView.setAdapter(adapter);
+        adapter.startListening();
     }
 }

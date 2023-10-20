@@ -16,7 +16,6 @@
             android:id="@+id/left_chat_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="It's me, hi"
             android:textSize="18sp"
             android:textColor="@color/white"/>
 
@@ -35,9 +34,8 @@
             android:id="@+id/right_chat_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="I'm the problem it's me"
             android:textSize="18sp"
             android:textColor="@color/white"/>
     </LinearLayout>
-    ,
+
 </RelativeLayout>
