@@ -11,7 +11,8 @@ public class UserModel {
     public UserModel() {
     }
 
-    public UserModel(String username, String batch, Timestamp createdTimeStamp) {
+    public UserModel(String userID, String username, String batch, Timestamp createdTimeStamp) {
+        this.userID = userID;
         this.username = username;
         this.batch = batch;
         this.createdTimeStamp = createdTimeStamp;

@@ -15,11 +15,11 @@ public class FirebaseUtils {
 
     public static DocumentReference currentUserDetails()
     {
-        return FirebaseFirestore.getInstance().collection("users").document(currentUserId());
+        return FirebaseFirestore.getInstance().collection("Users").document(currentUserId());
     }
 
     public static CollectionReference allUserCollectionReference()
     {
-        return FirebaseFirestore.getInstance().collection("users");
+        return FirebaseFirestore.getInstance().collection("Users");
     }
 }

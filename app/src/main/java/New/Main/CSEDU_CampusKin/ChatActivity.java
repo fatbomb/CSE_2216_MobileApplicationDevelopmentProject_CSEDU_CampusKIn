@@ -11,6 +11,8 @@ import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,8 +27,17 @@ import java.util.List;
 
 import New.Main.CSEDU_CampusKin.Adapters.ChatAdapter;
 import New.Main.CSEDU_CampusKin.Model.ChatMessage;
+import New.Main.CSEDU_CampusKin.Model.UserModel;
+import New.Main.CSEDU_CampusKin.Utils.AndroidUtil;
 
 public class ChatActivity extends AppCompatActivity {
+
+    UserModel otherUser;
+    EditText chat_msg_input;
+    ImageButton sendButton;
+    ImageButton backButton;
+    TextView otherUserName;
+    RecyclerView recyclerView;
 
 //    private RecyclerView recyclerView;
 //    private ChatAdapter adapter;
@@ -40,11 +51,28 @@ public class ChatActivity extends AppCompatActivity {
 //
 //    private MediaRecorder mediaRecorder;
 //    private String audioFilePath = null;
-//
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_screen);
+
+        chat_msg_input = findViewById(R.id.chat_msg_input);
+        sendButton = findViewById(R.id.send_button);
+        otherUserName = findViewById(R.id.otherUserName);
+        backButton = findViewById(R.id.back_button);
+        recyclerView = findViewById(R.id.chat_recycler_view);
+
+        backButton.setOnClickListener(view ->{
+            onBackPressed();
+        });
+
+        //get user model
+        otherUser = AndroidUtil.getUserModelFromIntent(getIntent());
+        otherUserName.setText(otherUser.getUsername());
+
+
 //
 //        recyclerView = findViewById(R.id.recycler_view);
 //        btnSend = findViewById(R.id.btn_send);

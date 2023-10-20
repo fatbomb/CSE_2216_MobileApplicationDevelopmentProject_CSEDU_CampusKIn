@@ -1,6 +1,7 @@
 package New.Main.CSEDU_CampusKin.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,10 @@ import com.airbnb.lottie.animation.content.Content;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+import New.Main.CSEDU_CampusKin.ChatActivity;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
 import New.Main.CSEDU_CampusKin.R;
+import New.Main.CSEDU_CampusKin.Utils.AndroidUtil;
 import New.Main.CSEDU_CampusKin.Utils.FirebaseUtils;
 
 public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserModel, SearchUserRecyclerAdapter.UserModelViewHolder>
@@ -25,13 +28,11 @@ public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserMode
     public SearchUserRecyclerAdapter(@NonNull FirestoreRecyclerOptions<UserModel> options, Context context){
         super(options);
         this.context = context;
-
     }
-
     @Override
     protected void onBindViewHolder(@NonNull UserModelViewHolder holder, int position, @NonNull UserModel model) {
         holder.usernameTextView.setText(model.getUsername());
-        holder.batchTextView.setText(model.getBatch());
+        holder.batchTextView.setText("Batch "+ model.getBatch());
 
         if(model.getUserID().equals(FirebaseUtils.currentUserId()))
         {
@@ -40,6 +41,10 @@ public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserMode
 
         holder.itemView.setOnClickListener(view -> {
             //navigate to chat activity
+            Intent intent = new Intent(context, ChatActivity.class);
+            AndroidUtil.passUserModelAsIntent(intent, model);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         });
     }
 

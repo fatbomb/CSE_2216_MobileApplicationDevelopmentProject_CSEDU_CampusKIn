@@ -38,8 +38,6 @@
             android:text="I'm the problem it's me"
             android:textSize="18sp"
             android:textColor="@color/white"/>
-
     </LinearLayout>
-
-
+    ,
 </RelativeLayout>
