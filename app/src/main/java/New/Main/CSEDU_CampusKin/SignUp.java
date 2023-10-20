@@ -3,6 +3,7 @@ package New.Main.CSEDU_CampusKin;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -48,6 +49,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.security.PrivateKey;
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +68,7 @@ public class SignUp extends AppCompatActivity {
     private String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     //private final String[] Gender = new String[]{"Male","Female","Other"};
     private EditText email;
-    String image;
+    String image="";
 
     private EditText firstname,lastname,batch,phnno,registration;
 
@@ -196,10 +199,16 @@ public class SignUp extends AppCompatActivity {
                 else if (s_pass1.isEmpty()) passwordEditText.setError("Password field can't be empty.");
                 else if (s_pass1.length() < 6) passwordEditText.setError("Password length must be at least 6");
                 else if (!s_pass1.equals(s_pass2)) confirmpass.setError("Password didn't match");
+                else if(imageUri==null){
+                    Toast.makeText(SignUp.this, "Please add a photo", Toast.LENGTH_SHORT).show();
+                }
                 else{
                     pd.setMessage("Please Wait");
                     pd.show();
-                    uploadimage();
+
+//                    if(image==""){
+//                        Toast.makeText(SignUp.this, "Image String Haray Geche", Toast.LENGTH_SHORT).show();
+//                    }
                     auth.createUserWithEmailAndPassword(getEmail,s_pass1).addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -213,7 +222,8 @@ public class SignUp extends AppCompatActivity {
                                                     if (task.isSuccessful()) {
                                                         // Email verification sent
                                                         //Toast.makeText(SignUp.this, "Please Confirm your email to complete registration", Toast.LENGTH_SHORT).show();
-                                                        adduser(name,getEmail,regnum,phone,bat,gen);
+                                                        //adduser(name,getEmail,regnum,phone,bat,gen);
+                                                        uploadimage(name,getEmail,regnum,phone,bat,gen);
 
                                                     } else {
                                                         Toast.makeText(SignUp.this, "Please add a valid email Address", Toast.LENGTH_SHORT).show();
@@ -243,7 +253,10 @@ public class SignUp extends AppCompatActivity {
 
     }
 
-    private void uploadimage() {
+    private String uploadimage(String name, String email, String regno, String phnno, String batch, String gender) {
+        final String[] s = {""};
+        //String img;
+
         if(imageUri!=null){
             StorageReference fileRef= FirebaseStorage.getInstance().getReference().child("Profile pictures").child(System.currentTimeMillis()+"."+getfileExtention(imageUri));
             fileRef.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -252,13 +265,32 @@ public class SignUp extends AppCompatActivity {
                     fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            image=uri.toString();
-                            Log.d("Downloadurl",image);
+                            s[0] =uri.toString();
+                            HashMap<String, Object> map= new HashMap<>();
+                            map.put("Name",name);
+                            map.put("Email",email);
+                            map.put("Registration no",regno);
+                            map.put("Phone no",phnno);
+                            map.put("Batch",batch);
+                            map.put("Gender",gender);
+                            map.put("Photo",s[0]);
+                            mRootRef.child("Users").child(auth.getCurrentUser().getUid()).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    pd.dismiss();
+                                    Toast.makeText(SignUp.this, "Please Confirm your email to complete registration", Toast.LENGTH_SHORT).show();
+                                    startActivity((new Intent(SignUp.this, MainActivity.class)));
+
+                                }
+                            });
+                            //Log.d("Downloadurl",image);
                         }
                     });
                 }
             });
+
         }
+        return s[0];
     }
 
     private String getfileExtention(Uri imageUri) {
@@ -281,6 +313,7 @@ public class SignUp extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 pd.dismiss();
                 Toast.makeText(SignUp.this, "Please Confirm your email to complete registration", Toast.LENGTH_SHORT).show();
+                startActivity((new Intent(SignUp.this, MainActivity.class)));
 
             }
         });
@@ -361,8 +394,30 @@ public class SignUp extends AppCompatActivity {
             imageUri = data.getData();
             profile.setImageURI(imageUri);
         } else if (requestCode == CAMERA_PERMISSION_REQUEST && resultCode == RESULT_OK) {
+            // Assuming you have a Bitmap named "thumbnail"
             Bitmap thumbnail = data.getParcelableExtra("data");
-            imageUri=data.getData();
+
+// Create a ContentResolver
+            ContentResolver resolver = getContentResolver();
+
+// Define the content values for the image
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+
+// Insert the image into the MediaStore and get the Uri
+            imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+// Open an OutputStream to write the Bitmap to the Uri
+            try {
+                OutputStream outStream = resolver.openOutputStream(imageUri);
+                thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+                outStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+// Now, "imageUri" contains the Uri for the Bitmap
+
             profile.setImageBitmap(thumbnail);
             // Do other work with full size photo saved in locationForPhotos.
         }
@@ -371,7 +426,7 @@ public class SignUp extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("imageResource", R.id.profile); // Replace with your image resource
+        outState.putInt(String.valueOf(imageUri), R.id.profile); // Replace with your image resource
     }
 }
 

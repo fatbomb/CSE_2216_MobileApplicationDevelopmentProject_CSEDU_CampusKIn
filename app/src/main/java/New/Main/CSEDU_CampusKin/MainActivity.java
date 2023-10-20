@@ -146,12 +146,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-HomePage.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        startActivity(new Intent(MainActivity.this, NavigationActivity.class));
-    }
-});
+//HomePage.setOnClickListener(new View.OnClickListener() {
+//    @Override
+//    public void onClick(View view) {
+//        startActivity(new Intent(MainActivity.this, NavigationActivity.class));
+//    }
+//});
 
 
         HomePage.setOnClickListener(new View.OnClickListener() {
@@ -182,7 +182,7 @@ HomePage.setOnClickListener(new View.OnClickListener() {
                             }
 
 
-
+                            //return null;
                         }
                     });
                     auth.signInWithEmailAndPassword(getEmail,s_pass1).addOnFailureListener(new OnFailureListener() {
@@ -213,7 +213,7 @@ HomePage.setOnClickListener(new View.OnClickListener() {
     @Override
     protected void onStart() {
         super.onStart();
-        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null && FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()){
             startActivity(new Intent(MainActivity.this,NavigationActivity.class));
             finish();
         }
