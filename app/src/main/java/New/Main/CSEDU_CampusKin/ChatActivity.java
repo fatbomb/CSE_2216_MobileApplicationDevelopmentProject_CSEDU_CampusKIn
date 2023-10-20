@@ -212,6 +212,7 @@ public class ChatActivity extends AppCompatActivity {
     void sendMessageToOtherUser(String message){
         chatRoomModel.setLastMessageTimestamp(Timestamp.now());
         chatRoomModel.setLastMessageSenderID(FirebaseUtils.currentUserId());
+        chatRoomModel.setLastMessage(message);
         FirebaseUtils.getChatRoomReference(chatRoomID).set(chatRoomModel);
 
         ChatMessageModel chatMessageModel = new ChatMessageModel(message, FirebaseUtils.currentUserId(), Timestamp.now());
