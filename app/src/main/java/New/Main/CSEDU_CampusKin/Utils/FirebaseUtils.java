@@ -41,7 +41,6 @@ public class FirebaseUtils {
         else
         {
             return userID_2 + "_" + userID_1;
-
         }
     }
 
@@ -52,7 +51,7 @@ public class FirebaseUtils {
 
     public static CollectionReference allChatRoomsCollectionReference()
     {
-        return FirebaseFirestore.getInstance().collection("chatRooms");
+        return FirebaseFirestore.getInstance().collection("chatrooms");
     }
 
     public static DocumentReference getOtherUserFromChatRoom(List<String> userIDs)

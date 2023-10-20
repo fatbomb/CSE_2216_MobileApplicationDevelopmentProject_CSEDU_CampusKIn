@@ -24,7 +24,6 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
     public ChatAdapter(@NonNull FirestoreRecyclerOptions<ChatMessageModel> options, Context context){
         super(options);
         this.context = context;
-
     }
 
     @Override
