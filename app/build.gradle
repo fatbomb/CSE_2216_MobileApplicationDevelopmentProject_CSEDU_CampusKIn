@@ -81,4 +81,13 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
     implementation 'com.firebaseui:firebase-ui-firestore:8.0.2'
+
+    // base widgets
+    implementation "com.hendraanggrian.appcompat:socialview:0.1"
+
+    // auto-complete widgets
+    implementation "com.hendraanggrian.appcompat:socialview-autocomplete:0.1"
+
+    //implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+
 }
