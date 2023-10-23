@@ -3,10 +3,50 @@ package New.Main.CSEDU_CampusKin.Model;
 import com.google.firebase.Timestamp;
 
 public class UserModel {
-    private String userID;
+    private String userID,gender,phoneNo,email,photo,registrationNo;
     private String username;
     private String batch;
     private Timestamp createdTimeStamp;
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getRegistrationNo() {
+        return registrationNo;
+    }
+
+    public void setRegistrationNo(String registrationNo) {
+        this.registrationNo = registrationNo;
+    }
 
     public UserModel() {
     }

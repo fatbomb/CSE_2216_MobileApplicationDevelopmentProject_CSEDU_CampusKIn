@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#DDDDDD"
     tools:context=".PostActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -24,7 +25,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:src="@drawable/outline_close"
-                    android:id="@+id/clos"/>
+                    android:id="@+id/close"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -55,14 +56,17 @@
             app:socialFlags="hashtag|mention"
             app:hashtagColor="@color/primary"
             app:mentionColor="@color/primary"/>
+
         <ImageView
+            android:id="@+id/cropImageView"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="300dp"
             android:layout_gravity="center"
-            android:scaleType="centerInside"
-            android:id="@+id/imageadd"
             android:layout_marginTop="10dp"
-            android:src="@drawable/addimage_foreground"/>
+            android:background="@drawable/edit_text_background"
+            android:src="@drawable/addimage_foreground"
+            />
+
 
 
 
