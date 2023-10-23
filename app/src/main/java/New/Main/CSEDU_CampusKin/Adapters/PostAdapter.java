@@ -62,6 +62,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
         holder.description.setText(post.getPostDescription());
         holder.likes.setText((int) post.getPostLike()+" Likes");
         holder.comments.setText(post.getCommentCount()+" Comments");
+        setTime(holder,post);
+
+
         FirebaseFirestore.getInstance().collection("Users").document(post.getPostedBy()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -78,6 +81,38 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
         });
     }
 
+    private void setTime(viewholder holder,Post post) {
+        long postTimeMillis = post.getPostedDate().toDate().getTime();
+
+// Get the current time in milliseconds (UTC time)
+        long currentTimeMillis = System.currentTimeMillis();
+
+// Calculate the time difference in seconds
+        long timeDifferenceSeconds = (currentTimeMillis - postTimeMillis) / 1000;
+
+        String timeAgo;
+
+        if (timeDifferenceSeconds < 60) {
+            // Less than a minute ago
+            timeAgo = timeDifferenceSeconds + " sec ago";
+        } else if (timeDifferenceSeconds < 3600) {
+            // Less than an hour ago
+            long minutes = timeDifferenceSeconds / 60;
+            timeAgo = minutes + " min ago";
+        } else if (timeDifferenceSeconds < 86400) {
+            // Less than a day ago
+            long hours = timeDifferenceSeconds / 3600;
+            timeAgo = hours + " hr ago";
+        } else {
+            // Days ago
+            long days = timeDifferenceSeconds / 86400;
+            timeAgo = days + " day ago";
+        }
+
+// Set the "time ago" text in your TextView
+        holder.timeago.setText(timeAgo);
+    }
+
     @Override
     public int getItemCount() {
         return mPost.size();
@@ -85,7 +120,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
 
     public class viewholder extends RecyclerView.ViewHolder{
         public ImageView imagerProfile,postImage,like,comment,save,more;
-        public TextView likes,username,comments;
+        public TextView likes,username,comments,timeago;
         SocialTextView description;
 
         public viewholder(@NonNull View itemView) {
@@ -100,6 +135,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
             comments=itemView.findViewById(R.id.comments);
             description=itemView.findViewById(R.id.description);
             more=itemView.findViewById(R.id.more);
+            timeago=itemView.findViewById(R.id.timeago);
 
         }
     }
