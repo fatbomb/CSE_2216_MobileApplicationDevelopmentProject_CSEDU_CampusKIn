@@ -60,6 +60,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
 
 
         holder.description.setText(post.getPostDescription());
+        holder.likes.setText((int) post.getPostLike()+" Likes");
+        holder.comments.setText(post.getCommentCount()+" Comments");
         FirebaseFirestore.getInstance().collection("Users").document(post.getPostedBy()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
