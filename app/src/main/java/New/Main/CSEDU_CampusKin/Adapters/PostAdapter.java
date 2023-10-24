@@ -1,6 +1,7 @@
 package New.Main.CSEDU_CampusKin.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import New.Main.CSEDU_CampusKin.CommentActivity;
 import New.Main.CSEDU_CampusKin.Model.Post;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
 import New.Main.CSEDU_CampusKin.PostActivity;
@@ -120,6 +122,27 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
             }
         });
         holder.likes.setText( post.getPostLike()+" Likes");
+        holder.comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(mContext, CommentActivity.class);
+                intent.putExtra("postID",post.getPostID());
+                intent.putExtra("postedBy",post.getPostedBy());
+                mContext.startActivity(intent);
+                getComments(post,holder.comments);
+            }
+        });
+        holder.comments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(mContext, CommentActivity.class);
+                intent.putExtra("postID",post.getPostID());
+                intent.putExtra("postedBy",post.getPostedBy());
+                mContext.startActivity(intent);
+                getComments(post,holder.comments);
+            }
+        });
+
 
     }
 
@@ -200,5 +223,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
 
             }
         });
+    }
+    private void getComments(Post post, TextView text){
+        FirebaseDatabase.getInstance().getReference().child("Comments").child(post.getPostID()).
+                addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        post.setCommentCount(snapshot.getChildrenCount());
+                        text.setText(post.getCommentCount()+" Comments");
+                        Map<String, Object> data = new HashMap<>();
+                        data.put("commentCount", post.getCommentCount());
+                        FirebaseFirestore.getInstance().collection("Post").document(post.getPostID()).update(data);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 }
