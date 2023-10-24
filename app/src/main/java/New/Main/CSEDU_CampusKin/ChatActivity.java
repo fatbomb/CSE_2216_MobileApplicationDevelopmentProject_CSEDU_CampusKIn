@@ -1,5 +1,6 @@
 package New.Main.CSEDU_CampusKin;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,9 +17,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Query;
+import com.zegocloud.uikit.prebuilt.call.config.ZegoNotificationConfig;
+import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationConfig;
+import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationService;
+import com.zegocloud.uikit.prebuilt.call.invite.widget.ZegoSendCallInvitationButton;
+import com.zegocloud.uikit.service.defines.ZegoUIKitUser;
 
 import java.sql.Time;
 import java.util.Arrays;
+import java.util.Collections;
 
 import New.Main.CSEDU_CampusKin.Adapters.ChatAdapter;
 import New.Main.CSEDU_CampusKin.Adapters.SearchUserRecyclerAdapter;
@@ -38,6 +45,7 @@ public class ChatActivity extends AppCompatActivity {
     TextView otherUserName;
     RecyclerView chatRecyclerView;
     String chatRoomID;
+    ZegoSendCallInvitationButton voiceCallButton, videoCallButton;
 
     ChatAdapter adapter;
 
@@ -65,6 +73,8 @@ public class ChatActivity extends AppCompatActivity {
         otherUserName = findViewById(R.id.otherUserName);
         backButton = findViewById(R.id.back_button);
         chatRecyclerView = findViewById(R.id.chat_recycler_view);
+        voiceCallButton = findViewById(R.id.voice_call_Button);
+        videoCallButton = findViewById(R.id.video_call_button);
 
         backButton.setOnClickListener(view -> {
             onBackPressed();
@@ -79,12 +89,23 @@ public class ChatActivity extends AppCompatActivity {
 
         sendButton.setOnClickListener(view -> {
             String message = chat_msg_input.getText().toString().trim();
-            if(message.isEmpty())
+            if (message.isEmpty())
                 return;
             sendMessageToOtherUser(message);
         });
-
         setUpChatRecyclerView();
+
+
+
+            String userID = FirebaseUtils.currentUserId();
+            String userName = FirebaseUtils.currentUserName();
+            if (userID.isEmpty()) {
+                return;
+            }
+            //start calling service
+            startCallingService(userID, userName);
+            setVoiceCall(otherUser.getUserID());
+            setVideoCall(otherUser.getUserID());
 
     }
 
@@ -104,7 +125,7 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    void sendMessageToOtherUser(String message){
+    void sendMessageToOtherUser(String message) {
         chatRoomModel.setLastMessageTimestamp(Timestamp.now());
         chatRoomModel.setLastMessageSenderID(FirebaseUtils.currentUserId());
         chatRoomModel.setLastMessage(message);
@@ -115,7 +136,7 @@ public class ChatActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             chat_msg_input.setText("");
                         }
                     }
@@ -123,15 +144,14 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    void setUpChatRecyclerView()
-    {
+    void setUpChatRecyclerView() {
         Query query = FirebaseUtils.getChatRoomMessageReference(chatRoomID)
                 .orderBy("timestamp", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<ChatMessageModel> options = new FirestoreRecyclerOptions.Builder<ChatMessageModel>()
                 .setQuery(query, ChatMessageModel.class).build();
 
-        adapter = new ChatAdapter(options,getApplicationContext());
+        adapter = new ChatAdapter(options, getApplicationContext());
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setReverseLayout(true);
         chatRecyclerView.setLayoutManager(manager);
@@ -147,4 +167,41 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    void startCallingService(String ID, String name) {
+        Application application = getApplication(); // Android's application context
+        long appID = 816688113;   // yourAppID
+        String appSign = "0e37b85757c4c2fed8a856e391068adc2bb0926c5a7dc8eb9bfeec2f79caadf8";  // yourAppSign
+        String userID = ID; // yourUserID, userID should only contain numbers, English characters, and '_'.
+        String userName = name;   // yourUserName
+
+        ZegoUIKitPrebuiltCallInvitationConfig callInvitationConfig = new ZegoUIKitPrebuiltCallInvitationConfig();
+        callInvitationConfig.notifyWhenAppRunningInBackgroundOrQuit = true;
+        ZegoNotificationConfig notificationConfig = new ZegoNotificationConfig();
+        notificationConfig.sound = "zego_uikit_sound_call";
+        notificationConfig.channelID = "CallInvitation";
+        notificationConfig.channelName = "CallInvitation";
+        ZegoUIKitPrebuiltCallInvitationService.init(getApplication(), appID, appSign, userID, userName, callInvitationConfig);
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
+        ZegoUIKitPrebuiltCallInvitationService.unInit();
+    }
+
+    void setVoiceCall(String targetUserID) {
+        voiceCallButton.setIsVideoCall(false);
+        voiceCallButton.setResourceID("zego_uikit_call");
+        voiceCallButton.setInvitees(Collections.singletonList(new ZegoUIKitUser(targetUserID,targetUserID)));
+    }
+
+    void setVideoCall(String targetUserID) {
+        videoCallButton.setIsVideoCall(true);
+        videoCallButton.setResourceID("zego_uikit_call");
+        videoCallButton.setInvitees(Collections.singletonList(new ZegoUIKitUser(targetUserID,targetUserID)));
+    }
+
 }
