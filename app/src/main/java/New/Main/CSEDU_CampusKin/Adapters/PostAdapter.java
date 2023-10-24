@@ -16,13 +16,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
 import com.hendraanggrian.appcompat.socialview.widget.SocialTextView;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import New.Main.CSEDU_CampusKin.Model.Post;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
@@ -37,6 +43,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
     public PostAdapter(Context mContext, List<Post> mPost) {
         this.mContext = mContext;
         this.mPost = mPost;
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     @NonNull
@@ -48,7 +55,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
 
     @Override
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
         Post post = mPost.get(position);
         String imageUrl = post.getPostImage();
         if(imageUrl!=""){
@@ -60,7 +67,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
 
 
         holder.description.setText(post.getPostDescription());
-        holder.likes.setText((int) post.getPostLike()+" Likes");
+
         holder.comments.setText(post.getCommentCount()+" Comments");
         setTime(holder,post);
 
@@ -79,6 +86,41 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
 
             }
         });
+        isLiked(post.getPostID(),holder.like);
+        holder.like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(holder.like.getTag().equals("like")){
+                    FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostID()).child(firebaseUser.getUid()).setValue(true);
+                    post.setPostLike(post.getPostLike()+1);
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("postLike", post.getPostLike());
+                    FirebaseFirestore.getInstance().collection("Post").document(post.getPostID()).update(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(mContext, "Liked", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
+                }
+                else{
+                    FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostID()).child(firebaseUser.getUid()).removeValue();
+                    post.setPostLike(post.getPostLike()-1);
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("postLike", post.getPostLike());
+                    FirebaseFirestore.getInstance().collection("Post").document(post.getPostID()).update(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(mContext, "Like Removed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                holder.likes.setText( post.getPostLike()+" Likes");
+            }
+        });
+        holder.likes.setText( post.getPostLike()+" Likes");
+
     }
 
     private void setTime(viewholder holder,Post post) {
@@ -138,5 +180,25 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
             timeago=itemView.findViewById(R.id.timeago);
 
         }
+    }
+    private void isLiked(String postId, ImageView imageView){
+        FirebaseDatabase.getInstance().getReference().child("Likes").child(postId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.child(firebaseUser.getUid()).exists()){
+                    imageView.setImageResource(R.drawable.baseline_star_24);
+                    imageView.setTag("liked");
+                }
+                else{
+                    imageView.setImageResource(R.drawable.outline_star_outline_24);
+                    imageView.setTag("like");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
