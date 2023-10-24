@@ -350,12 +350,23 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void requestGalleryPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    GALLERY_PERMISSION_REQUEST);
-        } else {
-            openGallery();
+        if(android.os.Build.VERSION.SDK_INT>=33){
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES},
+                        GALLERY_PERMISSION_REQUEST);
+            } else {
+                openGallery();
+            }
+        }
+        else {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        GALLERY_PERMISSION_REQUEST);
+            } else {
+                openGallery();
+            }
         }
     }
 
