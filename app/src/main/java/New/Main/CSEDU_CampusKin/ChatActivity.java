@@ -96,14 +96,11 @@ public class ChatActivity extends AppCompatActivity {
         setUpChatRecyclerView();
 
 
-
             String userID = FirebaseUtils.currentUserId();
-            String userName = FirebaseUtils.currentUserName();
-            if (userID.isEmpty()) {
-                return;
-            }
-            //start calling service
-            startCallingService(userID, userName);
+            //String userName = FirebaseUtils.currentUserName();
+
+            startCallingService(userID);
+
             setVoiceCall(otherUser.getUserID());
             setVideoCall(otherUser.getUserID());
 
@@ -169,12 +166,12 @@ public class ChatActivity extends AppCompatActivity {
     }
 
 
-    void startCallingService(String ID, String name) {
+    void startCallingService(String ID) {
         Application application = getApplication(); // Android's application context
         long appID = 816688113;   // yourAppID
         String appSign = "0e37b85757c4c2fed8a856e391068adc2bb0926c5a7dc8eb9bfeec2f79caadf8";  // yourAppSign
         String userID = ID; // yourUserID, userID should only contain numbers, English characters, and '_'.
-        String userName = name;   // yourUserName
+        String userName = ID;   // yourUserName
 
         ZegoUIKitPrebuiltCallInvitationConfig callInvitationConfig = new ZegoUIKitPrebuiltCallInvitationConfig();
         callInvitationConfig.notifyWhenAppRunningInBackgroundOrQuit = true;
@@ -195,13 +192,13 @@ public class ChatActivity extends AppCompatActivity {
     void setVoiceCall(String targetUserID) {
         voiceCallButton.setIsVideoCall(false);
         voiceCallButton.setResourceID("zego_uikit_call");
-        voiceCallButton.setInvitees(Collections.singletonList(new ZegoUIKitUser(targetUserID,targetUserID)));
+        voiceCallButton.setInvitees(Collections.singletonList(new ZegoUIKitUser(targetUserID)));
     }
 
     void setVideoCall(String targetUserID) {
         videoCallButton.setIsVideoCall(true);
         videoCallButton.setResourceID("zego_uikit_call");
-        videoCallButton.setInvitees(Collections.singletonList(new ZegoUIKitUser(targetUserID,targetUserID)));
+        videoCallButton.setInvitees(Collections.singletonList(new ZegoUIKitUser(targetUserID)));
     }
 
 }
