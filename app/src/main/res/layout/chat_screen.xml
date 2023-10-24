@@ -16,21 +16,26 @@
         tools:ignore="MissingConstraints">
 
         <com.zegocloud.uikit.prebuilt.call.invite.widget.ZegoSendCallInvitationButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="10dp"
             android:id="@+id/voice_call_Button"
-            android:layout_marginRight="-1dp"
             android:layout_toLeftOf="@id/video_call_button"
+            android:layout_marginRight="20dp"
             android:src="@drawable/voice_call_icon"
             android:layout_centerVertical="true"
+            android:backgroundTint="@color/white"
             />
 
         <com.zegocloud.uikit.prebuilt.call.invite.widget.ZegoSendCallInvitationButton
             android:id="@+id/video_call_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="7dp"
+
             android:layout_alignParentEnd="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@color/white"
             android:src="@drawable/video_call_icon" />
 
         <include layout="@layout/profile_pic_view"
@@ -46,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
             android:layout_toRightOf="@id/profile"
             android:gravity="center"
             android:text="Kin Name"
