@@ -1,7 +1,9 @@
 package New.Main.CSEDU_CampusKin.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,6 +57,7 @@ public class MyProfileFragment extends Fragment {
     private RecyclerView recyclerViewPosts;
     private PostAdapter postAdapter;
     private List<Post> postLIst;
+    private AppCompatButton editProfile;
 
 
 
@@ -95,7 +98,15 @@ public class MyProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.my_profile_screen_fragment, container, false);
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-        profileId=firebaseUser.getUid();
+        String data=getContext().getSharedPreferences("PROFILE", Context.MODE_PRIVATE).getString("profileId","none");
+        if(data.equals("none")){
+            profileId=firebaseUser.getUid();
+        }
+        else{
+            profileId=data;
+        }
+
+
 
         imageProfile=view.findViewById(R.id.image_profile);
         options=view.findViewById(R.id.option);
@@ -107,6 +118,7 @@ public class MyProfileFragment extends Fragment {
         myPosts=view.findViewById(R.id.my_posts);
         savedPosts=view.findViewById(R.id.saved_posts);
         bio=view.findViewById(R.id.bio);
+        editProfile=view.findViewById(R.id.edit_profile);
         userinfo();
         recyclerViewPosts= view.findViewById(R.id.recycler_view_posts);
         recyclerViewPosts.setHasFixedSize(true);
@@ -120,7 +132,12 @@ public class MyProfileFragment extends Fragment {
         recyclerViewPosts.setAdapter(postAdapter);
 
         getpostCount();
-
+        if(profileId.equals(firebaseUser.getUid())){
+            editProfile.setText("Edit Profile");
+        }
+        else{
+            editProfile.setText("Follow");
+        }
 
         return view;
     }

@@ -34,6 +34,7 @@ import java.util.Map;
 import New.Main.CSEDU_CampusKin.CommentActivity;
 import New.Main.CSEDU_CampusKin.Model.Post;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
+import New.Main.CSEDU_CampusKin.NavigationActivity;
 import New.Main.CSEDU_CampusKin.PostActivity;
 import New.Main.CSEDU_CampusKin.R;
 
@@ -140,6 +141,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                 intent.putExtra("postedBy",post.getPostedBy());
                 mContext.startActivity(intent);
                 getComments(post,holder.comments);
+            }
+        });
+        holder.username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(mContext, NavigationActivity.class);
+                intent.putExtra("publisherId",post.getPostedBy());
+                mContext.startActivity(intent);
+
+            }
+        });
+        holder.imagerProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(mContext, NavigationActivity.class);
+                intent.putExtra("publisherId",post.getPostedBy());
+                mContext.startActivity(intent);
+
             }
         });
 

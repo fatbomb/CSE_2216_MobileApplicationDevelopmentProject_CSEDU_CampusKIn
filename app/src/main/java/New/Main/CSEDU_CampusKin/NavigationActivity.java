@@ -61,6 +61,16 @@ public class NavigationActivity extends AppCompatActivity {
                 replaceFragment(new MyProfileFragment());
             return  true;
         });
+        Bundle intent=getIntent().getExtras();
+        if(intent!=null){
+            String profileId=intent.getString("publisherId");
+            getSharedPreferences("PROFILE",MODE_PRIVATE).edit().putString("profileId",profileId).apply();
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,new MyProfileFragment() ).commit();
+        }
+        else{
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,new HomePageFragment()).commit();
+
+        }
     }
 
     private void replaceFragment(Fragment fragment){

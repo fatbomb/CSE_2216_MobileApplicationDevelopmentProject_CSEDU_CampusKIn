@@ -1,6 +1,7 @@
 package New.Main.CSEDU_CampusKin.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import New.Main.CSEDU_CampusKin.Model.Comment;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
+import New.Main.CSEDU_CampusKin.NavigationActivity;
 import New.Main.CSEDU_CampusKin.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -62,6 +64,25 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
             }
         });
         setTime(holder,comment);
+        holder.username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(mContext, NavigationActivity.class);
+                intent.putExtra("publisherId",comment.getPublisher());
+                mContext.startActivity(intent);
+
+            }
+        });
+        holder.imageProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(mContext, NavigationActivity.class);
+                intent.putExtra("publisherId",comment.getPublisher());
+                mContext.startActivity(intent);
+
+            }
+        });
+
 
     }
 
