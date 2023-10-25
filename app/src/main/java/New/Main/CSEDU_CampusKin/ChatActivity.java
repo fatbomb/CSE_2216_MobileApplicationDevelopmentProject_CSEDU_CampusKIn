@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,10 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.squareup.picasso.Picasso;
 import com.zegocloud.uikit.prebuilt.call.config.ZegoNotificationConfig;
 import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationConfig;
 import com.zegocloud.uikit.prebuilt.call.invite.ZegoUIKitPrebuiltCallInvitationService;
@@ -34,6 +39,7 @@ import New.Main.CSEDU_CampusKin.Model.ChatRoomModel;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
 import New.Main.CSEDU_CampusKin.Utils.AndroidUtil;
 import New.Main.CSEDU_CampusKin.Utils.FirebaseUtils;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -44,6 +50,7 @@ public class ChatActivity extends AppCompatActivity {
     ImageButton backButton;
     TextView otherUserName;
     RecyclerView chatRecyclerView;
+    CircleImageView profilePic;
     String chatRoomID;
     ZegoSendCallInvitationButton voiceCallButton, videoCallButton;
 
@@ -75,6 +82,7 @@ public class ChatActivity extends AppCompatActivity {
         chatRecyclerView = findViewById(R.id.chat_recycler_view);
         voiceCallButton = findViewById(R.id.voice_call_Button);
         videoCallButton = findViewById(R.id.video_call_button);
+        profilePic=findViewById(R.id.profile);
 
         backButton.setOnClickListener(view -> {
             onBackPressed();
@@ -84,6 +92,22 @@ public class ChatActivity extends AppCompatActivity {
         otherUser = AndroidUtil.getUserModelFromIntent(getIntent());
         otherUserName.setText(otherUser.getUsername());
         chatRoomID = FirebaseUtils.getChatRoomID(FirebaseUtils.currentUserId(), otherUser.getUserID());
+        //Toast.makeText(this, otherUser.getPhoto(), Toast.LENGTH_SHORT).show();
+        FirebaseFirestore.getInstance().collection("Users").document(otherUser.getUserID()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                    UserModel user =  documentSnapshot.toObject(UserModel.class);
+                    Picasso.get().load(user.getPhoto()).placeholder(R.drawable.human).into(profilePic);
+                    //holder.username.setText(user.getUsername());
+                }
+                else{
+
+                }
+
+            }
+        });
+
 
         getOrCreateChatRoomModel();
 
