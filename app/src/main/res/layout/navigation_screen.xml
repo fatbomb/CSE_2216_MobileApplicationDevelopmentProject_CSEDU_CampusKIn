@@ -29,6 +29,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageButton
+                android:id="@+id/create"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="-10dp"
+                android:layout_gravity="center|right"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/outline_add_24"
+                android:layout_toStartOf="@+id/search_button"
+                app:tint="@color/white"
+
+                />
+            <ImageButton
                 android:id="@+id/search_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -57,22 +69,7 @@
         app:layout_constraintVertical_bias="1.0">
 
     </FrameLayout>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@+id/bottomNavigationView"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp">
-        <ImageButton
-            android:id="@+id/create"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/camera_background"
-            android:backgroundTint="#A929EE"
-            android:src="@drawable/outline_add_24"/>
 
-    </RelativeLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

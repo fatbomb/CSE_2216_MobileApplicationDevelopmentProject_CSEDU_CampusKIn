@@ -1,6 +1,7 @@
 package New.Main.CSEDU_CampusKin.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -29,9 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import New.Main.CSEDU_CampusKin.Adapters.PostAdapter;
+import New.Main.CSEDU_CampusKin.ChatActivity;
 import New.Main.CSEDU_CampusKin.Model.Post;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
 import New.Main.CSEDU_CampusKin.R;
+import New.Main.CSEDU_CampusKin.Utils.AndroidUtil;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -50,7 +53,7 @@ public class MyProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private CircleImageView imageProfile;
-    private ImageView options,myPosts,savedPosts;
+    private ImageView options,myPosts,savedPosts,msg;
     private TextView posts,followers,following,username,bio,registrationNo;
     private FirebaseUser firebaseUser;
     String profileId;
@@ -58,6 +61,7 @@ public class MyProfileFragment extends Fragment {
     private PostAdapter postAdapter;
     private List<Post> postLIst;
     private AppCompatButton editProfile;
+    UserModel user;
 
 
 
@@ -119,6 +123,7 @@ public class MyProfileFragment extends Fragment {
         savedPosts=view.findViewById(R.id.saved_posts);
         bio=view.findViewById(R.id.bio);
         editProfile=view.findViewById(R.id.edit_profile);
+        msg=view.findViewById(R.id.msg);
         userinfo();
         recyclerViewPosts= view.findViewById(R.id.recycler_view_posts);
         recyclerViewPosts.setHasFixedSize(true);
@@ -134,9 +139,18 @@ public class MyProfileFragment extends Fragment {
         getpostCount();
         if(profileId.equals(firebaseUser.getUid())){
             editProfile.setText("Edit Profile");
+            msg.setVisibility(View.GONE);
         }
         else{
             editProfile.setText("Follow");
+            msg.setVisibility(View.VISIBLE);
+            msg.setOnClickListener(views -> {
+                //navigate to chat activity
+                Intent intent = new Intent(getContext(), ChatActivity.class);
+                AndroidUtil.passUserModelAsIntent(intent, user);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            });
         }
 
         return view;
@@ -171,7 +185,7 @@ public class MyProfileFragment extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists()){
-                    UserModel user =  documentSnapshot.toObject(UserModel.class);
+                    user =  documentSnapshot.toObject(UserModel.class);
                     Picasso.get().load(user.getPhoto()).placeholder(R.drawable.human).into(imageProfile);
                     username.setText(user.getUsername());
                     registrationNo.setText(user.getRegistrationNo());
