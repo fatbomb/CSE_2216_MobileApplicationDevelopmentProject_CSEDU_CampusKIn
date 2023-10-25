@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +21,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -138,12 +143,13 @@ public class MyProfileFragment extends Fragment {
         recyclerViewPosts.setAdapter(postAdapter);
 
         getpostCount();
+        getFollowersAndFollowingCount();
         if(profileId.equals(firebaseUser.getUid())){
             editProfile.setText("Edit Profile");
             msg.setVisibility(View.GONE);
         }
         else{
-            editProfile.setText("Follow");
+            chekFollowingStatus();
             msg.setVisibility(View.VISIBLE);
             msg.setOnClickListener(views -> {
                 //navigate to chat activity
@@ -153,8 +159,79 @@ public class MyProfileFragment extends Fragment {
                 startActivity(intent);
             });
         }
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String btnText=editProfile.getText().toString();
+                if(btnText.equals("Edit Profile")){
+                    // To go to edit profile
+                }
+                else{
+                    if(btnText.equals("Follow")){
+                        FirebaseDatabase.getInstance().getReference().child("Follow")
+                                .child(firebaseUser.getUid()).child("following")
+                                .child(profileId).setValue(true);
+                        FirebaseDatabase.getInstance().getReference().child("Follow")
+                                .child(profileId).child("followers")
+                                .child(firebaseUser.getUid()).setValue(true);
+                    }else {
+                        FirebaseDatabase.getInstance().getReference().child("Follow")
+                                .child(firebaseUser.getUid()).child("following")
+                                .child(profileId).removeValue();
+                        FirebaseDatabase.getInstance().getReference().child("Follow")
+                                .child(profileId).child("followers")
+                                .child(firebaseUser.getUid()).removeValue();
+                    }
+                }
+            }
+        });
 
         return view;
+    }
+
+    private void chekFollowingStatus() {
+        FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("following").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.child(profileId).exists()){
+                    editProfile.setText("Following");
+                }
+                else{
+                    editProfile.setText("Follow");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getFollowersAndFollowingCount() {
+        DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Follow").child(profileId);
+        ref.child("followers").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                followers.setText(""+snapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        ref.child("following").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                following.setText(""+snapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void getpostCount() {

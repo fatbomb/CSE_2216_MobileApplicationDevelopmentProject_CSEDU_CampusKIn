@@ -37,6 +37,15 @@
                 android:textSize="13sp"
                 android:layout_marginStart="5dp"
                 android:id="@+id/timeago"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:layout_marginStart="5dp"
+                android:id="@+id/editd"
+                android:text="(Edited)"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

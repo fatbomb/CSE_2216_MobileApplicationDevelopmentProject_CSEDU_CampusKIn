@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -69,20 +70,21 @@ public class CommentActivity extends AppCompatActivity {
                 finish();
             }
         });
+        Intent intent = getIntent();
+        postId=intent.getStringExtra("postID");
+        authorId=intent.getStringExtra("postedBy");
         addComment = findViewById(R.id.add_comment);
         imageProfile = findViewById(R.id.image_profile);
         recyclerView =findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         commentList = new ArrayList<>();
-        commentAdapter=new CommentAdapter(this,commentList);
+        commentAdapter=new CommentAdapter(this,commentList,postId);
         recyclerView.setAdapter(commentAdapter);
 
 
         post=findViewById(R.id.post);
-        Intent intent = getIntent();
-        postId=intent.getStringExtra("postID");
-        authorId=intent.getStringExtra("postedBy");
+
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         getUserImage();
         post.setOnClickListener(new View.OnClickListener() {
@@ -121,11 +123,13 @@ public class CommentActivity extends AppCompatActivity {
 
     private void putComment() {
         HashMap<String,Object> mp= new HashMap<>();
+        DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("Comments").child(postId);
+        String id=ref.push().getKey();
+        mp.put("id",id);
         mp.put("comment",addComment.getText().toString());
         mp.put("publisher",firebaseUser.getUid());
         mp.put("postTime", System.currentTimeMillis());
-        FirebaseDatabase.getInstance().getReference().child("Comments").child(postId).
-                push().setValue(mp).addOnCompleteListener(new OnCompleteListener<Void>() {
+        ref.child(id).setValue(mp).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
