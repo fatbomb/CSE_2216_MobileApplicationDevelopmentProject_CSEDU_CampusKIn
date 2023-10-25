@@ -62,6 +62,7 @@ public class MyProfileFragment extends Fragment {
     private List<Post> postLIst;
     private AppCompatButton editProfile;
     UserModel user;
+    String data;
 
 
 
@@ -102,7 +103,7 @@ public class MyProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.my_profile_screen_fragment, container, false);
         firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-        String data=getContext().getSharedPreferences("PROFILE", Context.MODE_PRIVATE).getString("profileId","none");
+        data=getContext().getSharedPreferences("PROFILE", Context.MODE_PRIVATE).getString("profileId","none");
         if(data.equals("none")){
             profileId=firebaseUser.getUid();
         }
@@ -203,4 +204,11 @@ public class MyProfileFragment extends Fragment {
             }
         });
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        data="none";
+        // Perform any final cleanup when the fragment is being destroyed.
+    }
+
 }

@@ -6,11 +6,14 @@
     android:background="@drawable/chat_list"
     android:elevation="2dp">
 
-    <include layout="@layout/profile_pic_view"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:src="@drawable/human"
+        android:id="@+id/profile_pic_image_view"
         android:layout_width="52dp"
         android:layout_height="52dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
+
         />
 
     <LinearLayout

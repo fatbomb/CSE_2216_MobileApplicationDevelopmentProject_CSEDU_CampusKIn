@@ -57,8 +57,10 @@ public class NavigationActivity extends AppCompatActivity {
                 replaceFragment(new ChatPageFragment());
             else if(item.getItemId() == R.id.notifications)
                 replaceFragment(new NotificationPageFragment());
-            else if(item.getItemId() == R.id.myProfile)
+            else if(item.getItemId() == R.id.myProfile) {
+                getSharedPreferences("PROFILE",MODE_PRIVATE).edit().putString("profileId","none").apply();
                 replaceFragment(new MyProfileFragment());
+            }
             return  true;
         });
         Bundle intent=getIntent().getExtras();

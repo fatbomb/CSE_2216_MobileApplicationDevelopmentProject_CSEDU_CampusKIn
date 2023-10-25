@@ -14,12 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.animation.content.Content;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.squareup.picasso.Picasso;
 
 import New.Main.CSEDU_CampusKin.ChatActivity;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
 import New.Main.CSEDU_CampusKin.R;
 import New.Main.CSEDU_CampusKin.Utils.AndroidUtil;
 import New.Main.CSEDU_CampusKin.Utils.FirebaseUtils;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserModel, SearchUserRecyclerAdapter.UserModelViewHolder>
 {
@@ -38,6 +40,7 @@ public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserMode
         {
             holder.usernameTextView.setText(model.getUsername() + " (Me)");
         }
+        Picasso.get().load(model.getPhoto()).placeholder(R.drawable.human).into(holder.profilePic);
 
         holder.itemView.setOnClickListener(view -> {
             //navigate to chat activity
@@ -58,7 +61,7 @@ public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserMode
     class UserModelViewHolder extends RecyclerView.ViewHolder{
         TextView usernameTextView;
         TextView batchTextView;
-        ImageView profilePic;
+        CircleImageView profilePic;
         public UserModelViewHolder(@NonNull View itemView)
         {
             super(itemView);

@@ -17,6 +17,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.squareup.picasso.Picasso;
 
 import New.Main.CSEDU_CampusKin.ChatActivity;
 import New.Main.CSEDU_CampusKin.Model.ChatRoomModel;
@@ -24,6 +25,7 @@ import New.Main.CSEDU_CampusKin.Model.UserModel;
 import New.Main.CSEDU_CampusKin.R;
 import New.Main.CSEDU_CampusKin.Utils.AndroidUtil;
 import New.Main.CSEDU_CampusKin.Utils.FirebaseUtils;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecentChatsRecyclerAdapter extends FirestoreRecyclerAdapter<ChatRoomModel, RecentChatsRecyclerAdapter.ChatRoomModelViewHolder>
 {
@@ -48,6 +50,7 @@ public class RecentChatsRecyclerAdapter extends FirestoreRecyclerAdapter<ChatRoo
                 else
                     holder.lastMessageText.setText(model.getLastMessage());
                 holder.lastMessageTime.setText(FirebaseUtils.timeStampToString(model.getLastMessageTimestamp()));
+                Picasso.get().load(otherUserModel.getPhoto()).placeholder(R.drawable.human).into(holder.profilePic);
 
                 holder.itemView.setOnClickListener(view -> {
                     //navigate to chat activity
@@ -71,7 +74,7 @@ public class RecentChatsRecyclerAdapter extends FirestoreRecyclerAdapter<ChatRoo
         TextView usernameTextView;
         TextView lastMessageText;
         TextView lastMessageTime;
-        ImageView profilePic;
+        CircleImageView profilePic;
         public ChatRoomModelViewHolder(@NonNull View itemView)
         {
             super(itemView);
