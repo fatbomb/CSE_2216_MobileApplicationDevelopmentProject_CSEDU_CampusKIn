@@ -278,6 +278,7 @@ public class SignUp extends AppCompatActivity {
                             map.put("photo",s[0]);
                             map.put("createdTimeStamp", Timestamp.now());
                             map.put("userID",auth.getCurrentUser().getUid());
+                            map.put("bio","");
                             mRootRef.collection("Users").document(auth.getCurrentUser().getUid()).set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {

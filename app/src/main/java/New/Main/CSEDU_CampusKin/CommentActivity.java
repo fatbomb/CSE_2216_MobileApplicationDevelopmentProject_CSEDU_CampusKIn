@@ -129,7 +129,7 @@ public class CommentActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            addComment.clearComposingText();
+                            addComment.setText("");
                             Toast.makeText(CommentActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
                         }
                         else{
