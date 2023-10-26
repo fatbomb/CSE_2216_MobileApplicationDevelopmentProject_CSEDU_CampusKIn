@@ -38,6 +38,7 @@ import New.Main.CSEDU_CampusKin.Adapters.PostAdapter;
 import New.Main.CSEDU_CampusKin.ChatActivity;
 import New.Main.CSEDU_CampusKin.Model.Post;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
+import New.Main.CSEDU_CampusKin.OptionsActivity;
 import New.Main.CSEDU_CampusKin.R;
 import New.Main.CSEDU_CampusKin.Utils.AndroidUtil;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -65,6 +66,9 @@ public class MyProfileFragment extends Fragment {
     private RecyclerView recyclerViewPosts;
     private PostAdapter postAdapter;
     private List<Post> postLIst;
+    private RecyclerView recyclerViewSaved;
+    private PostAdapter postAdapterSaved;
+    private List<Post> postLIstSaved;
     private AppCompatButton editProfile;
     UserModel user;
     String data;
@@ -142,7 +146,20 @@ public class MyProfileFragment extends Fragment {
         postAdapter= new PostAdapter(getContext(),postLIst);
         recyclerViewPosts.setAdapter(postAdapter);
 
+
+        recyclerViewSaved= view.findViewById(R.id.recycler_view_saved);
+        recyclerViewSaved.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManagerSaved =new LinearLayoutManager(getContext());
+        linearLayoutManagerSaved.setStackFromEnd(true);
+        linearLayoutManagerSaved.setReverseLayout(true);
+        recyclerViewSaved.setLayoutManager(linearLayoutManagerSaved);
+//        getpostCount();
+        postLIstSaved = new ArrayList<>();
+        postAdapterSaved= new PostAdapter(getContext(),postLIstSaved);
+        recyclerViewSaved.setAdapter(postAdapterSaved);
+
         getpostCount();
+        getSavedPosts();
         getFollowersAndFollowingCount();
         if(profileId.equals(firebaseUser.getUid())){
             editProfile.setText("Edit Profile");
@@ -185,8 +202,69 @@ public class MyProfileFragment extends Fragment {
                 }
             }
         });
+        recyclerViewPosts.setVisibility(View.VISIBLE);
+        recyclerViewSaved.setVisibility(View.GONE);
+        myPosts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerViewPosts.setVisibility(View.VISIBLE);
+                recyclerViewSaved.setVisibility(View.GONE);
+            }
+        });
+        savedPosts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerViewPosts.setVisibility(View.GONE);
+                recyclerViewSaved.setVisibility(View.VISIBLE);
+
+            }
+        });
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), OptionsActivity.class));;
+            }
+        });
 
         return view;
+    }
+
+    private void getSavedPosts() {
+        List<String> savedIds=new ArrayList<>();
+        FirebaseDatabase.getInstance().getReference().child("Saves").child(profileId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snap: snapshot.getChildren()){
+                    savedIds.add(snap.getKey());
+                }
+                postLIstSaved.clear();
+                FirebaseFirestore.getInstance().collection("Post").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for(QueryDocumentSnapshot dataSnapshot:queryDocumentSnapshots){
+                            Post post=dataSnapshot.toObject(Post.class);
+                            for(String id:savedIds){
+                                if(post.getPostID().equals(id)){
+                                    postLIstSaved.add(post);
+                                }
+                            }
+
+                        }
+                        postAdapterSaved.notifyDataSetChanged();
+
+
+
+                    }
+
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     private void chekFollowingStatus() {

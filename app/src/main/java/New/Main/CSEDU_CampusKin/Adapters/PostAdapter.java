@@ -90,6 +90,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
             }
         });
         isLiked(post.getPostID(),holder.like);
+        isSaved(post.getPostID(),holder.save);
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,8 +162,42 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
 
             }
         });
+        holder.save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(holder.save.getTag().equals("save")){
+                    FirebaseDatabase.getInstance().getReference().child("Saves")
+                            .child(firebaseUser.getUid()).child(post.getPostID()).setValue(true);
+                }
+                else{
+                    FirebaseDatabase.getInstance().getReference().child("Saves")
+                            .child(firebaseUser.getUid()).child(post.getPostID()).removeValue();
+                }
+            }
+        });
 
 
+    }
+
+    private void isSaved(String postID, ImageView save) {
+        FirebaseDatabase.getInstance().getReference().child("Saves").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.child(postID).exists()){
+                    save.setImageResource(R.drawable.outline_playlist_add_check_24);
+                    save.setTag("saved");
+                }
+                else{
+                    save.setImageResource(R.drawable.outline_playlist_add_24);
+                    save.setTag("save");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void setTime(viewholder holder,Post post) {
