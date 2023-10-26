@@ -43,6 +43,7 @@ import java.util.List;
 
 import New.Main.CSEDU_CampusKin.Adapters.PostAdapter;
 import New.Main.CSEDU_CampusKin.ChatActivity;
+import New.Main.CSEDU_CampusKin.EditProfileActivity;
 import New.Main.CSEDU_CampusKin.Model.Post;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
 import New.Main.CSEDU_CampusKin.OptionsActivity;
@@ -190,7 +191,7 @@ public class MyProfileFragment extends Fragment {
             public void onClick(View view) {
                 String btnText=editProfile.getText().toString();
                 if(btnText.equals("Edit Profile")){
-                    // To go to edit profile
+                    startActivity(new Intent(getActivity(), EditProfileActivity.class));
                 }
                 else{
                     if(btnText.equals("Follow")){
@@ -353,10 +354,10 @@ public class MyProfileFragment extends Fragment {
                     user =  documentSnapshot.toObject(UserModel.class);
                     Picasso.get().load(user.getPhoto()).placeholder(R.drawable.human).into(imageProfile);
                     username.setText(user.getUsername());
-                    registrationNo.setText("reg: "+user.getRegistrationNo()+"(Batch: "+user.getBatch()+")");
+                    registrationNo.setText("reg: "+user.getRegistrationNo()+" (Batch: "+user.getBatch()+")");
                     //bio.setText(user.getBio());
                     getBio(user);
-                    if(user.getLinkedin()!=null){
+                    if(user.getLinkedin()!=""){
                         SpannableString spannable = new SpannableString("Linkedin: "+user.getLinkedin());
                         Linkify.addLinks(spannable, Linkify.WEB_URLS);
                         linkedin.setText(spannable);
@@ -401,7 +402,7 @@ public class MyProfileFragment extends Fragment {
         StringBuilder s=new StringBuilder();
         if(user.getWorks()!=""){
             if(user.getWorks().toLowerCase().equals("student")){
-                s.append("Student");
+                s.append("Student"+"\n");
 
             }
             else{
@@ -412,7 +413,12 @@ public class MyProfileFragment extends Fragment {
             s.append("Filed of Interests: "+user.getFieldOfInt()+"\n");
         }
         if(user.getWorkEnv()!=""){
-            s.append("Working Environment: "+user.getWorkEnv()+"\n");
+            if(user.getWorkEnv().equals("Both")){
+                s.append("Preferred Working Environment: "+"Academia & Industry"+"\n");
+            }
+            else {
+                s.append("Preferred Environment: "+user.getWorkEnv()+"\n");
+            }
         }
         if (user.getBio()!=""){
             s.append(user.getBio());
