@@ -406,11 +406,11 @@ public class MyProfileFragment extends Fragment {
 
             }
             else{
-                s.append("Works at"+user.getWorks()+"\n");
+                s.append("Works at: "+user.getWorks()+"\n");
             }
         }
         if(user.getFieldOfInt()!=""){
-            s.append("Filed of Interests: "+user.getFieldOfInt()+"\n");
+            s.append("Field of Interests: "+user.getFieldOfInt()+"\n");
         }
         if(user.getWorkEnv()!=""){
             if(user.getWorkEnv().equals("Both")){

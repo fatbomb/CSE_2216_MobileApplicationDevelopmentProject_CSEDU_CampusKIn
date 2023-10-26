@@ -62,7 +62,7 @@ public class SearchUserActivity extends AppCompatActivity {
         FirestoreRecyclerOptions<UserModel> options = new FirestoreRecyclerOptions.Builder<UserModel>()
                 .setQuery(query, UserModel.class).build();
 
-        adapter = new SearchUserRecyclerAdapter(options,getApplicationContext());
+        adapter = new SearchUserRecyclerAdapter(options,getApplicationContext(),this);
         searchUserRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         searchUserRecyclerView.setAdapter(adapter);
         adapter.startListening();
