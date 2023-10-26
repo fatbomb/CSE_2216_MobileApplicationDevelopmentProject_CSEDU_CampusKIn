@@ -2,7 +2,10 @@ package New.Main.CSEDU_CampusKin.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +73,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
         }
 
 
-        holder.description.setText(post.getPostDescription());
+        if(post.getPostDescription()!=""){
+
+            //holder.description.setText(post.getPostDescription());
+            SpannableString spannable = new SpannableString(post.getPostDescription());
+            Linkify.addLinks(spannable, Linkify.WEB_URLS);
+            holder.description.setText(spannable);
+            holder.description.setMovementMethod(LinkMovementMethod.getInstance());
+        }
 
         holder.comments.setText(post.getCommentCount()+" Comments");
         setTime(holder,post);

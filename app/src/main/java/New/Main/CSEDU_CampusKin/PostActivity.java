@@ -111,7 +111,12 @@ public class PostActivity extends AppCompatActivity {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                upload();
+                if(imageUri==null && (description.getText().toString()==null|| description.getText().toString().equals(""))){
+                    Toast.makeText(PostActivity.this, "Nothing to Post", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    upload();
+                }
             }
         });
 
