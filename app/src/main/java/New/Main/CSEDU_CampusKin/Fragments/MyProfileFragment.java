@@ -2,6 +2,7 @@ package New.Main.CSEDU_CampusKin.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +67,7 @@ public class MyProfileFragment extends Fragment {
     private String mParam2;
     private CircleImageView imageProfile;
     private ImageView options,myPosts,savedPosts,msg;
-    private TextView posts,followers,following,username,bio,registrationNo;
+    private TextView posts,followers,following,username,bio,registrationNo,linkedin;
     private FirebaseUser firebaseUser;
     String profileId;
     private RecyclerView recyclerViewPosts;
@@ -134,6 +141,8 @@ public class MyProfileFragment extends Fragment {
         bio=view.findViewById(R.id.bio);
         editProfile=view.findViewById(R.id.edit_profile);
         msg=view.findViewById(R.id.msg);
+        linkedin=view.findViewById(R.id.linkedin);
+
         userinfo();
         recyclerViewPosts= view.findViewById(R.id.recycler_view_posts);
         recyclerViewPosts.setHasFixedSize(true);
@@ -344,8 +353,36 @@ public class MyProfileFragment extends Fragment {
                     user =  documentSnapshot.toObject(UserModel.class);
                     Picasso.get().load(user.getPhoto()).placeholder(R.drawable.human).into(imageProfile);
                     username.setText(user.getUsername());
-                    registrationNo.setText(user.getRegistrationNo());
-                    bio.setText(user.getBio());
+                    registrationNo.setText("reg: "+user.getRegistrationNo()+"(Batch: "+user.getBatch()+")");
+                    //bio.setText(user.getBio());
+                    getBio(user);
+                    if(user.getLinkedin()!=null){
+                        SpannableString spannable = new SpannableString("Linkedin: "+user.getLinkedin());
+                        Linkify.addLinks(spannable, Linkify.WEB_URLS);
+                        linkedin.setText(spannable);
+                        linkedin.setMovementMethod(LinkMovementMethod.getInstance());
+                        ClickableSpan customLink = new ClickableSpan() {
+                            @Override
+                            public void onClick(View widget) {
+                                // Define the action when the custom link is clicked
+                                Toast.makeText(getContext(), "Custom link clicked", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void updateDrawState(TextPaint ds) {
+                                super.updateDrawState(ds);
+                                // Customize the appearance of the custom link (e.g., color, underline)
+                                ds.setColor(Color.BLUE); // Text color
+                                ds.setUnderlineText(true); // Underline
+                            }
+                        };
+                        spannable.setSpan(customLink, 10, spannable.length()-1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    }
+                    else{
+                        linkedin.setVisibility(View.GONE);
+
+                    }
 
 
 
@@ -359,6 +396,30 @@ public class MyProfileFragment extends Fragment {
             }
         });
     }
+
+    private void getBio(UserModel user) {
+        StringBuilder s=new StringBuilder();
+        if(user.getWorks()!=""){
+            if(user.getWorks().toLowerCase().equals("student")){
+                s.append("Student");
+
+            }
+            else{
+                s.append("Works at"+user.getWorks()+"\n");
+            }
+        }
+        if(user.getFieldOfInt()!=""){
+            s.append("Filed of Interests: "+user.getFieldOfInt()+"\n");
+        }
+        if(user.getWorkEnv()!=""){
+            s.append("Working Environment: "+user.getWorkEnv()+"\n");
+        }
+        if (user.getBio()!=""){
+            s.append(user.getBio());
+        }
+        bio.setText(s.toString());
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

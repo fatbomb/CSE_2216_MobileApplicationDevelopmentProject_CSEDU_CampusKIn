@@ -3,7 +3,7 @@ package New.Main.CSEDU_CampusKin.Model;
 import com.google.firebase.Timestamp;
 
 public class UserModel {
-    private String userID,gender,phoneNo,email,photo,registrationNo,bio;
+    private String userID,gender,phoneNo,email,photo,registrationNo,bio,works,workEnv,linkedin,fieldOfInt;
     private String username;
     private String batch;
 
@@ -13,6 +13,55 @@ public class UserModel {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getWorks() {
+        return works;
+    }
+
+    public void setWorks(String works) {
+        this.works = works;
+    }
+
+    public String getWorkEnv() {
+        return workEnv;
+    }
+
+    public void setWorkEnv(String workEnv) {
+        this.workEnv = workEnv;
+    }
+
+    public String getLinkedin() {
+        return linkedin;
+    }
+
+    public void setLinkedin(String linkedin) {
+        this.linkedin = linkedin;
+    }
+
+    public String getFieldOfInt() {
+        return fieldOfInt;
+    }
+
+    public void setFieldOfInt(String fieldOfInt) {
+        this.fieldOfInt = fieldOfInt;
+    }
+
+    public UserModel(String userID, String gender, String phoneNo, String email, String photo, String registrationNo, String bio, String works, String workEnv, String linkedin, String fieldOfInt, String username, String batch, Timestamp createdTimeStamp) {
+        this.userID = userID;
+        this.gender = gender;
+        this.phoneNo = phoneNo;
+        this.email = email;
+        this.photo = photo;
+        this.registrationNo = registrationNo;
+        this.bio = bio;
+        this.works = works;
+        this.workEnv = workEnv;
+        this.linkedin = linkedin;
+        this.fieldOfInt = fieldOfInt;
+        this.username = username;
+        this.batch = batch;
+        this.createdTimeStamp = createdTimeStamp;
     }
 
     public UserModel(String userID, String gender, String phoneNo, String email, String photo, String registrationNo, String bio, String username, String batch, Timestamp createdTimeStamp) {

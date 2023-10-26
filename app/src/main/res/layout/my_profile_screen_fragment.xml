@@ -173,8 +173,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="-5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="-3dp"
                     android:maxLines="1"
                     android:textColor="@color/black"
                     android:id="@+id/registrationNo"
@@ -185,8 +185,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/bio"
-                    android:maxLines="7"
                     android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/linkedin"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web" />
+
 
 
 

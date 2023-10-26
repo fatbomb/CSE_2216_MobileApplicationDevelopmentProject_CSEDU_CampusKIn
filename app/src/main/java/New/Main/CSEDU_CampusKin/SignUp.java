@@ -279,6 +279,10 @@ public class SignUp extends AppCompatActivity {
                             map.put("createdTimeStamp", Timestamp.now());
                             map.put("userID",auth.getCurrentUser().getUid());
                             map.put("bio","");
+                            map.put("works","");
+                            map.put("workEnv","");
+                            map.put("linkedin","");
+                            map.put("fieldOfInt","");
                             mRootRef.collection("Users").document(auth.getCurrentUser().getUid()).set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
