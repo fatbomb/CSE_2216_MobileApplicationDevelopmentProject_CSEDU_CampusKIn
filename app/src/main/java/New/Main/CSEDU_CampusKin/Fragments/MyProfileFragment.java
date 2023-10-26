@@ -41,6 +41,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import New.Main.CSEDU_CampusKin.Activity.FollowersActivity;
 import New.Main.CSEDU_CampusKin.Adapters.PostAdapter;
 import New.Main.CSEDU_CampusKin.ChatActivity;
 import New.Main.CSEDU_CampusKin.EditProfileActivity;
@@ -233,6 +234,26 @@ public class MyProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), OptionsActivity.class));;
+            }
+        });
+
+        followers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent(getContext(), FollowersActivity.class);
+                intent.putExtra("id",profileId);
+                intent.putExtra("title","followers");
+                startActivity(intent);
+            }
+        });
+
+        following.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent(getContext(), FollowersActivity.class);
+                intent.putExtra("id",profileId);
+                intent.putExtra("title","following");
+                startActivity(intent);
             }
         });
 

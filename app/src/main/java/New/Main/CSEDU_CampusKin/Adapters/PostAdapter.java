@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import New.Main.CSEDU_CampusKin.Activity.FollowersActivity;
 import New.Main.CSEDU_CampusKin.CommentActivity;
 import New.Main.CSEDU_CampusKin.Model.Post;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
@@ -173,6 +174,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                     FirebaseDatabase.getInstance().getReference().child("Saves")
                             .child(firebaseUser.getUid()).child(post.getPostID()).removeValue();
                 }
+            }
+        });
+        holder.likes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(mContext, FollowersActivity.class);
+                intent.putExtra("id",post.getPostID());
+                intent.putExtra("title","likes");
+                mContext.startActivity(intent);
             }
         });
 
