@@ -6,293 +6,302 @@
     android:layout_height="match_parent"
     android:background="#DDDDDD"
     tools:context=".EditProfileActivity">
-    <LinearLayout
-        android:id="@+id/top_linear_layout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:background="@drawable/top_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        android:orientation="horizontal"/>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit Profile"
-        android:textColor="@color/white"
-        android:textSize="50dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="parent"/>
-
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView5"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        app:cardCornerRadius="100dp"
-        app:cardElevation="21dp"
-        android:layout_marginTop="60dp"
-        app:layout_constraintBottom_toBottomOf="@+id/top_linear_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/top_linear_layout">
-
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:id="@+id/scrollview">
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/image_background">
+            android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/top_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:background="@drawable/top_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit Profile"
+                android:textColor="@color/white"
+                android:textSize="50dp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
 
-            <ImageView
-                android:id="@+id/profile"
+                />
+
+
+
+
+        </LinearLayout>
+
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView5"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            app:cardCornerRadius="100dp"
+            app:cardElevation="21dp"
+            android:layout_marginTop="-5dp"
+            android:layout_alignBottom="@+id/top_linear_layout"
+            android:layout_centerInParent="true"
+            >
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="0dp"
-                android:padding="0dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/human">
+                android:background="@drawable/image_background">
+
+                <ImageView
+                    android:id="@+id/profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:padding="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/human">
 
 
-            </ImageView>
+                </ImageView>
 
-        </LinearLayout>
-
-
-
-
-    </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="30dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/card_view_ackgroud"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
 
-        <LinearLayout
+        </androidx.cardview.widget.CardView>
+
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/card_view_ackgroud"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="-30dp"
+            android:layout_marginEnd="30dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="20dp"
+            android:layout_below="@+id/cardView5"
+            android:background="@drawable/card_view_ackgroud">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp">
-                <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/card_view_ackgroud"
+                android:orientation="vertical">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <EditText
-                        android:id="@+id/fstname"
-                        android:layout_width="140dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="40dp"
-                        android:layout_marginEnd="4dp"
-                        android:background="@drawable/edit_text_background"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/black"
-                        android:hint="First Name"
-                        android:paddingStart="15dp" />
-
-                    <EditText
-                        android:id="@+id/lstname"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp">
+                    <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="40dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_toRightOf="@+id/fstname"
-                        android:background="@drawable/edit_text_background"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/black"
-                        android:hint="Last Name"
-                        android:paddingStart="15dp" />
-                </RelativeLayout>
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:id="@+id/fstname"
+                            android:layout_width="140dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="40dp"
+                            android:layout_marginEnd="4dp"
+                            android:background="@drawable/edit_text_background"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/black"
+                            android:hint="First Name"
+                            android:paddingStart="15dp" />
+
+                        <EditText
+                            android:id="@+id/lstname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="40dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_toRightOf="@+id/fstname"
+                            android:background="@drawable/edit_text_background"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/black"
+                            android:hint="Last Name"
+                            android:paddingStart="15dp" />
+                    </RelativeLayout>
 
 
-            </LinearLayout>
-            <EditText
-                android:id="@+id/work"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="13dp"
-                android:paddingBottom="13dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="Current working status"
-                android:drawablePadding="10dp"
-                android:paddingStart="10dp"
-                android:drawableTint="@color/black"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp" />
-
-            <EditText
-                android:id="@+id/filedOfInt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="13dp"
-                android:paddingBottom="13dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="Field Of Interest"
-                android:drawablePadding="10dp"
-                android:paddingStart="10dp"
-                android:drawableTint="@color/black"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp" />
-            <EditText
-                android:id="@+id/contno"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="Contact Number"
-                android:drawablePadding="10dp"
-                android:paddingStart="10dp"
-                android:drawableTint="@color/black"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp">
-
-
-                <RelativeLayout
+                </LinearLayout>
+                <EditText
+                    android:id="@+id/work"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingTop="13dp"
+                    android:paddingBottom="13dp"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="Current working status"
+                    android:drawablePadding="10dp"
+                    android:paddingStart="10dp"
+                    android:drawableTint="@color/black"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="10dp" />
 
-                    <EditText
-                        android:id="@+id/bat"
-                        android:layout_width="140dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="4dp"
-                        android:background="@drawable/edit_text_background"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/black"
-                        android:hint="Batch"
-                        android:paddingStart="10dp" />
-
-                    <Spinner
-                        android:id="@+id/workEnv"
-                        android:layout_width="140dp"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/edit_text_background"
-                        android:layout_toRightOf="@+id/bat"
-                        android:layout_alignParentEnd="true"
-                        android:paddingStart="10dp"
-                        android:drawablePadding="10dp" />
-                </RelativeLayout>
-
-
-            </LinearLayout>
-            <EditText
-                android:id="@+id/linkedin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="13dp"
-                android:paddingBottom="13dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="LinkedIn Profile"
-                android:drawablePadding="10dp"
-                android:paddingStart="10dp"
-                android:drawableTint="@color/black"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:maxLines="7"
-                android:layout_marginTop="10dp" />
-            <EditText
-                android:id="@+id/bio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="13dp"
-                android:paddingBottom="13dp"
-                android:background="@drawable/edit_text_background"
-                android:hint="bio"
-                android:drawablePadding="10dp"
-                android:paddingStart="10dp"
-                android:drawableTint="@color/black"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:maxLines="7"
-                android:layout_marginTop="10dp" />
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <RelativeLayout
+                <EditText
+                    android:id="@+id/filedOfInt"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/update"
-                        android:layout_width="140dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/button_background"
-                        android:text="Update"
-                        android:textColor="@color/white"
-                        android:textSize="20dp"/>
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/cancel"
-                        android:layout_width="140dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/button_background"
-                        android:layout_alignParentEnd="true"
-                        android:text="Cancel"
-                        android:layout_marginEnd="20dp"
-                        android:textColor="@color/white"
-                        android:textSize="20dp"/>
+                    android:layout_height="wrap_content"
+                    android:paddingTop="13dp"
+                    android:paddingBottom="13dp"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="Field Of Interest"
+                    android:drawablePadding="10dp"
+                    android:paddingStart="10dp"
+                    android:drawableTint="@color/black"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="10dp" />
+                <EditText
+                    android:id="@+id/contno"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="Contact Number"
+                    android:drawablePadding="10dp"
+                    android:paddingStart="10dp"
+                    android:drawableTint="@color/black"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="10dp" />
 
-                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/bat"
+                            android:layout_width="140dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="4dp"
+                            android:background="@drawable/edit_text_background"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/black"
+                            android:hint="Batch"
+                            android:paddingStart="10dp" />
+
+                        <Spinner
+                            android:id="@+id/workEnv"
+                            android:layout_width="140dp"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="5dp"
+                            android:background="@drawable/edit_text_background"
+                            android:layout_toRightOf="@+id/bat"
+                            android:layout_alignParentEnd="true"
+                            android:paddingStart="10dp"
+                            android:drawablePadding="10dp" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+                <EditText
+                    android:id="@+id/linkedin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="13dp"
+                    android:paddingBottom="13dp"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="LinkedIn Profile"
+                    android:drawablePadding="10dp"
+                    android:paddingStart="10dp"
+                    android:drawableTint="@color/black"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:maxLines="7"
+                    android:layout_marginTop="10dp" />
+                <EditText
+                    android:id="@+id/bio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="13dp"
+                    android:paddingBottom="13dp"
+                    android:background="@drawable/edit_text_background"
+                    android:hint="bio"
+                    android:drawablePadding="10dp"
+                    android:paddingStart="10dp"
+                    android:drawableTint="@color/black"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:maxLines="7"
+                    android:layout_marginTop="10dp" />
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/update"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/button_background"
+                            android:text="Update"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"/>
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/cancel"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/button_background"
+                            android:layout_alignParentEnd="true"
+                            android:text="Cancel"
+                            android:layout_marginEnd="20dp"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
 
             </LinearLayout>
-
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-    <ImageView
-        android:id="@+id/AddImage"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="80dp"
-        android:background="@drawable/camera_background"
-        android:padding="3dp"
-        android:elevation="21dp"
-        android:src="@drawable/baseline_camera_alt_24"
-        app:layout_constraintBottom_toBottomOf="@+id/cardView5"
-        app:layout_constraintEnd_toEndOf="@+id/cardView5"
-        app:layout_constraintStart_toStartOf="@+id/cardView5" />
+        </androidx.cardview.widget.CardView>
+        <ImageView
+            android:id="@+id/AddImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/camera_background"
+            android:padding="3dp"
+            android:elevation="21dp"
+            android:src="@drawable/baseline_camera_alt_24"
+            android:layout_alignBottom="@+id/cardView5"
+            android:layout_alignRight="@+id/cardView5"
+            />
+        </RelativeLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
