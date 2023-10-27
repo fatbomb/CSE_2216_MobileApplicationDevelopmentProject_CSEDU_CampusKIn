@@ -129,6 +129,7 @@ public class CommentActivity extends AppCompatActivity {
         mp.put("comment",addComment.getText().toString());
         mp.put("publisher",firebaseUser.getUid());
         mp.put("postTime", System.currentTimeMillis());
+        mp.put("edited",false);
         ref.child(id).setValue(mp).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

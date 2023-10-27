@@ -78,6 +78,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
             }
         });
         setTime(holder,comment);
+        if(comment.isEdited()){
+            holder.edited.setVisibility(View.VISIBLE);
+        }
         holder.username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,7 +127,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
 
 // Create a HashMap with the updated data
                                     HashMap<String, Object> updatedData = new HashMap<>();
-                                    updatedData.put("comment", editedComment); // Replace with the new comment text
+                                    updatedData.put("comment", editedComment);
+                                    updatedData.put("edited",true);// Replace with the new comment text
 
 // Update the comment in the database
                                     commentToUpdateRef.updateChildren(updatedData)

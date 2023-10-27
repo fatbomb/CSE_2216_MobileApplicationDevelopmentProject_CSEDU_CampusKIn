@@ -1,6 +1,8 @@
 package New.Main.CSEDU_CampusKin.Adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -10,20 +12,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
@@ -164,6 +172,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
 
             }
         });
+        if(post.isEdited()){
+            holder.edited.setVisibility(View.VISIBLE);
+        }
         if(post.getPostedBy().equals(firebaseUser.getUid())){
             holder.save.setVisibility(View.GONE);
         }
@@ -198,7 +209,133 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                 mContext.startActivity(intent);
             }
         });
+        holder.more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(post.getPostedBy().equals(firebaseUser.getUid())){
+                    PopupMenu popupMenu = new PopupMenu(mContext, holder.itemView);
 
+                    // Inflate the menu resource
+                    popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+
+                    // Set an item click listener to handle clicks on the menu items
+                    popupMenu.setOnMenuItemClickListener(item -> {
+                        if(item.getItemId()==R.id.edit_option){
+                            editComment(mContext,post.getPostDescription(), new CommentAdapter.EditCommentCallback() {
+                                @Override
+                                public void onCommentEdited(String editedComment) {
+                                    if (editedComment.equals(post.getPostDescription())){
+                                        return;
+                                    }
+                                    DocumentReference mrootref=FirebaseFirestore.getInstance().collection("Post").document(post.getPostID());
+
+// Assume you have the comment ID you want to edit, let's call it commentId
+                                    // Replace with the actual comment ID
+
+// Retrieve the specific comment you want to edit
+
+
+// Create a HashMap with the updated data
+                                    HashMap<String, Object> updatedData = new HashMap<>();
+                                    updatedData.put("postDescription", editedComment);
+                                    updatedData.put("edited",true);// Replace with the new comment text
+
+// Update the comment in the database
+                                    mrootref.update(updatedData)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        // Comment updated successfully
+                                                        Toast.makeText(mContext, "Post Updated", Toast.LENGTH_SHORT).show();
+                                                        holder.edited.setVisibility(View.VISIBLE);
+                                                        holder.description.setText(editedComment);
+                                                    } else {
+                                                        // Handle the error if the update fails
+                                                        Toast.makeText(mContext, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+                                }
+                            });
+
+                        }
+                        else if(item.getItemId()==R.id.delete_option){
+                            AlertDialog alertDialog=new AlertDialog.Builder(mContext).create();
+                            alertDialog.setTitle("Do you want to delete?");
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "NO", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int i) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int i) {
+                                    FirebaseFirestore.getInstance().collection("Post").document(post.getPostID()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            int position = mPost.indexOf(post);
+                                            if (position != -1) {
+                                                mPost.remove(position);
+                                                // Notify the adapter that the data has changed
+                                                notifyItemRemoved(position);
+                                                Toast.makeText(mContext, "Post Deleted Successfully", Toast.LENGTH_SHORT).show();
+                                            }
+                                            //Toast.makeText(mContext, "Post Deleted Successfully", Toast.LENGTH_SHORT).show();
+                                            dialog.dismiss();
+                                        }
+                                    });
+
+
+
+                                }
+                            });
+
+                            alertDialog.show();
+                        }
+                        return true;
+
+
+                    });
+
+                    // Show the popup menu
+                    popupMenu.show();
+
+                }
+
+            }
+        });
+
+
+    }
+    private void editComment(Context context, String previousComment, CommentAdapter.EditCommentCallback callback) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Edit Comment");
+
+        View view = LayoutInflater.from(context).inflate(R.layout.edit_comment_dialog, null);
+        builder.setView(view);
+
+        EditText editText = view.findViewById(R.id.editCommentEditText);
+        editText.setText(previousComment);
+
+        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String updatedComment = editText.getText().toString();
+                dialog.dismiss();
+                callback.onCommentEdited(updatedComment);
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.show();
 
     }
 
@@ -321,4 +458,5 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                     }
                 });
     }
+
 }

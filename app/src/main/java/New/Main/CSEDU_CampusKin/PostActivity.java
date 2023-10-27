@@ -154,6 +154,7 @@ public class PostActivity extends AppCompatActivity {
                     mp.put("postedDate", Timestamp.now());
                     mp.put("postLike",0);
                     mp.put("commentCount",0);
+                    mp.put("edited",false);
                     ref.collection("Post").document(postId).set(mp);
                     List<String> hashTags=description.getHashtags();
 
@@ -205,6 +206,7 @@ public class PostActivity extends AppCompatActivity {
                 }
             }
             pd.dismiss();
+            startActivity(new Intent(PostActivity.this,NavigationActivity.class));
             finish();
 
         }

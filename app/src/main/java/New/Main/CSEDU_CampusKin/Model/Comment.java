@@ -5,15 +5,25 @@ import com.google.firebase.Timestamp;
 public class Comment {
     private String comment,publisher,id;
     private long postTime;
+    private boolean edited;
     public Comment(){
 
     }
 
-    public Comment(String comment, String publisher, String id, long postTime) {
+    public boolean isEdited() {
+        return edited;
+    }
+
+    public void setEdited(boolean edited) {
+        this.edited = edited;
+    }
+
+    public Comment(String comment, String publisher, String id, long postTime, boolean edited) {
         this.comment = comment;
         this.publisher = publisher;
         this.id = id;
         this.postTime = postTime;
+        this.edited=edited;
     }
 
     public String getId() {

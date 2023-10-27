@@ -6,15 +6,26 @@ public class Post {
     private String postID,postImage,postDescription,postedBy;
     Timestamp postedDate;
     private long postLike,commentCount;
+    boolean edited;
+
+    public boolean isEdited() {
+        return edited;
+    }
+
+    public void setEdited(boolean edited) {
+        this.edited = edited;
+    }
 
     public Post() {
     }
 
-    public Post(String postID, String postImage, Timestamp postedDate, String postDescription) {
+    public Post(String postID, String postImage, Timestamp postedDate, String postDescription,boolean edited) {
         this.postID = postID;
         this.postImage = postImage;
         this.postedDate = postedDate;
         this.postDescription = postDescription;
+        this.edited=edited;
+
     }
 
     public String getPostID() {
