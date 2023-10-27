@@ -55,7 +55,8 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:maxLines="100"
-            android:id="@+id/comment"/>
+            android:id="@+id/comment"
+            android:autoLink="web"/>
 
     </LinearLayout>
 

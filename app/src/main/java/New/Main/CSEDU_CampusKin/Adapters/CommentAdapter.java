@@ -6,6 +6,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +64,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         fUser= FirebaseAuth.getInstance().getCurrentUser();
         Comment comment =mComment.get(position);
-        holder.comment.setText(comment.getComment());
+        if(comment.getComment()!=""){
+            SpannableString spannable = new SpannableString(comment.getComment());
+            Linkify.addLinks(spannable, Linkify.WEB_URLS);
+            holder.comment.setText(spannable);
+            holder.comment.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+        //holder.comment.setText(comment.getComment());
 
         FirebaseFirestore.getInstance().collection("Users").document(comment.getPublisher()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
