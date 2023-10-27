@@ -1,20 +1,32 @@
 package New.Main.CSEDU_CampusKin;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class ForgetPassword extends AppCompatActivity {
-    boolean isPasswordVisible = false;
-    boolean isPasswordVisible1 = false;
 
+    EditText email;
+    AppCompatButton send, cancel;
+    private String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    FirebaseAuth firebaseAuth;
+    ProgressDialog pd;
     @Override
     protected void onCreate(Bundle setInstanceState) {
         super.onCreate(setInstanceState);
@@ -24,60 +36,52 @@ public class ForgetPassword extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        EditText passwordEditTextForgetPass = findViewById(R.id.passwordEditTextForgetPassNewPass);
-
-        passwordEditTextForgetPass.setOnTouchListener(new View.OnTouchListener() {
+        email=findViewById(R.id.email);
+        send=findViewById(R.id.send);
+        cancel=findViewById(R.id.cancel);
+        firebaseAuth=FirebaseAuth.getInstance();
+        pd= new ProgressDialog(this);
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_END = 2;
-
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (passwordEditTextForgetPass.getRight() - passwordEditTextForgetPass.getCompoundDrawables()[DRAWABLE_END].getBounds().width())) {
-                        isPasswordVisible = !isPasswordVisible;
-
-                        if (isPasswordVisible) {
-                            passwordEditTextForgetPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                            //passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_lock_24, 0);
-                            passwordEditTextForgetPass.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.outline_lock_24, 0, R.drawable.outline_remove_red_eye_24, 0);
-                        } else {
-                            passwordEditTextForgetPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                            //passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_lock_24, 0);
-                            passwordEditTextForgetPass.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.outline_lock_24, 0, R.drawable.hide_pass, 0);
-                        }
-
-                        return true;
-                    }
-                }
-                return false;
+            public void onClick(View view) {
+                startActivity(new Intent(ForgetPassword.this,MainActivity.class));
+                finish();
             }
         });
 
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) EditText confirmPassForgetPass = findViewById(R.id.confirmPassForgetPass);
-
-        confirmPassForgetPass.setOnTouchListener(new View.OnTouchListener() {
+        send.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_END = 2;
-
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (passwordEditTextForgetPass.getRight() - passwordEditTextForgetPass.getCompoundDrawables()[DRAWABLE_END].getBounds().width())) {
-                        isPasswordVisible1 = !isPasswordVisible1;
-
-                        if (isPasswordVisible1) {
-                            confirmPassForgetPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                            //passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_lock_24, 0);
-                            confirmPassForgetPass.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.outline_lock_24, 0, R.drawable.outline_remove_red_eye_24, 0);
-                        } else {
-                            confirmPassForgetPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                            //passwordEditText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.outline_lock_24, 0);
-                            confirmPassForgetPass.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.outline_lock_24, 0, R.drawable.hide_pass, 0);
-                        }
-
-                        return true;
-                    }
+            public void onClick(View view) {
+                String st=email.getText().toString();
+                if(st.isEmpty() ||!st.matches(emailpattern)){
+                    email.setError("Invalid Email Provided");
                 }
-                return false;
+                else{
+                    pd.setMessage("Please Wait");
+                    pd.show();
+                    resetPassWord(email.getText().toString());
+                }
+
             }
         });
+
+    }
+
+    private void resetPassWord(String mEmail) {
+        firebaseAuth.sendPasswordResetEmail(mEmail).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(ForgetPassword.this, "Reset email successfully sent", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ForgetPassword.this,MainActivity.class));
+                pd.dismiss();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                email.setError("Please provide a valid email Address");
+                pd.dismiss();
+            }
+        });
+
     }
 }

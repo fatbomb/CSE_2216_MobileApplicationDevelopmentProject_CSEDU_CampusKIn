@@ -189,7 +189,7 @@ public class SignUp extends AppCompatActivity {
                 String gen=gender.getSelectedItem().toString();
                 String bat=batch.getText().toString();
                 String s_pass2 = confirmpass.getText().toString();
-                if (!getEmail.matches(emailpattern)) email.setError("Enter correct e-mail");
+                if (getEmail.isEmpty()|| !getEmail.matches(emailpattern)) email.setError("Enter correct e-mail");
                 else if(name.isEmpty())firstname.setError("Name is Empty");
                 else if(regnum.isEmpty()) registration.setError("No registration Number Provided");
                 else if(phone.isEmpty()) phnno.setError("Phone no not provided");
