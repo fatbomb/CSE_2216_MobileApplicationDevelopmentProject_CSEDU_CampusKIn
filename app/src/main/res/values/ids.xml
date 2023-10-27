@@ -6,5 +6,4 @@
     <item name="passwordEditTextForgetPassNewPass" type="id" />
     <item name="confirmPassForgetPass" type="id" />
     <item name="forgetPasswordCode" type="id" />
-    <item name="recycler_view" type="id" />
 </resources>
