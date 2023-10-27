@@ -164,6 +164,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
 
             }
         });
+        if(post.getPostedBy().equals(firebaseUser.getUid())){
+            holder.save.setVisibility(View.GONE);
+        }
         holder.imagerProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -259,7 +262,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
 
     public class viewholder extends RecyclerView.ViewHolder{
         public ImageView imagerProfile,postImage,like,comment,save,more;
-        public TextView likes,username,comments,timeago;
+        public TextView likes,username,comments,timeago,edited;
         SocialTextView description;
 
         public viewholder(@NonNull View itemView) {
@@ -275,6 +278,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
             description=itemView.findViewById(R.id.description);
             more=itemView.findViewById(R.id.more);
             timeago=itemView.findViewById(R.id.timeago);
+            edited=itemView.findViewById(R.id.edited);
 
         }
     }
