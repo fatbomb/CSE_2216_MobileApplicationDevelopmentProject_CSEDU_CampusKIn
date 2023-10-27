@@ -22,45 +22,52 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_centerInParent="true"
             android:layout_toEndOf="@id/profile_pic_image_view"
-            android:layout_centerInParent="true">
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/kin_name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Kin Name"
+                android:textColor="@color/black"
                 android:textSize="15sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/kin_batch_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Batch 27"
-                android:textSize="13sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
+
         </LinearLayout>
+
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/follow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_background"
-            android:text="Follow"
-            android:layout_centerInParent="true"
             android:layout_alignParentEnd="true"
-            android:id="@+id/follow"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/button_background"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:textColor="@color/white"
-            android:layout_marginEnd="10dp"/>
+            android:text="Follow"
+            android:textColor="@color/white" />
+
         <ImageButton
+            android:id="@id/msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/send_icon"
-            android:layout_toStartOf="@id/follow"
             android:layout_centerInParent="true"
-            android:layout_marginEnd="5dp"
-            android:id="@id/msg"/>
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@id/follow"
+            android:background="@null"
+            android:src="@drawable/send_icon" />
 
     </RelativeLayout>
 

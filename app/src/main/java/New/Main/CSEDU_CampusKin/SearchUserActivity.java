@@ -1,5 +1,6 @@
 package New.Main.CSEDU_CampusKin;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,11 +9,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.media.Image;
 import android.media.MediaCodec;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.Firebase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -58,25 +64,35 @@ public class SearchUserActivity extends AppCompatActivity {
             onBackPressed();
         });
 
-        searchButton.setOnClickListener(view -> {
-            String searchTerm = searchInput.getText().toString();
-            if (searchTerm.isEmpty() || searchTerm.length() < 1) {
-                searchInput.setError("Invalid Kin Name");
-                return;
-            }
-            String[] field = {"username", "batch", "works", "workEnv", "fieldOfInt", "gender", "registrationNo"};
+        String[] field = {"username", "batch", "works", "workEnv", "fieldOfInt", "gender", "registrationNo"};
+        final String[] searchTerm = {""};
+        searchInput.addTextChangedListener(new TextWatcher() {
 
-            for(int i=0; i<7; i++)
-            {
-                setUpSearchRecyclerView(searchTerm, searchUserRecyclerView[i], field[i]);
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int j, int i1, int i2) {
+                searchTerm[0] = charSequence.toString();
+                for (int i = 0; i < 7; i++) {
+                    setUpSearchRecyclerView(searchTerm[0], searchUserRecyclerView[i], field[i]);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
             }
         });
+
     }
 
     void setUpSearchRecyclerView(String searchTerm, RecyclerView recyclerView, String field) {
         CollectionReference userCollection = FirebaseUtils.allUserCollectionReference();
 
         Query query = userCollection.orderBy(field).startAt(searchTerm).endAt(searchTerm + "\uf8ff");
+
 
         FirestoreRecyclerOptions<UserModel> options = new FirestoreRecyclerOptions.Builder<UserModel>()
                 .setQuery(query, UserModel.class).build();
@@ -85,8 +101,6 @@ public class SearchUserActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         adapter.startListening();
-
-        System.out.println(recyclerView.getAdapter().getItemCount() + " users found ");
     }
 
     @Override
