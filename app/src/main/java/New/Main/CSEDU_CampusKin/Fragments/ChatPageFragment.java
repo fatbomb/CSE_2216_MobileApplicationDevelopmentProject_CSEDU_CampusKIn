@@ -71,6 +71,6 @@ public class ChatPageFragment extends Fragment {
     {
         super.onResume();
         if(adapter!=null)
-            adapter.startListening();
+            adapter.notifyDataSetChanged();
     }
 }
