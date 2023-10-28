@@ -229,13 +229,13 @@ public class ChatActivity extends AppCompatActivity {
     void setVoiceCall(String targetUserID, String targetUsername) {
         voiceCallButton.setIsVideoCall(false);
         voiceCallButton.setResourceID("zego_uikit_call");
-        voiceCallButton.setInvitees(Collections.singletonList(new ZegoUIKitUser(targetUsername)));
+        voiceCallButton.setInvitees(Collections.singletonList(new ZegoUIKitUser(targetUserID, targetUsername)));
     }
 
     void setVideoCall(String targetUserID, String targetUsername) {
         videoCallButton.setIsVideoCall(true);
         videoCallButton.setResourceID("zego_uikit_call");
-        videoCallButton.setInvitees(Collections.singletonList(new ZegoUIKitUser(targetUsername)));
+        videoCallButton.setInvitees(Collections.singletonList(new ZegoUIKitUser(targetUserID, targetUsername)));
     }
 
     void sendNotification(String message){
