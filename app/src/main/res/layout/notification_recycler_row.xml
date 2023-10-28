@@ -4,7 +4,9 @@
     android:layout_height="wrap_content"
     android:background="@drawable/card_view_ackgroud"
     android:layout_marginBottom="3dp"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:layout_margin="5dp"
+    >
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="40dp"

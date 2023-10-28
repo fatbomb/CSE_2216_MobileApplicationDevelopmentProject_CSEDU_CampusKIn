@@ -27,6 +27,7 @@ import java.util.List;
 
 import New.Main.CSEDU_CampusKin.Fragments.HomePageFragment;
 import New.Main.CSEDU_CampusKin.Fragments.MyProfileFragment;
+import New.Main.CSEDU_CampusKin.Fragments.PostDetailFragment;
 import New.Main.CSEDU_CampusKin.Model.NotificationModel;
 import New.Main.CSEDU_CampusKin.Model.Post;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
@@ -73,7 +74,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                         putString("postID", notificationModel.getPostID()).apply();
 
                 ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().
-                        replace(R.id.frame_layout, new HomePageFragment()).commit();
+                        replace(R.id.frame_layout, new PostDetailFragment()).commit();
             } else {
                 context.getSharedPreferences("PROFILE", Context.MODE_PRIVATE).edit().
                         putString("profileId", notificationModel.getUserID()).apply();

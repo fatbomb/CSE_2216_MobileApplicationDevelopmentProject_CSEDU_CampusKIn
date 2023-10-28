@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,6 +45,7 @@ import java.util.Map;
 
 import New.Main.CSEDU_CampusKin.Activity.FollowersActivity;
 import New.Main.CSEDU_CampusKin.CommentActivity;
+import New.Main.CSEDU_CampusKin.Fragments.PostDetailFragment;
 import New.Main.CSEDU_CampusKin.Model.Post;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
 import New.Main.CSEDU_CampusKin.NavigationActivity;
@@ -301,6 +303,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                     // Show the popup menu
                     popupMenu.show();
                 }
+            }
+        });
+
+
+        holder.description.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit().putString("postID", post.getPostID()).apply();
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().
+                        replace(R.id.frame_layout, new PostDetailFragment()).commit();
             }
         });
     }
