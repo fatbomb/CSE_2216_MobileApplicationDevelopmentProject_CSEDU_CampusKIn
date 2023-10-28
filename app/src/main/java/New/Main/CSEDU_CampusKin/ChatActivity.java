@@ -259,13 +259,13 @@ public class ChatActivity extends AppCompatActivity {
                    callAPI(jsonObject);
 
                } catch (Exception e){
-
+                   System.out.println(e);
                }
            }
         });
     }
 
-    void callAPI(JSONObject jsonObject) throws IOException{
+    void callAPI(JSONObject jsonObject) {
         MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
         OkHttpClient client = new OkHttpClient();

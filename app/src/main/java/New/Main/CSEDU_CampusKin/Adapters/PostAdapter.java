@@ -513,25 +513,28 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
 
                     jsonObject.put("notification", notificationObject);
                     jsonObject.put("data", dataObject);
+
                     FirebaseUtils.allUserCollectionReference().document(postPublisherID).get().addOnCompleteListener(task1 -> {
                         UserModel otherUser = task1.getResult().toObject(UserModel.class);
                         try {
                             jsonObject.put("to", otherUser.getFCMToken());
                         } catch (JSONException e) {
-                            throw new RuntimeException(e);
+                            System.out.println("sending notif exception"+ e);
                         }
                     });
 
                     callAPI(jsonObject);
+                    System.out.println("notification sent");
 
                 } catch (Exception e) {
-
+                    System.out.println(e);
+                    System.out.println("exception in sending notification");
                 }
             }
         });
     }
 
-    void callAPI(JSONObject jsonObject) throws IOException {
+    void callAPI(JSONObject jsonObject){
         MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
         OkHttpClient client = new OkHttpClient();
@@ -555,6 +558,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
 
             }
         });
+        System.out.println("API called");
     }
 
 
