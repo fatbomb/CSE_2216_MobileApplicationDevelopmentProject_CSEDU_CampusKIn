@@ -172,10 +172,10 @@ public class ChatActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             chat_msg_input.setText("");
                             sendNotification(message);
+                            AndroidUtil.setNotificationType("chat");
                         }
                     }
                 });
-
     }
 
     void setUpChatRecyclerView() {

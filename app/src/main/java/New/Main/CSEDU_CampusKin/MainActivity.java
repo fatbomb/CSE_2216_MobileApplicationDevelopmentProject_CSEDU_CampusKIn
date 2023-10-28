@@ -73,7 +73,12 @@ public class MainActivity extends AppCompatActivity {
                 mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(mainIntent);
 
-                Intent intent = new Intent(this, ChatActivity.class);
+                Intent intent = null;
+                if(AndroidUtil.getNotificationType() == "chat")
+                    intent = new Intent(this, ChatActivity.class);
+                else if(AndroidUtil.getNotificationType() == "post")
+                    intent = new Intent(this, PostActivity.class);
+
                 AndroidUtil.passUserModelAsIntent(intent, userModel);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

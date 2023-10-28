@@ -9,6 +9,18 @@ import com.google.firebase.firestore.auth.User;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
 
 public class AndroidUtil {
+
+    public static String notificationType;
+
+    public static void setNotificationType(String type)
+    {
+        notificationType = type;
+    }
+
+    public static String getNotificationType()
+    {
+        return notificationType;
+    }
     public static void showToast(Context context, String message){
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }

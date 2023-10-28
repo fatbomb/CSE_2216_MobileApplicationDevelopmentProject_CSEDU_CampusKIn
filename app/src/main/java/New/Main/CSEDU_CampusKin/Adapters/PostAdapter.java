@@ -55,6 +55,7 @@ import New.Main.CSEDU_CampusKin.Model.UserModel;
 import New.Main.CSEDU_CampusKin.NavigationActivity;
 import New.Main.CSEDU_CampusKin.PostActivity;
 import New.Main.CSEDU_CampusKin.R;
+import New.Main.CSEDU_CampusKin.Utils.AndroidUtil;
 import New.Main.CSEDU_CampusKin.Utils.FirebaseUtils;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -149,6 +150,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                     if (!post.getPostedBy().equals(FirebaseUtils.currentUserId())) {
                         addNotification(post.getPostID(), post.getPostedBy(), "liked your post.");
                         sendNotification("liked your post", post.getPostedBy());
+                        AndroidUtil.setNotificationType("post");
                     }
                 } else {
                     FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostID()).child(firebaseUser.getUid()).removeValue();
