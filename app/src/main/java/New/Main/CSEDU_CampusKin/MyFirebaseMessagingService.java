@@ -15,10 +15,15 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Map;
+
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public static final String channelId = "notification_channel";
     public static final String channelName= "New.Main.CSEDU_CampusKin";
+
+
+
     private RemoteViews getCustomDesign(String title, String message)
     {
         RemoteViews remoteViews = new RemoteViews(getApplicationContext().getPackageName(), R.layout.pushnotification);
@@ -30,12 +35,23 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage){
         if(remoteMessage.getNotification()!=null){
-            generateNotification(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
+            //generateNotification(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
+            // Handle incoming FCM messages here
+            // Check the "notification_type" field to determine the type of notification
+            Map<String, String> data = remoteMessage.getData();
+            String notificationType = data.get("notification_type");
+
+            if ("post".equals(notificationType)) {
+                goToIntent(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(), new Intent(this, PostActivity.class));
+            } else if ("chat".equals(notificationType)) {
+                goToIntent(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(), new Intent(this, MainActivity.class));
+            }
         }
     }
 
-    void generateNotification(String title, String message){
-        Intent intent=new Intent(this,MainActivity.class);
+    void goToIntent(String title, String message, Intent intent){
+        //Intent intent=new Intent(this, toIntent.getClass());
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
@@ -63,4 +79,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
         notificationManager.notify(0,builder.build());
     }
+
+
 }

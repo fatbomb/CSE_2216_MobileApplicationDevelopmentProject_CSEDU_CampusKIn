@@ -249,6 +249,7 @@ public class ChatActivity extends AppCompatActivity {
 
                    notificationObject.put("title", userModel.getUsername());
                    notificationObject.put("body", message);
+                   notificationObject.put("notification_type", "chat");
 
                    dataObject.put("userID", userModel.getUserID());
 

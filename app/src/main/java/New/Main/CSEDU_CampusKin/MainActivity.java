@@ -74,8 +74,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(mainIntent);
 
                 Intent intent = null;
-                if(AndroidUtil.getNotificationType().equals("chat"))
+                System.out.println("notification type " + AndroidUtil.getNotificationType());
+
+                if(AndroidUtil.getNotificationType().equals("chat")) {
                     intent = new Intent(this, ChatActivity.class);
+                }
                 else if(AndroidUtil.getNotificationType().equals("post"))
                     intent = new Intent(this, PostActivity.class);
 
@@ -257,5 +260,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }
