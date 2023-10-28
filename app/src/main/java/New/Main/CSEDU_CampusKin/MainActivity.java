@@ -74,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(mainIntent);
 
                 Intent intent = null;
-                if(AndroidUtil.getNotificationType() == "chat")
+                if(AndroidUtil.getNotificationType().equals("chat"))
                     intent = new Intent(this, ChatActivity.class);
-                else if(AndroidUtil.getNotificationType() == "post")
+                else if(AndroidUtil.getNotificationType().equals("post"))
                     intent = new Intent(this, PostActivity.class);
 
                 AndroidUtil.passUserModelAsIntent(intent, userModel);
