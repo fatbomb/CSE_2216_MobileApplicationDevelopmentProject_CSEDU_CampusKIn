@@ -208,7 +208,7 @@ public class ChatActivity extends AppCompatActivity {
         long appID = 816688113;   // yourAppID
         String appSign = "0e37b85757c4c2fed8a856e391068adc2bb0926c5a7dc8eb9bfeec2f79caadf8";  // yourAppSign
         String userID = ID; // yourUserID, userID should only contain numbers, English characters, and '_'.
-        String userName =  FirebaseUtils.currentUserName();   // yourUserName
+        String userName =  ID;   // yourUserName
 
         ZegoUIKitPrebuiltCallInvitationConfig callInvitationConfig = new ZegoUIKitPrebuiltCallInvitationConfig();
         callInvitationConfig.notifyWhenAppRunningInBackgroundOrQuit = true;
