@@ -341,12 +341,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
 
     private void addNotification(String postID, String publisherID){
         HashMap<String, Object> map = new HashMap<>();
-        map.put("userID", publisherID);
+        map.put("userID", FirebaseUtils.currentUserId());
         map.put("text", "liked your post.");
         map.put("postID", postID);
         map.put("post", true);
 
-        FirebaseDatabase.getInstance().getReference().child("Notifications").child(firebaseUser.getUid()).push().setValue(map);
+        FirebaseDatabase.getInstance().getReference().child("Notifications").child(publisherID).push().setValue(map);
         System.out.println("notification is working");
     }
 
