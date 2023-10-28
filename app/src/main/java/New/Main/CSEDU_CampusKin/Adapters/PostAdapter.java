@@ -39,6 +39,10 @@ import com.google.firebase.firestore.auth.User;
 import com.hendraanggrian.appcompat.socialview.widget.SocialTextView;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +55,14 @@ import New.Main.CSEDU_CampusKin.Model.UserModel;
 import New.Main.CSEDU_CampusKin.NavigationActivity;
 import New.Main.CSEDU_CampusKin.PostActivity;
 import New.Main.CSEDU_CampusKin.R;
+import New.Main.CSEDU_CampusKin.Utils.FirebaseUtils;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
     private Context mContext;
@@ -136,6 +148,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                         }
                     });
                     addNotification(post.getPostID(), post.getPostedBy());
+                    sendNotification("liked your post", post.getPostedBy());
                 }
                 else{
                     FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostID()).child(firebaseUser.getUid()).removeValue();
@@ -486,5 +499,66 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                     }
                 });
     }
+
+    void sendNotification(String message, String postPublisherID){
+        FirebaseUtils.currentUserDetails().get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                UserModel userModel = task.getResult().toObject(UserModel.class);
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    JSONObject notificationObject = new JSONObject();
+                    JSONObject dataObject = new JSONObject();
+
+                    notificationObject.put("title", userModel.getUsername());
+                    notificationObject.put("body", message);
+
+                    dataObject.put("userID", userModel.getUserID());
+
+                    jsonObject.put("notification", notificationObject);
+                    jsonObject.put("data", dataObject);
+                    FirebaseUtils.allUserCollectionReference().document(postPublisherID).get().addOnCompleteListener(task1 -> {
+                        UserModel otherUser = task1.getResult().toObject(UserModel.class);
+                        try {
+                            jsonObject.put("to", otherUser.getFCMToken());
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+
+                    callAPI(jsonObject);
+
+                } catch (Exception e){
+
+                }
+            }
+        });
+    }
+
+    void callAPI(JSONObject jsonObject) throws IOException {
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://fcm.googleapis.com/fcm/send";
+
+
+        RequestBody body = RequestBody.create(jsonObject.toString(), JSON);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .header("Authorization", "Bearer AAAAjcl2Ftg:APA91bHj2XI6BRfatSyKAh7h8R74KWJXuvATQOqcn4wTEndYCWfaKZSk0mitHjzFU_YX0IPdLbXhb4l1iP6dKELlWupKMyHsTFNEjp03bzRRX6MzBNDSucEU-T5rXmRxQ3thvbl7oN9k")
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+
+            }
+        });
+    }
+
 
 }
