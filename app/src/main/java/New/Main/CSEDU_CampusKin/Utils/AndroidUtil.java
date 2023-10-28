@@ -16,6 +16,7 @@ public class AndroidUtil {
         intent.putExtra("userID", model.getUserID());
         intent.putExtra("username", model.getUsername());
         intent.putExtra("batch", model.getBatch());
+        intent.putExtra("FCMToken", model.getFCMToken());
     }
 
     public static UserModel getUserModelFromIntent(Intent intent){
@@ -23,6 +24,7 @@ public class AndroidUtil {
         userModel.setUserID(intent.getStringExtra("userID"));
         userModel.setUsername(intent.getStringExtra("username"));
         userModel.setBatch(intent.getStringExtra("batch"));
+        userModel.setFCMToken(intent.getStringExtra("FCMToken"));
         return userModel;
     }
 }

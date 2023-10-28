@@ -6,6 +6,15 @@ public class UserModel {
     private String userID, gender, phoneNo, email, photo = "default", registrationNo, bio, works, workEnv, linkedin, fieldOfInt;
     private String username;
     private String batch;
+    String FCMToken;
+
+    public String getFCMToken() {
+        return FCMToken;
+    }
+
+    public void setFCMToken(String FCMToken) {
+        this.FCMToken = FCMToken;
+    }
 
     public String getBio() {
         return bio;

@@ -83,6 +83,7 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
     implementation 'com.firebaseui:firebase-ui-firestore:8.0.2'
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
     implementation 'com.google.firebase:firebase-firestore:22.0.0'
 

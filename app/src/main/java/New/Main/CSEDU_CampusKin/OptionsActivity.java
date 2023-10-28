@@ -16,16 +16,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class OptionsActivity extends AppCompatActivity {
-    private TextView settings,logout;
+    private TextView settings, logout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
-        settings=findViewById(R.id.settings);
-        logout=findViewById(R.id.logout);
-        Toolbar toolbar=findViewById(R.id.toolbar);
+        settings = findViewById(R.id.settings);
+        logout = findViewById(R.id.logout);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Options");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -35,31 +37,34 @@ public class OptionsActivity extends AppCompatActivity {
                 finish();
             }
         });
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder alertDialog=new AlertDialog.Builder(OptionsActivity.this);
-                alertDialog.setTitle("Do you want to Sing out?");
-                alertDialog.setPositiveButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int i) {
-                        dialog.dismiss();
-                    }
-                });
-                alertDialog.setNegativeButton( "YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int i) {
 
-                        FirebaseAuth.getInstance().signOut();
-                        startActivity(new Intent(OptionsActivity.this,MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                        finish();
 
-                    }
-                });
-                AlertDialog alertDialog1=alertDialog.create();
-                alertDialog1.show();
 
-            }
+        logout.setOnClickListener(view -> {
+            FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(OptionsActivity.this);
+                    alertDialog.setTitle("Do you want to Sing out?");
+                    alertDialog.setPositiveButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int i) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alertDialog.setNegativeButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int i) {
+
+                            FirebaseAuth.getInstance().signOut();
+                            startActivity(new Intent(OptionsActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                            finish();
+
+                        }
+                    });
+                    AlertDialog alertDialog1 = alertDialog.create();
+                    alertDialog1.show();
+                }
+            });
         });
     }
 }
