@@ -520,17 +520,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                     jsonObject.put("data", dataObject);
 
                     FirebaseUtils.allUserCollectionReference().document(postPublisherID).get().addOnCompleteListener(task1 -> {
-                        UserModel otherUser = task1.getResult().toObject(UserModel.class);
-                        try {
-                            jsonObject.put("to", otherUser.getFCMToken());
-                        } catch (JSONException e) {
-                            System.out.println("sending notif exception"+ e);
+                        if (task1.isSuccessful()) {
+                            UserModel otherUser = task1.getResult().toObject(UserModel.class);
+                            try {
+                                jsonObject.put("to", otherUser.getFCMToken());
+                                callAPI(jsonObject); // Move callAPI here
+                                System.out.println("notification sent");
+                            } catch (JSONException e) {
+                                System.out.println("sending notification exception" + e);
+                            }
+                        } else {
+                            System.out.println("Error getting user data for FCM token");
                         }
                     });
-
-                    callAPI(jsonObject);
-                    System.out.println("notification sent");
-
                 } catch (Exception e) {
                     System.out.println(e);
                     System.out.println("exception in sending notification");
@@ -539,12 +541,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
         });
     }
 
+
     void callAPI(JSONObject jsonObject){
         MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
         OkHttpClient client = new OkHttpClient();
         String url = "https://fcm.googleapis.com/fcm/send";
-
 
         RequestBody body = RequestBody.create(jsonObject.toString(), JSON);
         Request request = new Request.Builder()
@@ -565,6 +567,4 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
         });
         System.out.println("API called");
     }
-
-
 }
