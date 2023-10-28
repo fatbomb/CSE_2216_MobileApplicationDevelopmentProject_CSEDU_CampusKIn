@@ -1,26 +1,43 @@
 package New.Main.CSEDU_CampusKin.Utils;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 
 import org.w3c.dom.Document;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import New.Main.CSEDU_CampusKin.Model.UserModel;
+
 public class FirebaseUtils {
-    public static String currentUserId()
-    {
+    public static String currentUserId() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-    public static String currentUserName()
-    {
-        return FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+    public static String currentUserName() {
+        final String[] username = {""};
+        FirebaseFirestore.getInstance().collection("Users").document(currentUserId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                UserModel currentUser = documentSnapshot.toObject(UserModel.class);
+                username[0] = currentUser.getUsername().toString();
+            }
+        });
+        return username[0];
     }
+
+
 
     public static DocumentReference currentUserDetails()
     {

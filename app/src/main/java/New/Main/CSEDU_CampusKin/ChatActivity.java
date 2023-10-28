@@ -208,7 +208,7 @@ public class ChatActivity extends AppCompatActivity {
         long appID = 816688113;   // yourAppID
         String appSign = "0e37b85757c4c2fed8a856e391068adc2bb0926c5a7dc8eb9bfeec2f79caadf8";  // yourAppSign
         String userID = ID; // yourUserID, userID should only contain numbers, English characters, and '_'.
-        String userName = ID;   // yourUserName
+        String userName =  FirebaseUtils.currentUserName();   // yourUserName
 
         ZegoUIKitPrebuiltCallInvitationConfig callInvitationConfig = new ZegoUIKitPrebuiltCallInvitationConfig();
         callInvitationConfig.notifyWhenAppRunningInBackgroundOrQuit = true;
@@ -229,13 +229,13 @@ public class ChatActivity extends AppCompatActivity {
     void setVoiceCall(String targetUserID, String targetUsername) {
         voiceCallButton.setIsVideoCall(false);
         voiceCallButton.setResourceID("zego_uikit_call");
-        voiceCallButton.setInvitees(Collections.singletonList(new ZegoUIKitUser(targetUserID, targetUsername)));
+        voiceCallButton.setInvitees(Collections.singletonList(new ZegoUIKitUser(targetUsername)));
     }
 
     void setVideoCall(String targetUserID, String targetUsername) {
         videoCallButton.setIsVideoCall(true);
         videoCallButton.setResourceID("zego_uikit_call");
-        videoCallButton.setInvitees(Collections.singletonList(new ZegoUIKitUser(targetUserID, targetUsername)));
+        videoCallButton.setInvitees(Collections.singletonList(new ZegoUIKitUser(targetUsername)));
     }
 
     void sendNotification(String message){
