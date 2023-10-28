@@ -5,7 +5,7 @@
     app:layout_constraintCircleRadius="5dp"
     android:layout_marginBottom="2dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#ffffff"
+    android:background="@drawable/card_view_ackgroud"
     xmlns:tools="http://schemas.android.com/tools">
     <ImageView
         android:layout_width="wrap_content"

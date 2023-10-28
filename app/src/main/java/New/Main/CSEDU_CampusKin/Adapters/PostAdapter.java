@@ -77,6 +77,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
         String imageUrl = post.getPostImage();
         if(imageUrl!=""){
             Picasso.get().load(imageUrl).into(holder.postImage);
+            holder.postImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit().putString("postID", post.getPostID()).apply();
+                    ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().
+                            replace(R.id.frame_layout, new PostDetailFragment()).commit();
+                }
+            });
+
         }
         else {
             holder.postImage.setVisibility(View.GONE);
