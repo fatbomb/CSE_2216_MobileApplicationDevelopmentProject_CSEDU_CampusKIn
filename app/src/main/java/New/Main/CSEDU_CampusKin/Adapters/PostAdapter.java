@@ -124,8 +124,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                             Toast.makeText(mContext, "Liked", Toast.LENGTH_SHORT).show();
                         }
                     });
-
-
+                    addNotification(post.getPostID(), post.getPostedBy());
                 }
                 else{
                     FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostID()).child(firebaseUser.getUid()).removeValue();
@@ -301,14 +300,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
 
                     // Show the popup menu
                     popupMenu.show();
-
                 }
-
             }
         });
-
-
     }
+
+    private void addNotification(String postID, String publisherID){
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("userID", publisherID);
+        map.put("text", "liked your post.");
+        map.put("postID", postID);
+        map.put("isPost", true);
+
+        FirebaseDatabase.getInstance().getReference().child("Notifications").child(firebaseUser.getUid()).push().setValue(map);
+        System.out.println("notification is working");
+    }
+
     private void editComment(Context context, String previousComment, CommentAdapter.EditCommentCallback callback) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Edit Comment");

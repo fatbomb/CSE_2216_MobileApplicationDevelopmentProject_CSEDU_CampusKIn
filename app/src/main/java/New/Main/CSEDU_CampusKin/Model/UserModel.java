@@ -3,7 +3,7 @@ package New.Main.CSEDU_CampusKin.Model;
 import com.google.firebase.Timestamp;
 
 public class UserModel {
-    private String userID,gender,phoneNo,email,photo,registrationNo,bio,works,workEnv,linkedin,fieldOfInt;
+    private String userID, gender, phoneNo, email, photo = "default", registrationNo, bio, works, workEnv, linkedin, fieldOfInt;
     private String username;
     private String batch;
 
