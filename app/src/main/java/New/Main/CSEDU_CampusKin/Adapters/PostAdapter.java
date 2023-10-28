@@ -146,7 +146,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                         }
                     });
 
-                    if (post.getPostedBy() != FirebaseUtils.currentUserId()) {
+                    if (!post.getPostedBy().equals(FirebaseUtils.currentUserId())) {
                         addNotification(post.getPostID(), post.getPostedBy());
                         sendNotification("liked your post", post.getPostedBy());
                     }
