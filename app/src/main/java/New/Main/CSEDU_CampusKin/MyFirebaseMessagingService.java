@@ -41,6 +41,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Map<String, String> data = remoteMessage.getData();
             String notificationType = data.get("notification_type");
 
+            System.out.println("On message receive working");
+
             if ("post".equals(notificationType)) {
                 goToIntent(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(), new Intent(this, PostActivity.class));
             } else if ("chat".equals(notificationType)) {
@@ -53,7 +55,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         //Intent intent=new Intent(this, toIntent.getClass());
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
+        System.out.println("page is transiting");
         PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
 
         //channel id, channel name
