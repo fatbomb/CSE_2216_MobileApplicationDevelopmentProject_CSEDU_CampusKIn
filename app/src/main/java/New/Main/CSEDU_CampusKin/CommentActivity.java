@@ -142,6 +142,17 @@ public class CommentActivity extends AppCompatActivity {
                         }
                     }
                 });
+        addNotification(postId,firebaseUser.getUid());
+    }
+    private void addNotification(String postID, String publisherID){
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("userID", publisherID);
+        map.put("text", "Commented In your Post.");
+        map.put("postID", postID);
+        map.put("post", true);
+
+        FirebaseDatabase.getInstance().getReference().child("Notifications").child(firebaseUser.getUid()).push().setValue(map);
+        System.out.println("notification is working");
     }
 
     private void getUserImage() {

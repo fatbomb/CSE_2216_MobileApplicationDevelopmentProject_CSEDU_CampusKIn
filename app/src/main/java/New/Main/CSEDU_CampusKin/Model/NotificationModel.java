@@ -5,7 +5,15 @@ public class NotificationModel
     private String userID;
     private String text;
     private String postID;
-    private boolean isPost;
+    private boolean post;
+
+    public boolean isPost() {
+        return post;
+    }
+
+    public void setPost(boolean post) {
+        this.post = post;
+    }
 
     public NotificationModel() {
     }
@@ -14,7 +22,7 @@ public class NotificationModel
         this.userID = userID;
         this.text = text;
         this.postID = postID;
-        this.isPost = isPost;
+        this.post = isPost;
     }
 
     public String getUserID() {
@@ -41,11 +49,5 @@ public class NotificationModel
         this.postID = postID;
     }
 
-    public boolean isPost() {
-        return isPost;
-    }
 
-    public void setPost(boolean post) {
-        isPost = post;
-    }
 }

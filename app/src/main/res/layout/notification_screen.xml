@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F5F5"
     tools:context=".Fragments.NotificationPageFragment" >
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recycler_view"
-        android:padding="15dp"
+        android:padding="3dp"
         android:layout_below="@+id/text"
         />
 
@@ -21,7 +22,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:padding="10dp"
-        android:text="NOTIFICATION"
+        android:text="NOTIFICATIONS"
+        android:background="@drawable/edit_text_background"
         android:textSize="28sp"
         android:textColor="@color/black"
         android:textStyle="bold" />

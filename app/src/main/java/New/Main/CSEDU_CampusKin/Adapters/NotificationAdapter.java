@@ -17,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
@@ -54,13 +55,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NotificationModel notificationModel = notificationList.get(position);
         getUser(holder.imageViewProfile, holder.username, notificationModel.getUserID());
-        holder.comment.setText(notificationModel.getText());
+
 
         if (notificationModel.isPost()) {
+            System.out.println("Post..........");
             holder.postImage.setVisibility(View.VISIBLE);
-            getPostImage(holder.postImage, notificationModel.getPostID());
+            getPostImage(holder.postImage, notificationModel.getPostID(),holder.comment,notificationModel.getText());
         } else {
+            System.out.println("Not post....");
             holder.postImage.setVisibility(View.GONE);
+            holder.comment.setText(notificationModel.getText());
         }
 
         holder.itemView.setOnClickListener(view -> {
@@ -117,23 +121,41 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 //        });
 //    }
 
-    private void getPostImage(final ImageView imageView, String postID) {
+    private void getPostImage(final ImageView imageView, String postID,TextView tv,String txt) {
         FirebaseFirestore.getInstance().collection("Post").document(postID).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 Post postModel = task.getResult().toObject(Post.class);
-                Picasso.get().load(postModel.getPostImage()).placeholder(R.mipmap.ic_launcher).into(imageView);
+                if(postModel.getPostImage().equals("")){
+                    imageView.setVisibility(View.GONE);
+                }
+                else{
+                    Picasso.get().load(postModel.getPostImage()).placeholder(R.mipmap.ic_launcher).into(imageView);
+                }
+                tv.setText(txt+"\n"+postModel.getPostDescription());
+
                 System.out.println("post image is reached");
             }
         });
     }
 
     private void getUser(ImageView imageView, TextView textView, String userID) {
-        FirebaseUtils.allUserCollectionReference().document(userID).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                UserModel userModel = task.getResult().toObject(UserModel.class);
-                Picasso.get().load(userModel.getPhoto()).into(imageView);
-                textView.setText(userModel.getUsername());
-                System.out.println("user is reached");
+//        FirebaseUtils.allUserCollectionReference().document(userID).get().addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                UserModel userModel = task.getResult().toObject(UserModel.class);
+//                Picasso.get().load(userModel.getPhoto()).into(imageView);
+//                textView.setText(userModel.getUsername());
+//                System.out.println("user is reached");
+//            }
+//        });
+        FirebaseFirestore.getInstance().collection("Users").document(userID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                    UserModel userModel = documentSnapshot.toObject(UserModel.class);
+                    Picasso.get().load(userModel.getPhoto()).into(imageView);
+                    textView.setText(userModel.getUsername());
+
+                }
             }
         });
     }

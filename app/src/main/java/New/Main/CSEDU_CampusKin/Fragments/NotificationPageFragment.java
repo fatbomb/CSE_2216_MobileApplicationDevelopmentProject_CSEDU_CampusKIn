@@ -55,16 +55,19 @@ public class NotificationPageFragment extends Fragment {
     }
 
     private void readNotifications(){
-        FirebaseDatabase.getInstance().getReference().child("notifications").child(FirebaseAuth.getInstance()
+        FirebaseDatabase.getInstance().getReference().child("Notifications").child(FirebaseAuth.getInstance()
                 .getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                notificationModelList.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    notificationModelList.add(snapshot.getValue(NotificationModel.class));
+                    NotificationModel notification=snapshot.getValue(NotificationModel.class);
+                    notificationModelList.add(notification);
                 }
                 Collections.reverse(notificationModelList);
                 adapter.notifyDataSetChanged();
                 System.out.println("notification being read");
+                System.out.println(notificationModelList.size());
             }
 
             @Override
