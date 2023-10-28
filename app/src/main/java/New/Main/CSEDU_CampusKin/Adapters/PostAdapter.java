@@ -147,7 +147,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                     });
 
                     if (!post.getPostedBy().equals(FirebaseUtils.currentUserId())) {
-                        addNotification(post.getPostID(), post.getPostedBy());
+                        addNotification(post.getPostID(), post.getPostedBy(), "liked your post.");
                         sendNotification("liked your post", post.getPostedBy());
                     }
                 } else {
@@ -184,6 +184,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                 intent.putExtra("postedBy", post.getPostedBy());
                 mContext.startActivity(intent);
                 getComments(post, holder.comments);
+
+                if (!post.getPostedBy().equals(FirebaseUtils.currentUserId())) {
+                    addNotification(post.getPostID(), post.getPostedBy(), "commented on your post.");
+                    sendNotification("commented on your post.", post.getPostedBy());
+                }
             }
         });
         holder.username.setOnClickListener(new View.OnClickListener() {
@@ -336,10 +341,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
         });
     }
 
-    private void addNotification(String postID, String publisherID) {
+    private void addNotification(String postID, String publisherID, String notificationBody) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("userID", FirebaseUtils.currentUserId());
-        map.put("text", "liked your post.");
+        map.put("text",  notificationBody);
         map.put("postID", postID);
         map.put("post", true);
 
