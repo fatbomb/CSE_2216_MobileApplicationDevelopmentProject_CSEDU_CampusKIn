@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/card_view_ackgroud"
+    android:background="@drawable/post_view_background"
+    android:layout_margin="7dp"
+    android:padding="4dp"
     android:layout_marginBottom="3dp">
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="40dp"

@@ -50,10 +50,10 @@ public class SearchReviewRecyclerAdapter extends FirestoreRecyclerAdapter<WorkRe
 
 
             holder.prof_name_text.setText(model.getBossName());
-            holder.workPlace_text.setText("Workplace : " + model.getNameOfWorkPlace());
-            holder.workPlace_review.setText("Review on work place : " + model.getReviewOnWorkPlace());
-            holder.prof_review.setText("Review on Prof/Boss : " + model.getReviewOnBoss());
-            holder.profLinkedIn.setText("LinkedIn of Prof/Boss : " + model.getBossLinkedin());
+            holder.workPlace_text.setText(model.getNameOfWorkPlace());
+            holder.workPlace_review.setText(model.getReviewOnWorkPlace());
+            holder.prof_review.setText(model.getReviewOnBoss());
+            holder.profLinkedIn.setText(model.getBossLinkedin());
             if(model.getWorkingStatus()!=null)
              holder.workingStatus.setText(model.getWorkingStatus());
 

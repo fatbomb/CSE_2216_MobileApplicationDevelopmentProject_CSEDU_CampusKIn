@@ -34,48 +34,134 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <TextView
-                android:id="@+id/prof_name_text"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Prof Name"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/workPlace_text"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Work Place : "
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/workPlace_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Work Place"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Work Place"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/workPlace_review"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Professor/Boss : "
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="5dp"
+                    />
+
+                <TextView
+                    android:id="@+id/prof_name_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Prof Name"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="5dp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Work Place review"
-                android:textColor="@color/black"
-                android:textSize="18sp"
+                android:layout_height="wrap_content">
 
-                />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Review on workplace : "
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="18sp"
+                    />
 
-            <TextView
-                android:id="@+id/Prof_review"
+                <TextView
+                    android:id="@+id/workPlace_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Work Place review"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="18sp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="prof review"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/Prof_linkedIn"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Review on Prof/Boss : "
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/Prof_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="prof review"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="prof linkedIn"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LinkedIn : "
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/Prof_linkedIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="prof linkedIn"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+
+
+
 
 
             <LinearLayout
@@ -102,14 +188,23 @@
 
 <!--                </LinearLayout>-->
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="About reviewer : "
+                    android:textStyle="bold"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
+
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:text="Worked as : " />
 
                     <TextView
@@ -128,6 +223,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:text="Worked from : " />
 
                     <TextView
@@ -146,6 +242,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:text="Worked to : " />
 
                     <TextView
