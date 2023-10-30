@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:text="Prof Name"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:text="Work Place"
                 android:textColor="@color/black"
-                android:textSize="13sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/workPlace_review"
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:text="Work Place review"
                 android:textColor="@color/black"
-                android:textSize="13sp"
+                android:textSize="18sp"
 
                 />
 
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:text="prof review"
                 android:textColor="@color/black"
-                android:textSize="13sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/Prof_linkedIn"
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:text="prof linkedIn"
                 android:textColor="@color/black"
-                android:textSize="13sp" />
+                android:textSize="18sp" />
 
 
             <LinearLayout
