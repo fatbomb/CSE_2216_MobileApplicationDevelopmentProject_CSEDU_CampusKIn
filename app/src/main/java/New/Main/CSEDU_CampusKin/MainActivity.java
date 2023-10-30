@@ -90,9 +90,6 @@ public class MainActivity extends AppCompatActivity {
                     // lets's set fade in animation on other layouts
                     binding.cardView.setAnimation(fade_in);
                     binding.cardView5.setAnimation(fade_in);
-                    binding.cardView2.setAnimation(fade_in);
-                    binding.cardView3.setAnimation(fade_in);
-                    binding.cardView4.setAnimation(fade_in);
                     binding.textView.setAnimation(fade_in);
                     binding.textView2.setAnimation(fade_in);
                     binding.registerLayout.setAnimation(fade_in);
