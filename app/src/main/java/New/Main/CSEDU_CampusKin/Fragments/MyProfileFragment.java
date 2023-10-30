@@ -358,11 +358,11 @@ public class MyProfileFragment extends Fragment {
                     user =  documentSnapshot.toObject(UserModel.class);
                     Picasso.get().load(user.getPhoto()).placeholder(R.drawable.human).into(imageProfile);
                     username.setText(user.getUsername());
-                    registrationNo.setText("reg: "+user.getRegistrationNo()+" (Batch: "+user.getBatch()+")");
+                    registrationNo.setText("Registration No : "+user.getRegistrationNo()+" (Batch : "+user.getBatch()+")");
                     //bio.setText(user.getBio());
                     getBio(user);
                     if(user.getLinkedin()!=""){
-                        SpannableString spannable = new SpannableString("Linkedin: "+user.getLinkedin());
+                        SpannableString spannable = new SpannableString("My Linkedin : "+user.getLinkedin());
                         Linkify.addLinks(spannable, Linkify.WEB_URLS);
                         linkedin.setText(spannable);
                         linkedin.setMovementMethod(LinkMovementMethod.getInstance());
@@ -406,22 +406,22 @@ public class MyProfileFragment extends Fragment {
         StringBuilder s=new StringBuilder();
         if(user.getWorks()!=""){
             if(user.getWorks().toLowerCase().equals("student")){
-                s.append("Student"+"\n");
+                s.append("Student"+"\n\n");
 
             }
             else{
-                s.append("Works at: "+user.getWorks()+"\n");
+                s.append("Works at : "+user.getWorks()+"\n\n");
             }
         }
         if(user.getFieldOfInt()!=""){
-            s.append("Field of Interests: "+user.getFieldOfInt()+"\n");
+            s.append("Fields of Interest : "+user.getFieldOfInt()+"\n\n");
         }
         if(user.getWorkEnv()!=""){
             if(user.getWorkEnv().equals("Both")){
-                s.append("Preferred Working Environment: "+"Academia & Industry"+"\n");
+                s.append("Preferred Working Environment : "+"Academia & Industry"+"\n\n");
             }
             else {
-                s.append("Preferred Environment: "+user.getWorkEnv()+"\n");
+                s.append("Preferred Environment : "+user.getWorkEnv()+"\n\n");
             }
         }
         if (user.getBio()!=""){
