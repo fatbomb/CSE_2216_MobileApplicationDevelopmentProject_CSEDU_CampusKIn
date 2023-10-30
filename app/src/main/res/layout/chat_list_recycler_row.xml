@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/chat_list"
-    android:layout_margin="10dp"
-    android:elevation="2dp">
+    android:layout_margin="7dp"
+    android:elevation="3dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:src="@drawable/human"

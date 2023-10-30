@@ -19,8 +19,6 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
         android:elevation="1dp">
-
-
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
