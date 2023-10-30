@@ -192,9 +192,10 @@
                         android:layout_margin="5dp"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="-3dp"
+                        android:layout_gravity="center"
                         android:maxLines="1"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
 
@@ -210,36 +211,97 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-                        <ImageView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:layout_marginBottom="5dp"
-                            android:src="@drawable/work_icon"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/work_icon"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:textSize="15sp"
+                                android:textColor="@color/black"
+                                android:layout_gravity="center"
+                                android:id="@+id/profession"/>
+
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:src="@drawable/interest_icon"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/interest_icon"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_gravity="center"
+                                android:textSize="15sp"
+                                android:textColor="@color/black"
+                                android:id="@+id/fint"/>
+
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:src="@drawable/work_env_icon"/>
-                        <ImageView
-                            android:layout_width="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/work_env_icon"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:textSize="15sp"
+                                android:textColor="@color/black"
+                                android:layout_gravity="center"
+                                android:id="@+id/wo_env"/>
+
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="18dp"
-                            android:src="@drawable/me_icon"/>
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/me_icon"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:textSize="15sp"
+                                android:textColor="@color/black"
+                                android:layout_gravity="center"
+                                android:id="@+id/meee"/>
+
+
+                        </LinearLayout>
+
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/bio"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:textSize="18sp"
-                        android:textColor="@color/black" />
+
                 </LinearLayout>
 
 
@@ -248,6 +310,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
                     >
 
                     <ImageView
@@ -262,7 +325,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:autoLink="web"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
+                        android:layout_gravity="center"
                         android:textColor="@color/black" />
                 </LinearLayout>
 

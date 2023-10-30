@@ -62,7 +62,7 @@ public class MyProfileFragment extends Fragment {
     private String mParam2;
     private CircleImageView imageProfile;
     private ImageView options,myPosts,savedPosts,msg;
-    private TextView posts,followers,following,username,bio,registrationNo,linkedin;
+    private TextView posts,followers,following,username,me,registrationNo,linkedin,profession,fint,woEnv;
     private FirebaseUser firebaseUser;
     String profileId;
     private RecyclerView recyclerViewPosts;
@@ -123,7 +123,10 @@ public class MyProfileFragment extends Fragment {
         username=view.findViewById(R.id.username);
         myPosts=view.findViewById(R.id.my_posts);
         savedPosts=view.findViewById(R.id.saved_posts);
-        bio=view.findViewById(R.id.bio);
+        me=view.findViewById(R.id.meee);
+        woEnv=view.findViewById(R.id.wo_env);
+        profession=view.findViewById(R.id.profession);
+        fint=view.findViewById(R.id.fint);
         editProfile=view.findViewById(R.id.edit_profile);
         msg=view.findViewById(R.id.msg);
         linkedin=view.findViewById(R.id.linkedin);
@@ -403,31 +406,30 @@ public class MyProfileFragment extends Fragment {
     }
 
     private void getBio(UserModel user) {
-        StringBuilder s=new StringBuilder();
+
         if(user.getWorks()!=""){
             if(user.getWorks().toLowerCase().equals("student")){
-                s.append("Student"+"\n\n");
+                profession.setText(user.getWorks());
 
             }
             else{
-                s.append("Works at : "+user.getWorks()+"\n\n");
+                profession.setText("Works at : "+user.getWorks());
             }
         }
         if(user.getFieldOfInt()!=""){
-            s.append("Fields of Interest : "+user.getFieldOfInt()+"\n\n");
+            fint.setText("Fields of Interest : "+user.getFieldOfInt());
         }
         if(user.getWorkEnv()!=""){
             if(user.getWorkEnv().equals("Both")){
-                s.append("Preferred Working Environment : "+"Academia & Industry"+"\n\n");
+                woEnv.setText("Preferred Working Environment : "+"Academia & Industry");
             }
             else {
-                s.append("Preferred Environment : "+user.getWorkEnv()+"\n\n");
+                woEnv.setText("Preferred Environment : "+user.getWorkEnv());
             }
         }
         if (user.getBio()!=""){
-            s.append(user.getBio());
+            me.setText(user.getBio());
         }
-        bio.setText(s.toString());
     }
 
     @Override
