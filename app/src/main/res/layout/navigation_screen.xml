@@ -9,16 +9,16 @@
     <LinearLayout
         android:id="@+id/search_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/main_theme_color"
+        android:layout_height="55dp"
+        android:background="@drawable/top_background_reverse"
+
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="24dp"
             android:gravity="center"
             android:text="CSEDU Campus Kin"
             android:textColor="@color/white"
@@ -28,22 +28,25 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageButton
                 android:id="@+id/create"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginEnd="-10dp"
                 android:layout_gravity="center|right"
+                android:layout_marginEnd="0dp"
+                android:layout_toStartOf="@+id/search_button"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/outline_add_24"
-                android:layout_toStartOf="@+id/search_button"
                 app:tint="@color/white"
 
                 />
+
             <ImageButton
                 android:id="@+id/search_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_marginRight="20dp"
                 android:layout_gravity="center|right"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/outline_search_24"
