@@ -76,8 +76,10 @@
         android:id="@+id/chat_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/chat"
         android:layout_below="@id/tool_bar_layout"
-        android:layout_above="@id/chat"/>
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp" />
 
     <RelativeLayout
         android:id="@id/chat"

@@ -5,7 +5,7 @@
     app:layout_constraintCircleRadius="5dp"
     android:layout_marginBottom="2dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/card_view_ackgroud"
+    android:background="@drawable/post_view_background"
     xmlns:tools="http://schemas.android.com/tools">
     <ImageView
         android:layout_width="wrap_content"
@@ -25,13 +25,18 @@
             android:background="#F5F5F5"
             android:orientation="horizontal">
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:id="@+id/profile_image"
-                android:layout_margin="5dp" />
+                android:padding="4dp"
+                android:layout_marginTop="15dp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rounded_corner_background"
+
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="wrap_content"
@@ -40,6 +45,7 @@
                     android:layout_gravity="center_vertical"
                     android:textSize="16sp"
                     android:textStyle="bold"
+                    android:layout_marginLeft="4dp"
                     android:textColor="@color/primary"
                     android:layout_marginTop="5dp"/>
                 <LinearLayout
@@ -53,6 +59,7 @@
                         android:layout_gravity="center_vertical"
                         android:textSize="14sp"
                         android:textStyle="bold"
+                        android:layout_marginLeft="4dp"
                         android:textColor="@color/black"
                         android:layout_marginBottom="5dp"/>
                     <TextView
@@ -61,7 +68,7 @@
                         android:id="@+id/edited"
                         android:layout_gravity="center_vertical"
                         android:textSize="13sp"
-                        android:text="(Edited)"
+                        android:text=" (Edited)"
                         android:textColor="@color/black"
                         android:visibility="gone"
                         android:layout_marginBottom="5dp"/>
@@ -74,13 +81,18 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
+                android:id="@+id/post_image"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:id="@+id/post_image"
+                android:layout_margin="16dp"
                 android:scaleType="fitCenter"
+                android:padding="10dp"
                 app:layout_constraintDimensionRatio="1:1"
-                tools:ignore="MissingConstraints"/>
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
         <com.hendraanggrian.appcompat.socialview.widget.SocialTextView
             android:layout_width="wrap_content"

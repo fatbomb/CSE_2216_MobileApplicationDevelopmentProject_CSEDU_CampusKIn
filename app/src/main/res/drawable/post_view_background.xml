@@ -7,7 +7,7 @@
             <size
                 android:width="25dp"
                 android:height="10dp" />
-            <solid android:color="#CBC3E3" />
+            <solid android:color="#FEF1FF" />
         </shape>
     </item>
 
@@ -21,7 +21,7 @@
         <rotate
             android:fromDegrees="135">
             <shape android:shape="rectangle">
-                <solid android:color="#FFFAA0" />
+                <solid android:color="#FEFFD3" />
 
                 <corners
                     android:topLeftRadius="20dp" />
@@ -40,7 +40,7 @@
         <rotate
             android:fromDegrees="135">
             <shape android:shape="rectangle">
-                <solid android:color="#A584B9" />
+                <solid android:color="#CDB6DA" />
                 <corners
                     android:bottomRightRadius="20dp"/>
             </shape>
