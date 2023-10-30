@@ -63,29 +63,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (getIntent().getExtras() != null) {
 
-            String userID = getIntent().getExtras().getString("userID");
-            FirebaseUtils.allUserCollectionReference().document(userID).get().addOnCompleteListener(task -> {
-                UserModel userModel = task.getResult().toObject(UserModel.class);
-
-                Intent mainIntent = new Intent(this, MainActivity.class);
-                mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(mainIntent);
-
-
-                System.out.println("notification type " + AndroidUtil.getNotificationType());
-
-                Intent intent = new Intent(this, ChatActivity.class);
-
-
-                AndroidUtil.passUserModelAsIntent(intent, userModel);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
-            });
-
-        } else {
 
             //setContentView(R.layout.signup);
             // Initalize variables
@@ -223,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-        }
+
         getFCMToken();
     }
     @Override
@@ -243,18 +221,45 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if(FirebaseAuth.getInstance().getCurrentUser()!=null && FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()){
-            startActivity(new Intent(MainActivity.this,NavigationActivity.class));
-            finish();
+            if (getIntent().getExtras() != null) {
+
+                String userID = getIntent().getExtras().getString("userID");
+                FirebaseUtils.allUserCollectionReference().document(userID).get().addOnCompleteListener(task -> {
+                    UserModel userModel = task.getResult().toObject(UserModel.class);
+
+                    Intent mainIntent = new Intent(this, MainActivity.class);
+                    mainIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(mainIntent);
+
+
+                    System.out.println("notification type " + AndroidUtil.getNotificationType());
+
+                    Intent intent = new Intent(this, ChatActivity.class);
+
+
+                    AndroidUtil.passUserModelAsIntent(intent, userModel);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                });
+
+            }
+            else {
+                startActivity(new Intent(MainActivity.this, NavigationActivity.class));
+                finish();
+            }
         }
     }
 
     void getFCMToken() {
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                String token = task.getResult();
-                System.out.println("My token " + token);
-                FirebaseUtils.currentUserDetails().update("FCMToken", token);
-            }
-        });
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
+            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    String token = task.getResult();
+                    System.out.println("My token " + token);
+                    FirebaseUtils.currentUserDetails().update("FCMToken", token);
+                }
+            });
+        }
     }
 }
