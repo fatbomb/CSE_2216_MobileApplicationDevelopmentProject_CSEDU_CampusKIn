@@ -49,6 +49,11 @@ public class FirebaseUtils {
         return FirebaseFirestore.getInstance().collection("Users");
     }
 
+    public static CollectionReference allReviewCollectionReference()
+    {
+        return FirebaseFirestore.getInstance().collection("WorkReview");
+    }
+
     public static DocumentReference getChatRoomReference(String chatRoomID)
     {
         return FirebaseFirestore.getInstance().collection("chatrooms").document(chatRoomID);

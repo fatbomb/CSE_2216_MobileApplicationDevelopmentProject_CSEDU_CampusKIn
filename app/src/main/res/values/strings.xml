@@ -9,4 +9,5 @@
     <string name="logout">logout</string>
     <string name="give_review">Give Review</string>
     <string name="see_reviews">See Reviews</string>
+    <string name="title_activity_search_review">SearchReviewActivity</string>
 </resources>

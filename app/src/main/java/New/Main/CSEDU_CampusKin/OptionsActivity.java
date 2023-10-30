@@ -80,7 +80,7 @@ public class OptionsActivity extends AppCompatActivity {
         seeReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(OptionsActivity.this, SeeeReviewActivity.class));
+                startActivity(new Intent(OptionsActivity.this, SearchReviewActivity.class));
             }
         });
     }
