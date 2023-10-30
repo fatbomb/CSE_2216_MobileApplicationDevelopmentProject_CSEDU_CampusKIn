@@ -3,6 +3,9 @@ package New.Main.CSEDU_CampusKin.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +56,15 @@ public class SearchReviewRecyclerAdapter extends FirestoreRecyclerAdapter<WorkRe
             holder.workPlace_text.setText(model.getNameOfWorkPlace());
             holder.workPlace_review.setText(model.getReviewOnWorkPlace());
             holder.prof_review.setText(model.getReviewOnBoss());
-            holder.profLinkedIn.setText(model.getBossLinkedin());
+            if(model.getBossLinkedin()!=""){
+                SpannableString spannable = new SpannableString(model.getBossLinkedin());
+                Linkify.addLinks(spannable, Linkify.WEB_URLS);
+                holder.profLinkedIn.setText(spannable);
+                holder.profLinkedIn.setMovementMethod(LinkMovementMethod.getInstance());
+                //holder.profLinkedIn.setText(model.getBossLinkedin());
+
+            }
+
             if(model.getWorkingStatus()!=null)
              holder.workingStatus.setText(model.getWorkingStatus());
 

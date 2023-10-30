@@ -63,6 +63,7 @@ import java.io.OutputStream;
 import java.security.PrivateKey;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import New.Main.CSEDU_CampusKin.Activity.Profile;
@@ -245,6 +246,9 @@ public class SignUp extends AppCompatActivity {
                                                                         //Toast.makeText(SignUp.this, "Please Confirm your email to complete registration", Toast.LENGTH_SHORT).show();
                                                                         //adduser(name,getEmail,regnum,phone,bat,gen);
                                                                         uploadimage(name,getEmail,regnum,phone,bat,gen);
+                                                                        Map<String , Object> mp=new HashMap<>();
+                                                                        mp.put("reg",true);
+                                                                        FirebaseFirestore.getInstance().collection("RegistrationNo").document(regnum).update(mp);
 
                                                                     } else {
                                                                         Toast.makeText(SignUp.this, "Please add a valid email Address", Toast.LENGTH_SHORT).show();
