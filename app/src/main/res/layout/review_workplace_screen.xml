@@ -12,18 +12,18 @@
         <LinearLayout
             android:id="@+id/top_linear_layout"
             android:layout_width="match_parent"
-            android:layout_height="240dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:padding="10dp"
                 android:text="Review Your Workplace Anonymously"
                 android:textAlignment="textEnd"
                 android:textColor="@color/white"
-                android:textSize="50dp"
+                android:textSize="27sp"
                 android:textStyle="bold"
 
                 />
@@ -38,9 +38,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="600dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/card_view_ackgroud"
                 android:orientation="vertical">
 
@@ -73,7 +73,7 @@
 
                         <EditText
                             android:id="@+id/started_working"
-                            android:layout_width="140dp"
+                            android:layout_width="150dp"
                             android:layout_height="50dp"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="5dp"
@@ -168,44 +168,7 @@
                     android:paddingTop="13dp"
                     android:paddingBottom="13dp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp">
 
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <EditText
-                            android:id="@+id/bat"
-                            android:layout_width="140dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="4dp"
-                            android:background="@drawable/edit_text_background"
-                            android:drawablePadding="10dp"
-                            android:drawableTint="@color/black"
-                            android:hint="Your Batch"
-                            android:paddingStart="10dp" />
-
-                        <Spinner
-                            android:id="@+id/gender"
-                            android:layout_width="140dp"
-                            android:layout_height="50dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="5dp"
-                            android:layout_toRightOf="@+id/bat"
-                            android:background="@drawable/edit_text_background"
-                            android:drawablePadding="10dp"
-                            android:paddingStart="10dp" />
-                    </RelativeLayout>
-
-
-                </LinearLayout>
 
                 <EditText
                     android:id="@+id/linkedin"
@@ -237,7 +200,7 @@
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/update"
-                            android:layout_width="140dp"
+                            android:layout_width="130dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginStart="20dp"
@@ -250,7 +213,7 @@
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/cancel"
-                            android:layout_width="140dp"
+                            android:layout_width="130dp"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_gravity="center_horizontal"
