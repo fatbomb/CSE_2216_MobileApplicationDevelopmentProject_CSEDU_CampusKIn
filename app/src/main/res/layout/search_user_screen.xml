@@ -9,9 +9,9 @@
     <RelativeLayout
         android:id="@+id/search_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:padding="10dp"
-        android:background="@drawable/main_theme_color"
+        android:background="@drawable/top_background_reverse"
         tools:ignore="MissingConstraints">
 
         <EditText
@@ -24,9 +24,9 @@
             android:layout_toRightOf="@id/back_button"
             android:gravity="center"
             android:hint="Find Your Kin"
-            android:padding="10dp"
             android:textColor="#FFFFFF"
-            android:textSize="22sp" />
+            android:textSize="18sp" />
+
 
         <ImageButton
             android:id="@+id/back_button"

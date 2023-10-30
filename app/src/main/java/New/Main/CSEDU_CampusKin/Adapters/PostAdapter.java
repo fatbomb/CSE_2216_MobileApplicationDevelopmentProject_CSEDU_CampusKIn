@@ -148,8 +148,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                     });
 
                     if (!post.getPostedBy().equals(FirebaseUtils.currentUserId())) {
-                        addNotification(post.getPostID(), post.getPostedBy(), "liked your post.");
-                        sendNotification("liked your post", post.getPostedBy());
+                        addNotification(post.getPostID(), post.getPostedBy(), "liked your post.\n");
+                        sendNotification("liked your post.\n", post.getPostedBy());
                     }
                 } else {
                     FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostID()).child(firebaseUser.getUid()).removeValue();
@@ -187,8 +187,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                 getComments(post, holder.comments);
 
                 if (!post.getPostedBy().equals(FirebaseUtils.currentUserId())) {
-                    addNotification(post.getPostID(), post.getPostedBy(), "commented on your post.");
-                    sendNotification("commented on your post.", post.getPostedBy());
+                    addNotification(post.getPostID(), post.getPostedBy(), "commented on your post.\n");
+                    sendNotification("commented on your post.\n", post.getPostedBy());
                 }
             }
         });
