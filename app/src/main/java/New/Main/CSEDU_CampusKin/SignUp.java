@@ -38,15 +38,22 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -59,6 +66,7 @@ import java.util.List;
 import java.util.Objects;
 
 import New.Main.CSEDU_CampusKin.Activity.Profile;
+import New.Main.CSEDU_CampusKin.Model.registrationModel;
 
 public class SignUp extends AppCompatActivity {
     boolean isPasswordVisible = false;
@@ -76,6 +84,7 @@ public class SignUp extends AppCompatActivity {
 
 
     private FirebaseAuth auth;
+    boolean fl=false,kl=false;
     private FirebaseFirestore mRootRef;
 
     private Uri imageUri;
@@ -111,6 +120,7 @@ public class SignUp extends AppCompatActivity {
         ImageView addImage = findViewById(R.id.AddImage);
         final Button register= findViewById(R.id.signup);
         email=findViewById(R.id.email);
+
 
 
 
@@ -185,6 +195,8 @@ public class SignUp extends AppCompatActivity {
                 String s_pass1 = passwordEditText.getText().toString();
                 String name=firstname.getText().toString()+" "+lastname.getText().toString();
                 String regnum=registration.getText().toString();
+
+
                 String phone=phnno.getText().toString();
                 String gen=gender.getSelectedItem().toString();
                 String bat=batch.getText().toString();
@@ -204,6 +216,7 @@ public class SignUp extends AppCompatActivity {
                 else if(imageUri==null){
                     Toast.makeText(SignUp.this, "Please add a photo", Toast.LENGTH_SHORT).show();
                 }
+
                 else{
                     pd.setMessage("Please Wait");
                     pd.show();
@@ -211,39 +224,61 @@ public class SignUp extends AppCompatActivity {
 //                    if(image==""){
 //                        Toast.makeText(SignUp.this, "Image String Haray Geche", Toast.LENGTH_SHORT).show();
 //                    }
-                    auth.createUserWithEmailAndPassword(getEmail,s_pass1).addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
+                    FirebaseFirestore.getInstance().collection("RegistrationNo").document(regnum).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                if (user != null) {
-                                    user.sendEmailVerification()
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        // Email verification sent
-                                                        //Toast.makeText(SignUp.this, "Please Confirm your email to complete registration", Toast.LENGTH_SHORT).show();
-                                                        //adduser(name,getEmail,regnum,phone,bat,gen);
-                                                        uploadimage(name,getEmail,regnum,phone,bat,gen);
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if(documentSnapshot.exists()){
+                                registrationModel student=documentSnapshot.toObject(registrationModel.class);
+                                if(!student.isReg()){
+                                    auth.createUserWithEmailAndPassword(getEmail,s_pass1).addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if(task.isSuccessful()){
+                                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                                if (user != null) {
+                                                    user.sendEmailVerification()
+                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if (task.isSuccessful()) {
+                                                                        // Email verification sent
+                                                                        //Toast.makeText(SignUp.this, "Please Confirm your email to complete registration", Toast.LENGTH_SHORT).show();
+                                                                        //adduser(name,getEmail,regnum,phone,bat,gen);
+                                                                        uploadimage(name,getEmail,regnum,phone,bat,gen);
 
-                                                    } else {
-                                                        Toast.makeText(SignUp.this, "Please add a valid email Address", Toast.LENGTH_SHORT).show();
-                                                        // Failed to send verification email
-                                                    }
+                                                                    } else {
+                                                                        Toast.makeText(SignUp.this, "Please add a valid email Address", Toast.LENGTH_SHORT).show();
+                                                                        // Failed to send verification email
+                                                                    }
+                                                                }
+                                                            });
                                                 }
-                                            });
+
+
+                                                //startActivity((new Intent(SignUp.this, Profile.class)));
+                                            }
+                                            else {
+                                                pd.dismiss();
+                                                Toast.makeText(SignUp.this, "Registration faild", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+
                                 }
-
-
-                                //startActivity((new Intent(SignUp.this, Profile.class)));
+                                else {
+                                    Toast.makeText(SignUp.this, "Already registered", Toast.LENGTH_SHORT).show();
+                                    pd.dismiss();
+                                }
                             }
-                            else {
+                            else{
+                                Toast.makeText(SignUp.this, "Please provide a valid registration no", Toast.LENGTH_SHORT).show();
                                 pd.dismiss();
-                                Toast.makeText(SignUp.this, "Registration faild", Toast.LENGTH_SHORT).show();
                             }
+
+
                         }
                     });
+
 
 
 
@@ -253,6 +288,17 @@ public class SignUp extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void performLogicBasedOnFl() {
+        // Here you can use the updated value of 'fl' to perform your logic.
+        if (fl) {
+            kl=true;
+
+        } else {
+            kl=false;
+            // Do something if 'fl' is false
+        }
     }
 
     private String uploadimage(String name, String email, String regno, String phnno, String batch, String gender) {

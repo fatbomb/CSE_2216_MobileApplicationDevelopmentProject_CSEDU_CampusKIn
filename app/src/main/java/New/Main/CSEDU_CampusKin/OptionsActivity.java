@@ -18,11 +18,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import New.Main.CSEDU_CampusKin.Activity.AboutUs;
 import New.Main.CSEDU_CampusKin.Activity.GiveReviewActivity;
 import New.Main.CSEDU_CampusKin.Activity.SeeeReviewActivity;
 
 public class OptionsActivity extends AppCompatActivity {
-    private TextView settings, logout,giveReview,seeReview;
+    private TextView settings, logout,giveReview,seeReview,aboutUs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class OptionsActivity extends AppCompatActivity {
         logout = findViewById(R.id.logout);
         giveReview=findViewById(R.id.greview);
         seeReview=findViewById(R.id.creview);
+        aboutUs=findViewById(R.id.aboutus);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Options");
@@ -42,6 +44,7 @@ public class OptionsActivity extends AppCompatActivity {
                 finish();
             }
         });
+
 
 
 
@@ -81,6 +84,12 @@ public class OptionsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(OptionsActivity.this, SearchReviewActivity.class));
+            }
+        });
+        aboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OptionsActivity.this, AboutUs.class));
             }
         });
     }
