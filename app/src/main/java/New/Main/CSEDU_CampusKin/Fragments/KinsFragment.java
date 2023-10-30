@@ -48,6 +48,7 @@ public class KinsFragment extends Fragment {
         Toolbar toolbar= view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Followings");
+        toolbar.setVisibility(View.GONE);
 
         // Enable the Up button for navigation, if needed
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
