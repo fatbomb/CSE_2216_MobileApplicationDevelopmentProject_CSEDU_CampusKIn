@@ -93,7 +93,7 @@ public class SearchUserRecyclerAdapter extends FirestoreRecyclerAdapter<UserMode
         });
         Picasso.get().load(model.getPhoto()).placeholder(R.drawable.human).into(holder.profilePic);
 
-        chekFollowingStatus(holder.follow,model.getUserID());
+        //chekFollowingStatus(holder.follow,model.getUserID());
 
 
         holder.msg.setOnClickListener(view -> {
