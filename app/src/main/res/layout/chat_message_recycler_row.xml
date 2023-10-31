@@ -22,7 +22,18 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:text="your message"
+            android:layout_marginRight="10dp"
             android:textColor="@color/white"/>
+        <TextView
+            android:id="@+id/otherSentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sentTime"
+            android:textColor="#D3D3D3"
+            android:textSize="9sp"/>
+
+
+
 
     </LinearLayout>
     <LinearLayout

@@ -10,15 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/toolbar"
-        android:backgroundTint="@color/primary"
+        android:backgroundTint="#DDDDD5"
         android:background="?android:attr/windowBackground"/>
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recycler_view"
-        android:layout_margin="5dp"
+        android:layout_above="@id/bottom"
         android:layout_below="@id/toolbar"
-        android:layout_above="@id/bottom"/>
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp" />
 
     <RelativeLayout
         android:id="@+id/bottom"

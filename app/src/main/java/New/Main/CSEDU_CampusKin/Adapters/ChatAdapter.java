@@ -49,7 +49,7 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
             holder.rightChatLayout.setVisibility(View.VISIBLE);
             holder.rightChatTextView.setText(model.getMessage());
 
-            setTime(holder, model);
+            setTime(holder.mySentTime, model);
 
             if(model.isRead())
             {
@@ -71,7 +71,7 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
             Map<String, Object> map = new HashMap<>();
             map.put("read", true);
 
-            setTime(holder, model);
+            setTime(holder.otherSentTime, model);
 
             if(chatRoomID!=null && model.getMessageID()!=null){
                 FirebaseUtils.getChatRoomMessageReference(chatRoomID).document(model.getMessageID()).update(map);
@@ -87,7 +87,7 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
 
     }
 
-    private void setTime(ChatAdapter.ChatModelViewHolder holder, ChatMessageModel chatMessageModel) {
+    private void setTime(TextView sentTime, ChatMessageModel chatMessageModel) {
         long postTimeMillis = chatMessageModel.getTimestamp().toDate().getTime();
 
 // Get the current time in milliseconds (UTC time)
@@ -115,8 +115,7 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
             timeAgo = days + " day ago";
         }
 
-
-        holder.mySentTime.setText(timeAgo);
+        sentTime.setText(timeAgo);
     }
 
 
@@ -138,7 +137,7 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
             sentIcon = itemView.findViewById(R.id.msg_sent_icon);
             readIcon = itemView.findViewById(R.id.msg_read_icon);
             mySentTime = itemView.findViewById(R.id.mySentTime);
-//            otherSentTime = itemView.findViewById(R.id.otherSentTime);
+            otherSentTime = itemView.findViewById(R.id.otherSentTime);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
