@@ -91,6 +91,8 @@ public class SearchUserActivity extends AppCompatActivity {
     void setUpSearchRecyclerView(String searchTerm, RecyclerView recyclerView, String field) {
         CollectionReference userCollection = FirebaseUtils.allUserCollectionReference();
 
+      //  userCollection = makeDataLowerCase(userCollection);
+
         Query query = userCollection.orderBy(field).startAt(searchTerm).endAt(searchTerm + "\uf8ff");
 
 
@@ -102,6 +104,11 @@ public class SearchUserActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         adapter.startListening();
     }
+
+//    CollectionReference makeDataLowerCase(CollectionReference data){
+//
+//
+//    }
 
     @Override
     protected void onStart() {

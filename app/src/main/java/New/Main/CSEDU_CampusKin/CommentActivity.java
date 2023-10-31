@@ -136,7 +136,7 @@ public class CommentActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             addComment.setText("");
                             Toast.makeText(CommentActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
-                            addNotification(postId,firebaseUser.getUid());
+                           // addNotification(postId,firebaseUser.getUid());
                         }
                         else{
                             Toast.makeText(CommentActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -152,7 +152,7 @@ public class CommentActivity extends AppCompatActivity {
         map.put("postID", postID);
         map.put("post", true);
 
-        FirebaseDatabase.getInstance().getReference().child("Notifications").child(firebaseUser.getUid()).push().setValue(map);
+        FirebaseDatabase.getInstance().getReference().child("Notifications").child(authorId).push().setValue(map);
         System.out.println("notification is working");
     }
 

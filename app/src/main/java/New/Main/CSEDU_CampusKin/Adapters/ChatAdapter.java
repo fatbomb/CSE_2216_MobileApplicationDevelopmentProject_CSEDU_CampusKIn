@@ -37,10 +37,10 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
         this.chatRoomID = ChatroomID;
     }
 
-    public ChatAdapter(FirestoreRecyclerOptions<ChatMessageModel> options, OnChatMessageClickListener messageClickListener) {
-        super(options);
-        this.messageClickListener = messageClickListener;
-    }
+//    public ChatAdapter(FirestoreRecyclerOptions<ChatMessageModel> options, OnChatMessageClickListener messageClickListener) {
+//        super(options);
+//        this.messageClickListener = messageClickListener;
+//    }
 
     @Override
     protected void onBindViewHolder(@NonNull ChatModelViewHolder holder, int position, @NonNull ChatMessageModel model) {
@@ -139,19 +139,19 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
             mySentTime = itemView.findViewById(R.id.mySentTime);
             otherSentTime = itemView.findViewById(R.id.otherSentTime);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        ChatMessageModel chatMessage = getItem(position);
-                        if (chatMessage != null) {
-                            // Notify the click listener that a message has been clicked
-                            messageClickListener.onChatMessageClick(chatMessage);
-                        }
-                    }
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int position = getAdapterPosition();
+//                    if (position != RecyclerView.NO_POSITION) {
+//                        ChatMessageModel chatMessage = getItem(position);
+//                        if (chatMessage != null) {
+//                            // Notify the click listener that a message has been clicked
+//                            messageClickListener.onChatMessageClick(chatMessage);
+//                        }
+//                    }
+//                }
+//            });
 
         }
 

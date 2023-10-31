@@ -198,7 +198,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                 Intent intent = new Intent(mContext, NavigationActivity.class);
                 intent.putExtra("publisherId", post.getPostedBy());
                 mContext.startActivity(intent);
-
             }
         });
         if (post.isEdited()) {

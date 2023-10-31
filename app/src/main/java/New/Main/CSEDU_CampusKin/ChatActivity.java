@@ -56,13 +56,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ChatActivity extends AppCompatActivity implements OnChatMessageClickListener {
+public class ChatActivity extends AppCompatActivity{
 
 
-    public void onChatMessageClick(ChatMessageModel chatMessage) {
-        // Handle the message click event and call markMessageAsRead
-        markMessageAsRead(chatMessage);
-    }
+//    public void onChatMessageClick(ChatMessageModel chatMessage) {
+//        // Handle the message click event and call markMessageAsRead
+//        markMessageAsRead(chatMessage);
+//    }
 
     UserModel otherUser;
     ChatRoomModel chatRoomModel;
@@ -191,13 +191,13 @@ public class ChatActivity extends AppCompatActivity implements OnChatMessageClic
 
 
 
-    void markMessageAsRead(ChatMessageModel chatMessage) {
-        chatMessage.setRead(true);
-        System.out.println("message read");
-        FirebaseUtils.getChatRoomMessageReference(chatRoomID)
-                .document(chatMessage.getSenderID())
-                .set(chatMessage);
-    }
+//    void markMessageAsRead(ChatMessageModel chatMessage) {
+//        chatMessage.setRead(true);
+//        System.out.println("message read");
+//        FirebaseUtils.getChatRoomMessageReference(chatRoomID)
+//                .document(chatMessage.getSenderID())
+//                .set(chatMessage);
+//    }
 
     void setUpChatRecyclerView() {
         Query query = FirebaseUtils.getChatRoomMessageReference(chatRoomID)
