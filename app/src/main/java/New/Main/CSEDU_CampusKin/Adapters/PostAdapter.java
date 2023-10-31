@@ -113,7 +113,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
             holder.description.setMovementMethod(LinkMovementMethod.getInstance());
         }
 
-        holder.comments.setText(post.getCommentCount() + " Comments");
+        numOfComments(post.getPostID(),holder.comments);
+
         setTime(holder, post);
 
 
@@ -166,7 +167,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                 holder.likes.setText(post.getPostLike() + " Likes");
             }
         });
-        holder.likes.setText(post.getPostLike() + " Likes");
+        //holder.likes.setText(post.getPostLike() + " Likes");
+        numOfLikes(post.getPostID(),holder.likes);
         holder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -477,6 +479,37 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
             }
         });
     }
+    private void numOfLikes(String postId, TextView tView){
+        FirebaseDatabase.getInstance().getReference().child("Likes")
+                .child(postId).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        tView.setText(snapshot.getChildrenCount()+" Likes");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+    }
+    private void numOfComments(String postId, TextView tView){
+        FirebaseDatabase.getInstance().getReference().child("Comments")
+                .child(postId).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        tView.setText(snapshot.getChildrenCount()+" Comments");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+    }
+
 
     private void getComments(Post post, TextView text) {
         FirebaseDatabase.getInstance().getReference().child("Comments").child(post.getPostID()).
