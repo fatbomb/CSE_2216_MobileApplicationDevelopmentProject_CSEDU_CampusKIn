@@ -6,6 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".SearchUserActivity">
 
+
+
+
     <RelativeLayout
         android:id="@+id/search_bar_layout"
         android:layout_width="match_parent"
@@ -14,19 +17,20 @@
         android:background="@drawable/top_background_reverse"
         tools:ignore="MissingConstraints">
 
+
         <EditText
             android:id="@+id/searchInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="0dp"
             android:layout_toLeftOf="@id/search_button"
             android:layout_toRightOf="@id/back_button"
             android:gravity="center"
-            android:hint="Find Your Kin"
+            android:hint="Find Your Kin by Name, Batch..."
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
-
 
         <ImageButton
             android:id="@+id/back_button"
@@ -50,6 +54,21 @@
             app:tint="@color/white" />
 
     </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_bar_layout"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_bar_layout"
+        android:orientation="horizontal">
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view0"
@@ -107,4 +126,6 @@
         android:layout_below="@id/search_bar_layout"
         android:padding="10dp"
         />
+    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
