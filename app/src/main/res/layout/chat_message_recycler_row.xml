@@ -40,7 +40,52 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:text="my message"
+            android:layout_marginRight="10dp"
             android:textColor="@color/white"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:orientation="vertical"
+            android:layout_marginRight="0dp"
+            >
+
+           <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="0dp">
+
+                <ImageView
+                    android:id="@+id/msg_sent_icon"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/sent_icon"/>
+
+                <ImageView
+                    android:id="@+id/msg_read_icon"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/read_icon" />
+
+
+           </RelativeLayout>
+
+            <TextView
+                android:id="@+id/sentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="sentTime"
+                android:textColor="#D3D3D3"
+                android:textSize="9sp"/>
+
+
+        </LinearLayout>
+
+
+
     </LinearLayout>
 
 </RelativeLayout>
