@@ -34,6 +34,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -121,8 +122,10 @@ public class CommentActivity extends AppCompatActivity {
                 commentList.clear();
                 for(DataSnapshot dSnap:snapshot.getChildren()){
                     Comment comment =dSnap.getValue(Comment.class);
+
                     commentList.add(comment);
                 }
+                Collections.reverse(commentList);
                 commentAdapter.notifyDataSetChanged();
             }
 

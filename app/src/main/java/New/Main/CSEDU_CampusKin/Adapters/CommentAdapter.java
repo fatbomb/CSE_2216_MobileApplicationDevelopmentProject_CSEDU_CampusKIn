@@ -199,8 +199,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
                 return true;
             }
         });
-
-
     }
 
     private void editComment(Context context,String previousComment,EditCommentCallback callback) {
