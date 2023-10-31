@@ -20,11 +20,18 @@ import New.Main.CSEDU_CampusKin.Utils.FirebaseUtils;
 public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, ChatAdapter.ChatModelViewHolder>
 {
     Context context;
+    private OnChatMessageClickListener messageClickListener;
 
     public ChatAdapter(@NonNull FirestoreRecyclerOptions<ChatMessageModel> options, Context context){
         super(options);
         this.context = context;
     }
+
+    public ChatAdapter(FirestoreRecyclerOptions<ChatMessageModel> options, OnChatMessageClickListener messageClickListener) {
+        super(options);
+        this.messageClickListener = messageClickListener;
+    }
+
 
     @Override
     protected void onBindViewHolder(@NonNull ChatModelViewHolder holder, int position, @NonNull ChatMessageModel model) {
@@ -39,6 +46,12 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
             holder.leftChatLayout.setVisibility(View.VISIBLE);
             holder.leftChatTextView.setText(model.getMessage());
         }
+
+        if (model.isRead()) {
+            System.out.println("message read");
+        } else {
+            System.out.println("message unread");
+        }
     }
 
     @NonNull
@@ -46,7 +59,9 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
     public ChatModelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.chat_message_recycler_row, parent, false);
         return new ChatModelViewHolder(view);
+
     }
+
 
     class ChatModelViewHolder extends RecyclerView.ViewHolder
     {
@@ -61,6 +76,23 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
             rightChatLayout = itemView.findViewById(R.id.right_chat_layout);
             leftChatTextView = itemView.findViewById(R.id.left_chat_textview);
             rightChatTextView = itemView.findViewById(R.id.right_chat_textview);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        ChatMessageModel chatMessage = getItem(position);
+                        if (chatMessage != null) {
+                            // Notify the click listener that a message has been clicked
+                            messageClickListener.onChatMessageClick(chatMessage);
+                        }
+                    }
+                }
+            });
+
         }
+
+
     }
 }

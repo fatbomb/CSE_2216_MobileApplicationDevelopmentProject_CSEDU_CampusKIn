@@ -6,14 +6,24 @@ public class ChatMessageModel {
     private String message;
     private String senderID;
     private Timestamp timestamp;
+    private boolean isRead;
 
     public ChatMessageModel() {
     }
 
-    public ChatMessageModel(String message, String senderID, Timestamp timestamp) {
+    public ChatMessageModel(String message, String senderID, Timestamp timestamp, boolean isRead) {
         this.message = message;
         this.senderID = senderID;
         this.timestamp = timestamp;
+        this.isRead = isRead;
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
     }
 
     public String getMessage() {

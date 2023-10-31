@@ -6,6 +6,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import New.Main.CSEDU_CampusKin.Adapters.OnChatMessageClickListener;
 import okhttp3.Request;
 
 import androidx.annotation.NonNull;
@@ -53,7 +55,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements OnChatMessageClickListener {
+
+
+    public void onChatMessageClick(ChatMessageModel chatMessage) {
+        // Handle the message click event and call markMessageAsRead
+        markMessageAsRead(chatMessage);
+    }
 
     UserModel otherUser;
     ChatRoomModel chatRoomModel;
@@ -164,7 +172,7 @@ public class ChatActivity extends AppCompatActivity {
         chatRoomModel.setLastMessage(message);
         FirebaseUtils.getChatRoomReference(chatRoomID).set(chatRoomModel);
 
-        ChatMessageModel chatMessageModel = new ChatMessageModel(message, FirebaseUtils.currentUserId(), Timestamp.now());
+        ChatMessageModel chatMessageModel = new ChatMessageModel(message, FirebaseUtils.currentUserId(), Timestamp.now(), false);
         FirebaseUtils.getChatRoomMessageReference(chatRoomID).add(chatMessageModel)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
@@ -176,6 +184,14 @@ public class ChatActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    void markMessageAsRead(ChatMessageModel chatMessage) {
+        chatMessage.setRead(true);
+        System.out.println("message read");
+        FirebaseUtils.getChatRoomMessageReference(chatRoomID)
+                .document(chatMessage.getSenderID())
+                .set(chatMessage);
     }
 
     void setUpChatRecyclerView() {
