@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Firebase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,10 +25,13 @@ import com.google.firebase.database.annotations.Nullable;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Collections;
 import java.util.EventListener;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Queue;
 
 import New.Main.CSEDU_CampusKin.Adapters.SearchUserRecyclerAdapter;
@@ -91,7 +96,7 @@ public class SearchUserActivity extends AppCompatActivity {
     void setUpSearchRecyclerView(String searchTerm, RecyclerView recyclerView, String field) {
         CollectionReference userCollection = FirebaseUtils.allUserCollectionReference();
 
-      //  userCollection = makeDataLowerCase(userCollection);
+       // userCollection = makeDataLowerCase(userCollection);
 
         Query query = userCollection.orderBy(field).startAt(searchTerm).endAt(searchTerm + "\uf8ff");
 
@@ -105,9 +110,40 @@ public class SearchUserActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
-//    CollectionReference makeDataLowerCase(CollectionReference data){
+//    CollectionReference makeDataLowerCase(CollectionReference userCollection){
+//
+//        userCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    for (QueryDocumentSnapshot document : task.getResult()) {
+//                        // Get the data from the document
+//                        Map<String, Object> data = document.getData();
+//
+//                        // Create a new map to store the lowercase data
+//                        Map<String, Object> lowercaseData = new HashMap<>();
+//
+//                        // Iterate through the original data and convert it to lowercase
+//                        for (Map.Entry<String, Object> entry : data.entrySet()) {
+//                            String key = entry.getKey();
+//                            Object value = entry.getValue();
+//                            if (value instanceof String) {
+//                                lowercaseData.put(key, ((String) value).toLowerCase());
+//                            } else {
+//                                lowercaseData.put(key, value);
+//                            }
+//                        }
+//
+//                        // Update the document with the lowercase data
+//                        document.getReference().set(lowercaseData);
+//                    }
+//                } else {
+//                    // Handle the error
+//                }
 //
 //
+//            }
+//        });
 //    }
 
     @Override

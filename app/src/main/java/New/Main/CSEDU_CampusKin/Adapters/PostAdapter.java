@@ -186,10 +186,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewholder> {
                 mContext.startActivity(intent);
                 getComments(post, holder.comments);
 
-                if (!post.getPostedBy().equals(FirebaseUtils.currentUserId())) {
-                    addNotification(post.getPostID(), post.getPostedBy(), "commented on your post.\n");
-                    sendNotification("commented on your post.\n", post.getPostedBy());
-                }
             }
         });
         holder.username.setOnClickListener(new View.OnClickListener() {

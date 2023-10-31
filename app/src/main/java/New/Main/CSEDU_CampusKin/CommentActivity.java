@@ -29,6 +29,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +40,15 @@ import java.util.List;
 import New.Main.CSEDU_CampusKin.Adapters.CommentAdapter;
 import New.Main.CSEDU_CampusKin.Model.Comment;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
+import New.Main.CSEDU_CampusKin.Utils.FirebaseUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class CommentActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -137,6 +149,10 @@ public class CommentActivity extends AppCompatActivity {
                             addComment.setText("");
                             Toast.makeText(CommentActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
                            // addNotification(postId,firebaseUser.getUid());
+                            if (!authorId.equals(FirebaseUtils.currentUserId())) {
+                                addNotification(postId, authorId, "commented on your post.\n");
+                                sendNotification("commented on your post.\n", authorId);
+                            }
                         }
                         else{
                             Toast.makeText(CommentActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -145,14 +161,25 @@ public class CommentActivity extends AppCompatActivity {
                 });
 
     }
-    private void addNotification(String postID, String publisherID){
+//    private void addNotification(String postID, String publisherID){
+//        HashMap<String, Object> map = new HashMap<>();
+//        map.put("userID", publisherID);
+//        map.put("text", "Commented In your Post.");
+//        map.put("postID", postID);
+//        map.put("post", true);
+//
+//        FirebaseDatabase.getInstance().getReference().child("Notifications").child(authorId).push().setValue(map);
+//        System.out.println("notification is working");
+//    }
+
+    private void addNotification(String postID, String publisherID, String notificationBody) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("userID", publisherID);
-        map.put("text", "Commented In your Post.");
+        map.put("userID", FirebaseUtils.currentUserId());
+        map.put("text",  notificationBody);
         map.put("postID", postID);
         map.put("post", true);
 
-        FirebaseDatabase.getInstance().getReference().child("Notifications").child(authorId).push().setValue(map);
+        FirebaseDatabase.getInstance().getReference().child("Notifications").child(publisherID).push().setValue(map);
         System.out.println("notification is working");
     }
 
@@ -172,4 +199,71 @@ public class CommentActivity extends AppCompatActivity {
             }
         });
     }
+    void sendNotification(String message, String postPublisherID) {
+        FirebaseUtils.currentUserDetails().get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                UserModel userModel = task.getResult().toObject(UserModel.class);
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    JSONObject notificationObject = new JSONObject();
+                    JSONObject dataObject = new JSONObject();
+
+                    notificationObject.put("title", userModel.getUsername());
+                    notificationObject.put("body", message);
+                    notificationObject.put("notification_type", "post");
+
+                    dataObject.put("userID", userModel.getUserID());
+
+                    jsonObject.put("notification", notificationObject);
+                    jsonObject.put("data", dataObject);
+
+                    FirebaseUtils.allUserCollectionReference().document(postPublisherID).get().addOnCompleteListener(task1 -> {
+                        if (task1.isSuccessful()) {
+                            UserModel otherUser = task1.getResult().toObject(UserModel.class);
+                            try {
+                                jsonObject.put("to", otherUser.getFCMToken());
+                                callAPI(jsonObject); // Move callAPI here
+                                System.out.println("notification sent");
+                            } catch (JSONException e) {
+                                System.out.println("sending notification exception" + e);
+                            }
+                        } else {
+                            System.out.println("Error getting user data for FCM token");
+                        }
+                    });
+                } catch (Exception e) {
+                    System.out.println(e);
+                    System.out.println("exception in sending notification");
+                }
+            }
+        });
+    }
+
+
+    void callAPI(JSONObject jsonObject){
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://fcm.googleapis.com/fcm/send";
+
+        RequestBody body = RequestBody.create(jsonObject.toString(), JSON);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .header("Authorization", "Bearer AAAAjcl2Ftg:APA91bHj2XI6BRfatSyKAh7h8R74KWJXuvATQOqcn4wTEndYCWfaKZSk0mitHjzFU_YX0IPdLbXhb4l1iP6dKELlWupKMyHsTFNEjp03bzRRX6MzBNDSucEU-T5rXmRxQ3thvbl7oN9k")
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+
+            }
+        });
+        System.out.println("API called");
+    }
+
 }
