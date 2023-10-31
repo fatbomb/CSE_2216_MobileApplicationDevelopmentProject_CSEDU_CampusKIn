@@ -125,6 +125,7 @@ public class HomePageFragment extends Fragment {
                     for(String id:followingList){
                         if(post.getPostedBy().equals(id)||post.getPostedBy().equals(FirebaseAuth.getInstance().getUid())){
                             postLIst.add(post);
+                            break;
                         }
                     }
                 }
