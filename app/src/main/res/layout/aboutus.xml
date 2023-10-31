@@ -1,81 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp"
-    android:gravity="center"
     android:background="@drawable/post_view_background"
+    android:gravity="center"
     android:orientation="vertical">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical">
+        android:textAlignment="center"
+        >
 
         <TextView
+            android:id="@+id/team_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:text="Team : Final Masquerade"
             android:textColor="@color/primary"
             android:textSize="40sp"
-            android:layout_margin="10dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/project_name"
+            android:layout_below="@id/team_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:text="App Name : CSEDU Campus Kin"
             android:textColor="#484848"
             android:textSize="40sp"
-            android:layout_margin="10dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/member_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Member 1 :
-            Meherun Farzana
-            Roll : 05"
+            android:layout_below="@id/project_name"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="5dp"
+            android:text="Member 1 :"
             android:textColor="@color/secondary"
-            android:layout_margin="20dp"
             android:textSize="30sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/member_1_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Member 2 :
-
-            Himel Chandra Roy
-
-            Roll : 13"
+            android:layout_below="@id/member_1"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="5dp"
+            android:text="Meherun Farzana"
             android:textColor="@color/secondary"
             android:textSize="30sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/member_1_roll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Member 3 :
-
-            Aniket Joarder
-
-            Roll : 48"
+            android:layout_below="@id/member_1_name"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="5dp"
+            android:text="Roll : 05"
             android:textColor="@color/secondary"
             android:textSize="30sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/member_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/member_1_roll"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="5dp"
+            android:text="Member 2 :"
+            android:textColor="@color/secondary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/member_2_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/member_2"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Himel Chandra Roy"
+            android:textColor="@color/secondary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/member_2_roll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/member_2_name"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="5dp"
+            android:text="Roll : 13"
+            android:textColor="@color/secondary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/member_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/member_2_roll"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="5dp"
+            android:text="Member 3 :"
+            android:textColor="@color/secondary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/member_3_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/member_3"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="5dp"
+            android:text="Aniket Joarder"
+            android:textColor="@color/secondary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/member_3_roll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/member_3_name"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="Roll : 48"
+            android:textColor="@color/secondary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
 
 
-    </LinearLayout>
+    </RelativeLayout>
+    </ScrollView>
 
 
-
-</LinearLayout>
+</RelativeLayout>
 
 
 
