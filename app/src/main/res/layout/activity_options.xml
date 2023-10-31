@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/toolbar"
-        android:backgroundTint="#DDDDD5"
+        android:backgroundTint="#FEFFD3"
         android:background="?android:attr/windowBackground"/>
     <TextView
         android:layout_width="match_parent"

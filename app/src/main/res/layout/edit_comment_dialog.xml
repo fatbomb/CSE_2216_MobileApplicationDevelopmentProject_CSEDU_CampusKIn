@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="Edit your comment..."
-    android:background="#DDDDD5"
+    android:background="#FEFFD3"
     android:inputType="textMultiLine"
     android:gravity="top"
     />
