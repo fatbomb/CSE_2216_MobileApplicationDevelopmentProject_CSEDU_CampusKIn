@@ -136,13 +136,14 @@ public class CommentActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             addComment.setText("");
                             Toast.makeText(CommentActivity.this, "Comment Added", Toast.LENGTH_SHORT).show();
+                            addNotification(postId,firebaseUser.getUid());
                         }
                         else{
                             Toast.makeText(CommentActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-        addNotification(postId,firebaseUser.getUid());
+
     }
     private void addNotification(String postID, String publisherID){
         HashMap<String, Object> map = new HashMap<>();

@@ -55,8 +55,10 @@ public class ChatPageFragment extends Fragment {
     public void onStart()
     {
         super.onStart();
-        if(adapter!=null)
+        if(adapter!=null) {
+            setUpRecyclerView();
             adapter.startListening();
+        }
     }
     @Override
     public void onStop()
@@ -70,7 +72,9 @@ public class ChatPageFragment extends Fragment {
     public void onResume()
     {
         super.onResume();
-        if(adapter!=null)
+        if(adapter!=null) {
+            setUpRecyclerView();
             adapter.notifyDataSetChanged();
+        }
     }
 }

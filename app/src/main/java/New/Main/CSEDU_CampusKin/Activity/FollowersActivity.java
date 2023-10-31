@@ -49,7 +49,16 @@ public class FollowersActivity extends AppCompatActivity {
         title=intent.getStringExtra("title");
         Toolbar toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(title);
+        if(title.equals("followers")){
+            getSupportActionBar().setTitle("Your Follower Kins");
+
+        }
+        else if(title.equals("following")) {
+            getSupportActionBar().setTitle("Your Follower Kins");
+        }
+        else{
+            getSupportActionBar().setTitle(title);
+        }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         count=findViewById(R.id.count);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
