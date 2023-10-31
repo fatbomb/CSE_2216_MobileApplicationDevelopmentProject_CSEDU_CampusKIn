@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import New.Main.CSEDU_CampusKin.Model.ChatMessageModel;
@@ -52,7 +53,9 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
             holder.leftChatTextView.setText(model.getMessage());
             model.setRead(true);
             System.out.println("message read");
-            FirebaseUtils.getChatRoomMessageReference(chatRoomID).document(model.getMessageID()).update((Map<String, Object>) model);
+            Map<String, Object> map = new HashMap<>();
+            map.put("isRead", true);
+            FirebaseUtils.getChatRoomMessageReference(chatRoomID).document(model.getMessageID()).update(map);
         }
 
         if (model.isRead()) {
