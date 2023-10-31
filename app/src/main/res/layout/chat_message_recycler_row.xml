@@ -9,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_sender"
+        android:orientation="horizontal"
         android:padding="8dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="100dp"
@@ -20,6 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:text="your message"
             android:textColor="@color/white"/>
 
     </LinearLayout>
@@ -74,7 +76,7 @@
            </RelativeLayout>
 
             <TextView
-                android:id="@+id/sentTime"
+                android:id="@+id/mySentTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="sentTime"

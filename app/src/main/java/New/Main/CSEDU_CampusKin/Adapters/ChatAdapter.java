@@ -71,6 +71,8 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
             Map<String, Object> map = new HashMap<>();
             map.put("read", true);
 
+            setTime(holder, model);
+
             if(chatRoomID!=null && model.getMessageID()!=null){
                 FirebaseUtils.getChatRoomMessageReference(chatRoomID).document(model.getMessageID()).update(map);
             }
@@ -114,7 +116,7 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
         }
 
 
-        holder.sentTime.setText(timeAgo);
+        holder.mySentTime.setText(timeAgo);
     }
 
 
@@ -123,7 +125,7 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
         LinearLayout leftChatLayout, rightChatLayout;
         TextView leftChatTextView, rightChatTextView;
         ImageView sentIcon, readIcon;
-        TextView sentTime;
+        TextView mySentTime, otherSentTime;
 
         public ChatModelViewHolder(@NonNull View itemView)
         {
@@ -135,7 +137,8 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
             rightChatTextView = itemView.findViewById(R.id.right_chat_textview);
             sentIcon = itemView.findViewById(R.id.msg_sent_icon);
             readIcon = itemView.findViewById(R.id.msg_read_icon);
-            sentTime = itemView.findViewById(R.id.sentTime);
+            mySentTime = itemView.findViewById(R.id.mySentTime);
+//            otherSentTime = itemView.findViewById(R.id.otherSentTime);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
