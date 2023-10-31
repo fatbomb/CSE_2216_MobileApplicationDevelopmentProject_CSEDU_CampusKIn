@@ -55,7 +55,10 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
             System.out.println("message read");
             Map<String, Object> map = new HashMap<>();
             map.put("isRead", true);
-            FirebaseUtils.getChatRoomMessageReference(chatRoomID).document(model.getMessageID()).update(map);
+
+            if(chatRoomID!=null && model.getMessageID()!=null){
+                FirebaseUtils.getChatRoomMessageReference(chatRoomID).document(model.getMessageID()).update(map);
+            }
         }
 
         if (model.isRead()) {
