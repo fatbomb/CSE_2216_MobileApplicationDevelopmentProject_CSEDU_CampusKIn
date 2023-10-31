@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Firebase;
 import com.google.firebase.database.DataSnapshot;
@@ -90,16 +91,12 @@ public class SearchUserActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
             }
         });
-
     }
 
     void setUpSearchRecyclerView(String searchTerm, RecyclerView recyclerView, String field) {
         CollectionReference userCollection = FirebaseUtils.allUserCollectionReference();
 
-       // userCollection = makeDataLowerCase(userCollection);
-
         Query query = userCollection.orderBy(field).startAt(searchTerm).endAt(searchTerm + "\uf8ff");
-
 
         FirestoreRecyclerOptions<UserModel> options = new FirestoreRecyclerOptions.Builder<UserModel>()
                 .setQuery(query, UserModel.class).build();
@@ -109,42 +106,6 @@ public class SearchUserActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         adapter.startListening();
     }
-
-//    CollectionReference makeDataLowerCase(CollectionReference userCollection){
-//
-//        userCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    for (QueryDocumentSnapshot document : task.getResult()) {
-//                        // Get the data from the document
-//                        Map<String, Object> data = document.getData();
-//
-//                        // Create a new map to store the lowercase data
-//                        Map<String, Object> lowercaseData = new HashMap<>();
-//
-//                        // Iterate through the original data and convert it to lowercase
-//                        for (Map.Entry<String, Object> entry : data.entrySet()) {
-//                            String key = entry.getKey();
-//                            Object value = entry.getValue();
-//                            if (value instanceof String) {
-//                                lowercaseData.put(key, ((String) value).toLowerCase());
-//                            } else {
-//                                lowercaseData.put(key, value);
-//                            }
-//                        }
-//
-//                        // Update the document with the lowercase data
-//                        document.getReference().set(lowercaseData);
-//                    }
-//                } else {
-//                    // Handle the error
-//                }
-//
-//
-//            }
-//        });
-//    }
 
     @Override
     protected void onStart() {
