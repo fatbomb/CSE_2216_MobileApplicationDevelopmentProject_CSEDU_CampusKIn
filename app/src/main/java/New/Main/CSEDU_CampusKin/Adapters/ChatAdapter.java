@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+import java.util.Map;
+
 import New.Main.CSEDU_CampusKin.Model.ChatMessageModel;
 import New.Main.CSEDU_CampusKin.R;
 import New.Main.CSEDU_CampusKin.Utils.FirebaseUtils;
@@ -21,10 +23,12 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
 {
     Context context;
     private OnChatMessageClickListener messageClickListener;
+    private String chatRoomID;
 
-    public ChatAdapter(@NonNull FirestoreRecyclerOptions<ChatMessageModel> options, Context context){
+    public ChatAdapter(@NonNull FirestoreRecyclerOptions<ChatMessageModel> options, Context context, String ChatroomID){
         super(options);
         this.context = context;
+        this.chatRoomID = ChatroomID;
     }
 
     public ChatAdapter(FirestoreRecyclerOptions<ChatMessageModel> options, OnChatMessageClickListener messageClickListener) {
@@ -39,12 +43,16 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
             holder.leftChatLayout.setVisibility(View.GONE);
             holder.rightChatLayout.setVisibility(View.VISIBLE);
             holder.rightChatTextView.setText(model.getMessage());
+
         }
         else
         {
             holder.rightChatLayout.setVisibility(View.GONE);
             holder.leftChatLayout.setVisibility(View.VISIBLE);
             holder.leftChatTextView.setText(model.getMessage());
+            model.setRead(true);
+            System.out.println("message read");
+            FirebaseUtils.getChatRoomMessageReference(chatRoomID).document(model.getMessageID()).update((Map<String, Object>) model);
         }
 
         if (model.isRead()) {

@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -172,19 +173,23 @@ public class ChatActivity extends AppCompatActivity implements OnChatMessageClic
         chatRoomModel.setLastMessage(message);
         FirebaseUtils.getChatRoomReference(chatRoomID).set(chatRoomModel);
 
-        ChatMessageModel chatMessageModel = new ChatMessageModel(message, FirebaseUtils.currentUserId(), Timestamp.now(), false);
-        FirebaseUtils.getChatRoomMessageReference(chatRoomID).add(chatMessageModel)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if (task.isSuccessful()) {
-                            chat_msg_input.setText("");
-                            sendNotification(message);
-                            AndroidUtil.setNotificationType("chat");
-                        }
-                    }
-                });
+        String ID =  FirebaseDatabase.getInstance().getReference().child("messageID").push().getKey();
+
+        ChatMessageModel chatMessageModel = new ChatMessageModel(ID, message, FirebaseUtils.currentUserId(), Timestamp.now(), false);
+
+        FirebaseUtils.getChatRoomMessageReference(chatRoomID).document(ID).set(chatMessageModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    chat_msg_input.setText("");
+                    sendNotification(message);
+                    AndroidUtil.setNotificationType("chat");
+                }
+            }
+        });
     }
+
+
 
     void markMessageAsRead(ChatMessageModel chatMessage) {
         chatMessage.setRead(true);
@@ -201,7 +206,7 @@ public class ChatActivity extends AppCompatActivity implements OnChatMessageClic
         FirestoreRecyclerOptions<ChatMessageModel> options = new FirestoreRecyclerOptions.Builder<ChatMessageModel>()
                 .setQuery(query, ChatMessageModel.class).build();
 
-        adapter = new ChatAdapter(options, getApplicationContext());
+        adapter = new ChatAdapter(options, getApplicationContext(), chatRoomID);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setReverseLayout(true);
         chatRecyclerView.setLayoutManager(manager);

@@ -3,6 +3,7 @@ package New.Main.CSEDU_CampusKin.Model;
 import com.google.firebase.Timestamp;
 
 public class ChatMessageModel {
+    private String messageID;
     private String message;
     private String senderID;
     private Timestamp timestamp;
@@ -11,11 +12,21 @@ public class ChatMessageModel {
     public ChatMessageModel() {
     }
 
-    public ChatMessageModel(String message, String senderID, Timestamp timestamp, boolean isRead) {
+
+    public ChatMessageModel(String messageID, String message, String senderID, Timestamp timestamp, boolean isRead) {
+        this.messageID = messageID;
         this.message = message;
         this.senderID = senderID;
         this.timestamp = timestamp;
         this.isRead = isRead;
+    }
+
+    public String getMessageID() {
+        return messageID;
+    }
+
+    public void setMessageID(String messageID) {
+        this.messageID = messageID;
     }
 
     public boolean isRead() {
