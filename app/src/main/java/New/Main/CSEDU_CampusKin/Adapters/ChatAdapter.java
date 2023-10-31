@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.common.util.ScopeUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,20 +38,23 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
         this.messageClickListener = messageClickListener;
     }
 
-
     @Override
     protected void onBindViewHolder(@NonNull ChatModelViewHolder holder, int position, @NonNull ChatMessageModel model) {
         if(model.getSenderID().equals(FirebaseUtils.currentUserId())){
             holder.leftChatLayout.setVisibility(View.GONE);
             holder.rightChatLayout.setVisibility(View.VISIBLE);
             holder.rightChatTextView.setText(model.getMessage());
-
+            System.out.println("message unread");
         }
         else
         {
             holder.rightChatLayout.setVisibility(View.GONE);
             holder.leftChatLayout.setVisibility(View.VISIBLE);
             holder.leftChatTextView.setText(model.getMessage());
+
+            if(model == null)
+                System.out.println("null model");
+
             model.setRead(true);
             System.out.println("message read");
             Map<String, Object> map = new HashMap<>();
@@ -59,12 +63,6 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
             if(chatRoomID!=null && model.getMessageID()!=null){
                 FirebaseUtils.getChatRoomMessageReference(chatRoomID).document(model.getMessageID()).update(map);
             }
-        }
-
-        if (model.isRead()) {
-            System.out.println("message read");
-        } else {
-            System.out.println("message unread");
         }
     }
 
