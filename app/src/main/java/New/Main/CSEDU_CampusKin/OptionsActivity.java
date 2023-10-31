@@ -52,7 +52,7 @@ public class OptionsActivity extends AppCompatActivity {
             FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(OptionsActivity.this);
-                    alertDialog.setTitle("Do you want to Sing out?");
+                    alertDialog.setTitle("Do you want to Sign out?");
                     alertDialog.setPositiveButton("NO", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
