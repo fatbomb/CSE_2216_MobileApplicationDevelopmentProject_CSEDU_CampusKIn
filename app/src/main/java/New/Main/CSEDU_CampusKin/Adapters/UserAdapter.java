@@ -23,7 +23,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import New.Main.CSEDU_CampusKin.ChatActivity;
-import New.Main.CSEDU_CampusKin.Model.Comment;
 import New.Main.CSEDU_CampusKin.Model.UserModel;
 import New.Main.CSEDU_CampusKin.NavigationActivity;
 import New.Main.CSEDU_CampusKin.R;

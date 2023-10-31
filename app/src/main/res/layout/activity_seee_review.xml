@@ -23,7 +23,7 @@
             android:layout_toRightOf="@id/back_button"
             android:gravity="center"
             android:hint="Find Reviews"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textSize="18sp" />
 
 
