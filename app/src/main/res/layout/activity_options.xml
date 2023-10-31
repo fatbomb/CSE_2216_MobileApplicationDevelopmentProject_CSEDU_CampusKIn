@@ -11,20 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/toolbar"
+        android:backgroundTint="@color/primary"
         android:background="?android:attr/windowBackground"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/settings"
         android:text="@string/settings"
-        android:textColor="@color/black"
-        android:layout_margin="10dp"
-        android:textSize="18sp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/logout"
-        android:text="@string/logout"
         android:textColor="@color/black"
         android:layout_margin="10dp"
         android:textSize="18sp"/>
@@ -49,6 +42,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/aboutus"
         android:text="About Us"
+        android:textColor="@color/black"
+        android:layout_margin="10dp"
+        android:textSize="18sp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/logout"
+        android:text="@string/logout"
         android:textColor="@color/black"
         android:layout_margin="10dp"
         android:textSize="18sp"/>
