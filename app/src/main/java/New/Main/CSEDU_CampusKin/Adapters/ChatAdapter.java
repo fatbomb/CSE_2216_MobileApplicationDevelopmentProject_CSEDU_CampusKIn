@@ -44,7 +44,16 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessageModel, Chat
             holder.leftChatLayout.setVisibility(View.GONE);
             holder.rightChatLayout.setVisibility(View.VISIBLE);
             holder.rightChatTextView.setText(model.getMessage());
-            System.out.println("message unread");
+            //System.out.println("message unread");
+            if(model.isRead()){
+                System.out.println("Amar meessage seen hoiche");
+                //read icon viesible hobe
+
+            }
+            else{
+                //sent icon visible hobe.
+
+            }
         }
         else
         {
