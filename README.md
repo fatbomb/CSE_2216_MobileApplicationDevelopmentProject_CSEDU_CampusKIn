@@ -2,7 +2,9 @@
 This is an online media platform aimed at gathering all the current students, faculties, and alumni of CSEDU. 
 
 Framework: Android
+
 Language: Java
+
 Database: Firebase Real-time Database and Firestore
 
 Developers: 
