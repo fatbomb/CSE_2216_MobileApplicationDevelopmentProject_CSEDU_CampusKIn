@@ -1,5 +1,5 @@
 # CSE_2216_MobileApplicationDevelopmentProject_CSEDU_CampusKin
-This is an online media platform aimed at gathering all the current students, faculties, and alumni of CSEDU. 
+CSEDU Campus Kin is a specialized social networking application created exclusively for the students, alumni, and faculty members of CSEDU (Computer Science and Engineering Department, University of Dhaka). 
 
 Framework: Android
 
